@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.project.splitz.MainActivity">
+
+    <TextView
+        android:id="@+id/userViewTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bad"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="148dp"
+        android:layout_marginTop="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:id="@+id/signoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="signout"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="240dp"
+        android:layout_below="@+id/userViewTV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp" />
+
+
+</RelativeLayout>
+
+

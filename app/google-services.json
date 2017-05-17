@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "395484866402",
+    "firebase_url": "https://splitz-696ba.firebaseio.com",
+    "project_id": "splitz-696ba",
+    "storage_bucket": "splitz-696ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395484866402:android:1f879ca0f59bdaa8",
+        "android_client_info": {
+          "package_name": "com.project.splitz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395484866402-9cma3r2p1nbr3ljodkithfsb5r31817e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXibxagk3TwQs1C6PlamtYPFGHkcakHR8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
