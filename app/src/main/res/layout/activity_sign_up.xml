@@ -14,22 +14,34 @@
         android:textSize="25dp"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="148dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="20dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
     <EditText
-        android:id="@+id/userNameET"
+        android:id="@+id/nameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Enter username"
         android:inputType="text"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp" />
+
+    <EditText
+        android:id="@+id/emailET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter email"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="187dp"
+        android:layout_alignLeft="@+id/nameET"
+        android:layout_marginTop="110dp"/>
 
     <EditText
         android:id="@+id/passwordET"
@@ -42,7 +54,7 @@
         tools:layout_editor_absoluteY="187dp"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="100dp" />
 
     <EditText
         android:id="@+id/confirmPasswordET"
@@ -55,18 +67,29 @@
         tools:layout_editor_absoluteY="187dp"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
+        android:layout_marginTop="150dp" />
 
     <Button
         android:id="@+id/signUpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign Up Now"
-        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="240dp"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp" />
+        android:layout_marginTop="200dp"/>
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BACK"
+        tools:layout_editor_absoluteX="140dp"
+        tools:layout_editor_absoluteY="240dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"/>
 
 
 </RelativeLayout>

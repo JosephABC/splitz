@@ -8,20 +8,34 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-// hello
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "EmailPassword";
+import static com.project.splitz.R.id.text;
+import static com.project.splitz.R.id.textView;
+
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+
+    private static final String TAG = "Activity";
+    private static final int RC_SIGN_IN = 9001;
 
     private EditText emailField;
     private EditText passwordField;
+    private TextView textView;
+
+    private GoogleApiClient mGoogleApiClient;
 
     public FirebaseAuth mAuth;
 
@@ -30,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         // Views
         emailField = (EditText) findViewById(R.id.emailET);
         passwordField = (EditText) findViewById(R.id.passwordET);
@@ -37,9 +52,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Buttons
         findViewById(R.id.signInBtn).setOnClickListener(this);
         findViewById(R.id.signUpBtn).setOnClickListener(this);
+        findViewById(R.id.GoogleSignInBtn).setOnClickListener(this);
         findViewById(R.id.verifyEmailBtn).setOnClickListener(this);
 
+        //Create Google Sign in option
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
         // initialize auth
+
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -54,32 +80,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(myIntent);
         }
     }
-
-
-    protected void createAccount(String email, String password) {
-        Log.d(TAG, "createAccount:" + email);
-        if(!validateForm()) {
-            return;
-        }
-
-        // [START create_user_with_email]
-
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    // Signin success,updateUI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:Success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                } else {
-                    // If signin fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure",task.getException());
-                    Toast.makeText(LoginActivity.this, "Authenticationfailed.", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        });
+    private void GoogleSignIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
+//    private void handleSignInResult(GoogleSignInResult result) {
+//        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+//        if (result.isSuccess()) {
+//            // Signed in successfully, show authenticated UI.
+//            GoogleSignInAccount acct = result.getSignInAccount();
+//            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+//
+//        } else {
+//
+//    }
+
 
     protected void signIn(String email, String password) {
         Log.d(TAG,"signIn:" + email);
@@ -105,8 +121,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-
-
 
     protected void sendEmailVerification() {
         // Disable button
@@ -156,7 +170,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else {
             passwordField.setError(null);
         }
-
         return valid;
     }
 
@@ -165,12 +178,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.signUpBtn) {
-            createAccount(emailField.getText().toString(), passwordField.getText().toString());
+            Intent myIntent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(myIntent);
+
         } else if (i == R.id.signInBtn) {
             signIn(emailField.getText().toString(), passwordField.getText().toString());
         } else if (i == R.id.verifyEmailBtn) {
             sendEmailVerification();
         }
+          else if (i == R.id.GoogleSignInBtn) {
+            GoogleSignIn();
+
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d(TAG, "onConnectionFailed:" + connectionResult);
+        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 }
 

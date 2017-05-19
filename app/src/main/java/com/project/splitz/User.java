@@ -4,16 +4,15 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class User {
 
-    public String username;
+    public String email;
     public String password;
+    public String name;
 
-    public User() {
 
-    }
-
-    public User(String username, String password) {
-        this.username = username;
+    public User(String email, String password, String name) {
+        this.email = email;
         this.password = password;
+        this.name = name;
     }
 
 }

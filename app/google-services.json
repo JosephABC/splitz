@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "395484866402-8hg53ouc77uao823o9sfl8lab8sv6hah.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.splitz",
+            "certificate_hash": "42aade1c256a45a81f09bc4197256d1b11b2288f"
+          }
+        },
+        {
           "client_id": "395484866402-9cma3r2p1nbr3ljodkithfsb5r31817e.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395484866402-9cma3r2p1nbr3ljodkithfsb5r31817e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
