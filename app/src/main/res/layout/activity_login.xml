@@ -97,5 +97,16 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="250dp" />
+
+    <Button
+        android:id="@+id/signOutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SignOutBtn"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="240dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp" />
 </RelativeLayout>
 

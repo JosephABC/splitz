@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
     <Button
-        android:id="@+id/signoutBtn"
+        android:id="@+id/signOutBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="signout"
