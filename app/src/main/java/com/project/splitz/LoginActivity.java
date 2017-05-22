@@ -26,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 
 import static com.project.splitz.R.id.text;
 import static com.project.splitz.R.id.textView;
@@ -57,7 +58,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         findViewById(R.id.signInBtn).setOnClickListener(this);
         findViewById(R.id.signUpBtn).setOnClickListener(this);
         findViewById(R.id.GoogleSignInBtn).setOnClickListener(this);
-        findViewById(R.id.verifyEmailBtn).setOnClickListener(this);
         findViewById(R.id.signOutBtn).setOnClickListener(this);
 
         //Create Google Sign in option
@@ -71,8 +71,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 .build();
 
         // initialize auth
-
         mAuth = FirebaseAuth.getInstance();
+
     }
 
     //[START on_start_check_user]
@@ -81,16 +81,16 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         super.onStart();
         //Check if user is signed in (non-null)
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if (currentUser != null) {
             Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(myIntent);
         }
     }
-
+    //[Start] Google Sign in
     private void GoogleSignIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
     }
 
     @Override
@@ -105,8 +105,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 GoogleSignInAccount account = results.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                // Google Sign In failed, update UI appropriately
-                // ...
+                //If Google Sign in fails
             }
         }
     }
@@ -125,7 +124,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(true);
+                            Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(main);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -133,22 +134,12 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                                     Toast.LENGTH_SHORT).show();
                         }
                         hideProgressDialog();
-
-
                     }
                 });
 
     }
+    //[End] Google Sign in
 
-    private void updateUI(boolean signedIn) {
-        if (signedIn) {
-
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
-            finish();
-        } else {
-        }
-    }
     private void signOut() {
         // Firebase sign out
         mAuth.signOut();
@@ -162,13 +153,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 });
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed:" + connectionResult);
-        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
-    }
-
-
+    //[Start] EmailPassword Sign in
     protected void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
@@ -193,38 +178,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             }
         });
     }
+    //[End] EmailPassword Sign in
 
-    protected void sendEmailVerification() {
-        // Disable button
-        findViewById(R.id.verifyEmailBtn).setEnabled(false);
-
-        // Send verification email
-        // [START send_email_verification]
-        final FirebaseUser user = mAuth.getCurrentUser();
-        user.sendEmailVerification()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // [START_EXCLUDE]
-                        // Re-enable button
-                        findViewById(R.id.verifyEmailBtn).setEnabled(true);
-
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this,
-                                    "Verification email sent to " + user.getEmail(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.e(TAG, "sendEmailVerification", task.getException());
-                            Toast.makeText(LoginActivity.this,
-                                    "Failed to send verification email.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END send_email_verification]
-    }
-
+    //Ensure all fields are filled
     protected boolean validateForm() {
         boolean valid = true;
 
@@ -246,7 +202,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         return valid;
     }
 
-
+    //Click Listeners
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -256,14 +212,18 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
         } else if (i == R.id.signInBtn) {
             signIn(emailField.getText().toString(), passwordField.getText().toString());
-        } else if (i == R.id.verifyEmailBtn) {
-            sendEmailVerification();
         } else if (i == R.id.GoogleSignInBtn) {
             GoogleSignIn();
         } else if (i == R.id.signOutBtn) {
             signOut();
 
         }
+    }
+    //onConnectionFailed Listener
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d(TAG, "onConnectionFailed:" + connectionResult);
+        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
 }
 
