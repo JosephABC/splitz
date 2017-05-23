@@ -38,7 +38,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
     private EditText emailField;
     private EditText passwordField;
-    private TextView textView;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -58,7 +57,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         findViewById(R.id.signInBtn).setOnClickListener(this);
         findViewById(R.id.signUpBtn).setOnClickListener(this);
         findViewById(R.id.GoogleSignInBtn).setOnClickListener(this);
-        findViewById(R.id.signOutBtn).setOnClickListener(this);
 
         //Create Google Sign in option
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -140,19 +138,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     }
     //[End] Google Sign in
 
-    private void signOut() {
-        // Firebase sign out
-        mAuth.signOut();
-
-        // Google sign out
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                    }
-                });
-    }
-
     //[Start] EmailPassword Sign in
     protected void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
@@ -214,9 +199,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             signIn(emailField.getText().toString(), passwordField.getText().toString());
         } else if (i == R.id.GoogleSignInBtn) {
             GoogleSignIn();
-        } else if (i == R.id.signOutBtn) {
-            signOut();
-
         }
     }
     //onConnectionFailed Listener
