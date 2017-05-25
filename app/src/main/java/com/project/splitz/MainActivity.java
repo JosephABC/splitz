@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     public void onResult(@NonNull Status status) {
                     }
                 });
+        // FB sign out
+        LoginManager.getInstance().logOut();
+
         //Redirect back to LoginActivity
         Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(myIntent);

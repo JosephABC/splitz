@@ -8,4 +8,8 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="loading">Loading…</string>
+    <string name="facebook_app_id">361261564271970</string>
+    <string name="fb_login_protocol_scheme">fb361261564271970</string>
+
+
 </resources>
