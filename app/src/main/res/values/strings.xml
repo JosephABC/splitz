@@ -10,6 +10,10 @@
     <string name="loading">Loading…</string>
     <string name="facebook_app_id">361261564271970</string>
     <string name="fb_login_protocol_scheme">fb361261564271970</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
 
+    <string name="action_settings">Settings</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 </resources>
