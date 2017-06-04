@@ -6,18 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.project.splitz.CreateGroupActivity">
 
-    <include
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/includetoolbar" />
-
     <EditText
-        android:id="@+id/groupnameField"
+        android:id="@+id/groupnameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/includetoolbar"
         android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="Group Name"
@@ -33,7 +26,7 @@
         android:layout_marginRight="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="50dp"
-        android:layout_below="@+id/groupnameField"
+        android:layout_below="@+id/groupnameET"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -42,7 +35,7 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="Back"
-        android:layout_below="@+id/groupnameField"
+        android:layout_below="@+id/groupnameET"
         android:layout_marginLeft="50dp"
         android:layout_marginStart="50dp"
         android:layout_alignBottom="@id/submitBtn"

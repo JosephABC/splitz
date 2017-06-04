@@ -48,18 +48,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     //Drawer stuff
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
-    //Groups stuff
-    private ListView list;
     private ArrayAdapter<String> adapter;
-    private ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,16 +70,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         mDrawer.addDrawerListener(drawerToggle);
 
         // Setup drawer view
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
         userView = (TextView) nvDrawer.getHeaderView(0).findViewById(R.id.userViewTV);
 
+
         // Group view
-        list = (ListView) findViewById(R.id.listView);
-        arrayList = new ArrayList<String>();
+        ListView groupList = (ListView) findViewById(R.id.listView);
+        ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add("Test");
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
-        list.setAdapter(adapter);
+        groupList.setAdapter(adapter);
         findViewById(R.id.NewGrpBtn).setOnClickListener(this);
 
         //Create Google Sign in option
@@ -102,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
+
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
@@ -125,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         switch(menuItem.getItemId()) {
             case R.id.nav_groups:
                 fragmentClass = Fragment.class;
+                Intent myIntent = new Intent(this, CreateGroupActivity.class);
+                startActivity(myIntent);
                 break;
             case R.id.nav_friends:
                 fragmentClass = Fragment.class;
@@ -166,12 +167,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
 /*        // The action bar home/up action should open or close the drawer.
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
                 return true;
         }*/
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -193,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {

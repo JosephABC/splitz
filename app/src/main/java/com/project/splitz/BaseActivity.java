@@ -1,15 +1,14 @@
 package com.project.splitz;
 
-/**
- * Created by Joseph Ang on 19/5/2017.
- */
+
 import android.app.ProgressDialog;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 
+
 public class BaseActivity extends AppCompatActivity {
 
-    @VisibleForTesting
+   @VisibleForTesting
     public ProgressDialog mProgressDialog;
 
     public void showProgressDialog() {
@@ -18,7 +17,6 @@ public class BaseActivity extends AppCompatActivity {
             mProgressDialog.setMessage(getString(R.string.loading));
             mProgressDialog.setIndeterminate(true);
         }
-
         mProgressDialog.show();
     }
 
