@@ -10,13 +10,19 @@
     <string name="loading">Loading…</string>
     <string name="facebook_app_id">361261564271970</string>
     <string name="fb_login_protocol_scheme">fb361261564271970</string>
+<<<<<<< HEAD
     <string name="title_activity_menu_drawer">MenuDrawerActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+=======
+>>>>>>> aa2520ff727292f641402af37d5d51e417ea65b9
     <string name="title_activity_drawer">DrawerActivity</string>
 
+    <string name="action_settings">Settings</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 </resources>
