@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,6 +35,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     public FirebaseAuth mAuth;
     public FirebaseAuth mAuthListener;
+
+    public String userID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         mAuth = getInstance();
     }
 
-    protected void createAccount(String email, String password, final String name) {
+    protected void createAccount(final String email, String password, final String name) {
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -76,10 +80,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     }
                                 }
                             });
+                    //Insert User into Firebase database
+                    NewUser(user);
+
                     mAuth.signOut();
                     Toast.makeText(SignUpActivity.this, "Account Sign Up Successful! Please Sign in!", Toast.LENGTH_SHORT).show();
                     Intent myIntent = new Intent(SignUpActivity.this, LoginActivity.class);
                     startActivity(myIntent);
+
                 } else {
                     // If signin fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure",task.getException());
@@ -88,8 +96,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
 
         });
-
-
+    }
+    //NewUser into Firebase Database
+    public void NewUser(FirebaseUser user){
+        String userID = user.getUid();
+        String Email = user.getEmail();
+        String Name = user.getDisplayName();
+        User User = new User(Email, Name);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mDatabase.child(userID).setValue(User);
     }
 
 

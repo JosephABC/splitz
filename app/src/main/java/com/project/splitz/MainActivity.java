@@ -5,7 +5,9 @@ import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -51,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private ActionBarDrawerToggle drawerToggle;
 
     private ArrayAdapter<String> adapter;
+
+    final String[] fragments = {
+            "com.project.splitz.FriendsFragment"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case R.id.nav_friends:
                 fragmentClass = Fragment.class;
+                Intent Intent = new Intent(this, FriendsActivity.class);
+                startActivity(Intent);
                 break;
             case R.id.nav_settings:
                 fragmentClass = Fragment.class;
@@ -153,6 +161,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+
+
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -200,18 +211,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            for (UserInfo profile : user.getProviderData()) {
-                // Id of the provider (ex: google.com)
-                String providerId = profile.getProviderId();
-
-                // UID specific to the provider
-                String uid = profile.getUid();
-
-                // Name, email address, and profile photo Url
-                String name = profile.getDisplayName();
-                String email = profile.getEmail();
-                userView.setText(name);
-            };
+            String name = user.getDisplayName();
+            userView.setText(name);
         }
     }
 

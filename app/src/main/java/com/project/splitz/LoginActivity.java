@@ -36,6 +36,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static com.project.splitz.R.id.text;
 import static com.project.splitz.R.id.textView;
@@ -139,6 +144,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            //Insert New User into Firebase Database
+                            NewUser(user);
+
                             Intent main = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(main);
                         } else {
@@ -197,6 +205,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            //Insert New User into Firebase Database
+                            NewUser(user);
                             Intent main = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(main);
                             finish();
@@ -210,6 +220,29 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     }
                 });
 
+    }
+    //Insert New User into FireBase database
+    public void NewUser(FirebaseUser User){
+        final String userID = User.getUid();
+        final String Email = User.getEmail();
+        final String Name = User.getDisplayName();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(userID)) {
+
+                } else{
+                    User User = new User(Email, Name);
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
+                    mDatabase.child(userID).setValue(User);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
     //[End] Google Sign in
 
@@ -226,6 +259,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
+
                     Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(myIntent);
                 } else {

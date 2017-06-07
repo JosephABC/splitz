@@ -40,10 +40,13 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
-        <activity android:name=".CreateGroupActivity"></activity>
->>>>>>> aa2520ff727292f641402af37d5d51e417ea65b9
+        <activity android:name=".CreateGroupActivity" />
+        <activity android:name=".FriendsActivity" />
+        <activity
+            android:name=".AddFriendActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_add_friend"
+            android:theme="@style/FullscreenTheme" />
     </application>
 
 </manifest>
