@@ -233,7 +233,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 if (snapshot.hasChild(userID)) {
 
                 } else{
-                    User User = new User(Email, Name);
+                    User User = new User(Email, Name, null);
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
                     mDatabase.child(userID).setValue(User);
                 }

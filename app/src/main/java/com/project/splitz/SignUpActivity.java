@@ -102,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String userID = user.getUid();
         String Email = user.getEmail();
         String Name = user.getDisplayName();
-        User User = new User(Email, Name);
+        User User = new User(Email, Name, null);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
         mDatabase.child(userID).setValue(User);
     }

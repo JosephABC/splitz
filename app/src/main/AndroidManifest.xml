@@ -42,11 +42,8 @@
         </activity>
         <activity android:name=".CreateGroupActivity" />
         <activity android:name=".FriendsActivity" />
-        <activity
-            android:name=".AddFriendActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_add_friend"
-            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".AddFriendsActivity" />
+        <activity android:name=".AddFriendActivity"></activity>
     </application>
 
 </manifest>
