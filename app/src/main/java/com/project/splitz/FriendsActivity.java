@@ -35,9 +35,7 @@ public class FriendsActivity extends Activity implements View.OnClickListener {
 
         mAuth = FirebaseAuth.getInstance();
 
-
-
-        // Retrieve friend list
+        // Display friend list
         FirebaseUser currentUser = mAuth.getCurrentUser();
         final String currentUid = currentUser.getUid();
         final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -48,57 +46,45 @@ public class FriendsActivity extends Activity implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 // Generate list of friends details
-                ArrayList<String> arrayList = new ArrayList<String>();
+                ArrayList<String> FriendUidList = new ArrayList<String>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     String Entry = child.getValue().toString();
-                    arrayList.add(Entry);
+                    FriendUidList.add(Entry);
                 }
-                    //Friend List Adapter
-                    MyAdapter adapter = new MyAdapter(FriendsActivity.this, generateData(arrayList));
-                    ListView friendList = (ListView) findViewById(R.id.listViewFriends);
-                    friendList.setAdapter(adapter);
+
+                // Retrieve name and email data
+                for (String uid: FriendUidList){
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
+                    Query UserQuery = mDatabase.orderByKey().equalTo(uid);
+                    UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                String Name = child.child("Name").getValue().toString();
+                                String Email = child.child("Email").getValue().toString();
+                                FriendDataList.add(new Items(Name, Email));
+                            }
+
+                            //Friend List Adapter
+                            MyAdapter adapter = new MyAdapter(FriendsActivity.this, FriendDataList);
+                            ListView friendList = (ListView) findViewById(R.id.listViewFriends);
+                            friendList.setAdapter(adapter);
+
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
 
-
+        // Add friend button
         findViewById(R.id.AddFriendBtn).setOnClickListener(this);
     }
-
-    // Generate ArrayList of Friend Data
-    private ArrayList<Items> generateData(List<String> FriendUidList){
-//        final ArrayList<Items> FriendDataList = new ArrayList<Items>();
-        for (String uid: FriendUidList){
-            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
-            Query UserQuery = mDatabase.orderByKey().equalTo(uid);
-            UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    // Generate list of friends details
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        String Name = child.child("Name").getValue().toString();
-                        String Email = child.child("Email").getValue().toString();
-                        FriendDataList.add(new Items(Name, Email));
-                    }
-
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
-//        FriendDataList.add(new Items("hello1","Hello1"));
-//        FriendDataList.add(new Items("hello2","Hello2"));
-//        FriendDataList.add(new Items("hello3","Hello3"));
-        System.out.println(FriendDataList);
-        return FriendDataList;
-
-    }
-
-
 
     @Override
     public void onClick(View v) {
