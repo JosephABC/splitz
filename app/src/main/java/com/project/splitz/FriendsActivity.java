@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class FriendsActivity extends Activity implements View.OnClickListener {
 
     public FirebaseAuth mAuth;
     private ArrayAdapter<String> adapter;
+    public ArrayList<Items> FriendDataList = new ArrayList<Items>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,8 @@ public class FriendsActivity extends Activity implements View.OnClickListener {
                     String Entry = child.getValue().toString();
                     arrayList.add(Entry);
                 }
-
                     //Friend List Adapter
-                    MyAdapter adapter = new MyAdapter(FriendsActivity.this, generateData());
+                    MyAdapter adapter = new MyAdapter(FriendsActivity.this, generateData(arrayList));
                     ListView friendList = (ListView) findViewById(R.id.listViewFriends);
                     friendList.setAdapter(adapter);
             }
@@ -66,15 +67,37 @@ public class FriendsActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.AddFriendBtn).setOnClickListener(this);
     }
 
-    // Example of creating ArrayList of "items"
-    private ArrayList<Items> generateData(){
-        ArrayList<Items> items = new ArrayList<Items>();
-        items.add(new Items("Item 1","First Item on the list"));
-        items.add(new Items("Item 2","Second Item on the list"));
-        items.add(new Items("Item 3","Third Item on the list"));
+    // Generate ArrayList of Friend Data
+    private ArrayList<Items> generateData(List<String> FriendUidList){
+//        final ArrayList<Items> FriendDataList = new ArrayList<Items>();
+        for (String uid: FriendUidList){
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
+            Query UserQuery = mDatabase.orderByKey().equalTo(uid);
+            UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-        return items;
+                    // Generate list of friends details
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        String Name = child.child("Name").getValue().toString();
+                        String Email = child.child("Email").getValue().toString();
+                        FriendDataList.add(new Items(Name, Email));
+                    }
+
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+//        FriendDataList.add(new Items("hello1","Hello1"));
+//        FriendDataList.add(new Items("hello2","Hello2"));
+//        FriendDataList.add(new Items("hello3","Hello3"));
+        System.out.println(FriendDataList);
+        return FriendDataList;
+
     }
+
 
 
     @Override
