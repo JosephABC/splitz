@@ -140,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case R.id.nav_settings:
                 fragmentClass = Fragment.class;
+                Intent aIntent = new Intent(this, MainTestActivity.class);
+                startActivity(aIntent);
                 break;
             case R.id.nav_about:
                 fragmentClass = Fragment.class;

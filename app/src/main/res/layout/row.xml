@@ -4,13 +4,21 @@
     android:layout_height="wrap_content"
     >
 
-    <TextView
+    <!--<TextView-->
+        <!--android:id="@+id/label"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="30sp"-->
+        <!--android:paddingLeft="5dp">-->
+    <!--</TextView>-->
+    <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/label"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:paddingLeft="5dp">
-    </TextView>
+        android:paddingLeft="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+         />
 
     <TextView
         android:id="@+id/value"

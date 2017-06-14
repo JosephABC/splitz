@@ -18,6 +18,15 @@
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp" />
 
+    <ListView
+        android:id="@+id/listViewFriends"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@+id/groupnameET"
+        android:scrollbars="none">
+
+    </ListView>
+
     <Button
         android:id="@+id/submitBtn"
         android:layout_width="80dp"
@@ -25,8 +34,8 @@
         android:text="Create Group"
         android:layout_marginRight="50dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/groupnameET"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/listViewFriends"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -35,12 +44,14 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="Back"
-        android:layout_below="@+id/groupnameET"
+        android:layout_below="@+id/listViewFriends"
         android:layout_marginLeft="50dp"
         android:layout_marginStart="50dp"
         android:layout_alignBottom="@id/submitBtn"
         android:layout_alignTop="@id/submitBtn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>

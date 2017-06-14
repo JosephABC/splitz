@@ -9,12 +9,16 @@ import java.util.Map;
 public class Groups {
 
     public String groupName;
-//    public List participants;
+    public List<String> participants;
+
+    public Groups(){
+
+    }
 
 
-    public Groups(String groupName) {
+    public Groups(String groupName, List<String> participants) {
         this.groupName = groupName;
-//        this.participants = participants;
+        this.participants = participants;
 
     }
 

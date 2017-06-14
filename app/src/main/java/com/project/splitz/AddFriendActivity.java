@@ -78,6 +78,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
@@ -96,8 +97,6 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
                     String Entry = child.getValue().toString();
                     FriendList.add(Entry);
                 }
-                System.out.println(FriendList);
-                System.out.println(UserIDField.getText().toString());
                 if (FriendList.contains(UserIDField.getText().toString())){
                     Toast.makeText(AddFriendActivity.this, "User is already your Friend", Toast.LENGTH_SHORT).show();
                 }else{
@@ -105,9 +104,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
                     mDatabase.setValue(FriendList);
                     Toast.makeText(AddFriendActivity.this, "User has been added as Friend", Toast.LENGTH_SHORT).show();
                 }
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
