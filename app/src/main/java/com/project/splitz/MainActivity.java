@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -85,8 +86,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         ListView groupList = (ListView) findViewById(R.id.listView);
         ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add("Test");
+        arrayList.add("Test1");
+        arrayList.add("Test2");
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
         groupList.setAdapter(adapter);
+
+        groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent5 = new Intent(MainActivity.this, FriendsActivity.class);
+                startActivity(myIntent5);
+            }
+        });
+
+
+
+
         findViewById(R.id.NewGrpBtn).setOnClickListener(this);
 
         //Create Google Sign in option
