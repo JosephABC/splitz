@@ -136,13 +136,24 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
     }
     protected void groupSubmit(final String GroupName){
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("groups");
-        final String groupId = mDatabase.push().getKey();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //Initialise ArrayLists
         final ArrayList<String> GroupUidList = new ArrayList<String>();
+
+
+        //Add Current user by default to the group
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
         GroupUidList.add(currentUser.getUid());
+
+        //Group Database
+        DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
+        final String groupId = gDatabase.push().getKey();
         Groups group = new Groups(GroupName, GroupUidList);
-        mDatabase.child(groupId).setValue(group);
+        gDatabase.child(groupId).setValue(group);
+        //User Database
+        final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+        //Add GroupId to current User
+        addGroup(currentUser.getUid(), groupId);
+
         //Check Which Friends are selected
         SparseBooleanArray checked = listViewFriends.getCheckedItemPositions();
         ArrayList<String> selectedFriends = new ArrayList<String>();
@@ -152,16 +163,18 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
                 selectedFriends.add(adapter.getItem(position));
             }
         }
+        //Retrive Uid of selected Friend and add to Group Database
         for (String Email: selectedFriends){
 
-            DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("users");
-            Query UserQuery = fDatabase.orderByChild("Email").equalTo(Email);
+
+            Query UserQuery = uDatabase.orderByChild("Email").equalTo(Email);
             UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         GroupUidList.add(child.getKey().toString());
                         addParticipant(groupId, GroupUidList);
+                        addGroup(child.getKey().toString(),groupId);
                     }
                 }
 
@@ -175,9 +188,29 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         startActivity(myIntent);
 
     }
+    //Add selected friend to Group Database
     public void addParticipant(String groupId, List<String> GroupUidList){
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(groupId).child("participants");
         gDatabase.setValue(GroupUidList);
+    }
+    public void addGroup(final String UserUid, final String groupId){
+        final ArrayList<String> UserGroupList = new ArrayList<String>();
+        final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+        Query GroupQuery = uDatabase.child(UserUid).child("groups");
+        GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    UserGroupList.add(child.getValue().toString());
+                }
+                UserGroupList.add(groupId);
+                uDatabase.child(UserUid).child("groups").setValue(UserGroupList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     protected boolean validateForm() {

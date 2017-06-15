@@ -35,6 +35,12 @@ import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -42,6 +48,7 @@ import static com.project.splitz.R.id.textView;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
     TextView userView;
+    public ListView ListViewGroups;
     private static final String TAG = "Activity";
 
     public FirebaseAuth mAuth;
@@ -83,25 +90,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
         // Group view
-        ListView groupList = (ListView) findViewById(R.id.listView);
-        ArrayList<String> arrayList = new ArrayList<String>();
-        arrayList.add("Test");
-        arrayList.add("Test1");
-        arrayList.add("Test2");
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
-        groupList.setAdapter(adapter);
-
-        groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent5 = new Intent(MainActivity.this, FriendsActivity.class);
-                startActivity(myIntent5);
-            }
-        });
-
-
-
+        ListViewGroups = (ListView) findViewById(R.id.listViewGroups);
 
         findViewById(R.id.NewGrpBtn).setOnClickListener(this);
 
@@ -121,6 +110,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         //Find Current User
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent5 = new Intent(MainActivity.this, FriendsActivity.class);
+                startActivity(myIntent5);
+            }
+        });
     }
 
 
@@ -232,6 +228,54 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             String name = user.getDisplayName();
             userView.setText(name);
         }
+        final ArrayList<String> GroupIdList = new ArrayList<String>();
+        DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+        Query GroupQuery = uDatabase.child(user.getUid()).child("groups");
+        GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    GroupIdList.add(child.getValue().toString());
+                }
+                GenerateGroupName(GroupIdList);
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void GenerateGroupName(ArrayList<String> GroupIdList){
+        final ArrayList<String> GroupNameList = new ArrayList<String>();
+        for (String groupId: GroupIdList){
+            DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
+            Query GroupQuery = gDatabase.orderByKey().equalTo(groupId);
+            GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        String GroupName = child.child("groupName").getValue().toString();
+                        GroupNameList.add(GroupName);
+                    }
+                    generate(GroupNameList);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+
+    }
+
+    public void generate(ArrayList<String> GroupNameList){
+        String[] string = new String[GroupNameList.size()];
+        GroupNameList.toArray(string);
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, string);
+        ListViewGroups.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        ListViewGroups.setAdapter(adapter);
     }
 
     public void signOut() {
