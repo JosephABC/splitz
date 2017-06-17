@@ -259,7 +259,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
-
                     Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(myIntent);
                 } else {

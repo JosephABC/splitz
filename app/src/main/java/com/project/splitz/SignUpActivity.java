@@ -80,10 +80,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     }
                                 }
                             });
-                    //Insert User into Firebase database
-                    NewUser(user);
 
+                    //Insert User into Firebase database
+
+                    NewUser(user, name);
                     mAuth.signOut();
+
                     Toast.makeText(SignUpActivity.this, "Account Sign Up Successful! Please Sign in!", Toast.LENGTH_SHORT).show();
                     Intent myIntent = new Intent(SignUpActivity.this, LoginActivity.class);
                     startActivity(myIntent);
@@ -98,10 +100,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
     //NewUser into Firebase Database
-    public void NewUser(FirebaseUser user){
+    public void NewUser(FirebaseUser user, String Name){
         String userID = user.getUid();
         String Email = user.getEmail();
-        String Name = user.getDisplayName();
         User User = new User(Email, Name, null);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
         mDatabase.child(userID).setValue(User);
@@ -157,7 +158,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             if (password.equals(confirmPassword)) {
                 createAccount(emailField.getText().toString(), passwordField.getText().toString(), nameField.getText().toString());
             } else {
-                Toast.makeText(SignUpActivity.this, "Passwords don't match! ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Authenticationfailed.", Toast.LENGTH_SHORT).show();
                 confirmPasswordField.setText("");
             }
         } else if (i == R.id.backBtn){
