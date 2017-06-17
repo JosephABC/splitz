@@ -43,8 +43,7 @@
         <activity android:name=".CreateGroupActivity" />
         <activity android:name=".FriendsActivity" />
         <activity android:name=".AddFriendActivity" />
-        <activity android:name=".MainTestActivity" />
-        <activity android:name=".ResultsActivity"></activity>
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

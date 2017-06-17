@@ -112,11 +112,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         updateUI(currentUser);
         ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent5 = new Intent(MainActivity.this, FriendsActivity.class);
-                startActivity(myIntent5);
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+
+                System.out.println("hello");
+
             }
         });
+//        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                System.out.println("hello");
+//            }
+//        });
+//        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                System.out.println("hello");
+//                Intent myIntent5 = new Intent(MainActivity.this, FriendsActivity.class);
+//                startActivity(myIntent5);
+//            }
+//        });
     }
 
 
@@ -152,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case R.id.nav_settings:
                 fragmentClass = Fragment.class;
-                Intent aIntent = new Intent(this, MainTestActivity.class);
+                Intent aIntent = new Intent(this, Main2Activity.class);
                 startActivity(aIntent);
                 break;
             case R.id.nav_about:
@@ -276,6 +293,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 android.R.layout.simple_list_item_1, string);
         ListViewGroups.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ListViewGroups.setAdapter(adapter);
+//        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position,
+//                                    long id) {
+//
+//                System.out.println("hello");
+//
+//            }
+//        });
     }
 
     public void signOut() {
