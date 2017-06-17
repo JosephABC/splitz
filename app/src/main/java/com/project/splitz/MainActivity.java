@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
         userView = (TextView) nvDrawer.getHeaderView(0).findViewById(R.id.userViewTV);
-
 
         // Group view
         ListViewGroups = (ListView) findViewById(R.id.listViewGroups);
@@ -112,28 +110,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         updateUI(currentUser);
         ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Items selectedGroup = (Items) (ListViewGroups.getItemAtPosition(position));
 
-                System.out.println("hello");
+                TextView tv = (TextView) view.findViewById(R.id.value_groups);
+                String textvalue= tv.getText().toString();
+                System.out.println(textvalue);
+
+
+                Intent myIntent = new Intent(MainActivity.this, GroupActivity.class);
+
+                Bundle b = new Bundle();
+                b.putString("name", textvalue);
+                myIntent.putExtras(b);
+
+                startActivity(myIntent);
 
             }
         });
-//        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                System.out.println("hello");
-//            }
-//        });
-//        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                System.out.println("hello");
-//                Intent myIntent5 = new Intent(MainActivity.this, FriendsActivity.class);
-//                startActivity(myIntent5);
-//            }
-//        });
     }
 
 
@@ -264,9 +258,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         });
     }
+
     public void GenerateGroupName(ArrayList<String> GroupIdList){
-        final ArrayList<String> GroupNameList = new ArrayList<String>();
-        for (String groupId: GroupIdList){
+        final ArrayList<Items> GroupNameList = new ArrayList<Items>();
+        for (final String groupId: GroupIdList){
             DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
             Query GroupQuery = gDatabase.orderByKey().equalTo(groupId);
             GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -274,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         String GroupName = child.child("groupName").getValue().toString();
-                        GroupNameList.add(GroupName);
+                        GroupNameList.add(new Items(GroupName, groupId));
                     }
                     generate(GroupNameList);
                 }
@@ -283,25 +278,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 }
             });
         }
-
     }
 
-    public void generate(ArrayList<String> GroupNameList){
-        String[] string = new String[GroupNameList.size()];
-        GroupNameList.toArray(string);
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, string);
+    public void generate(ArrayList<Items> GroupNameList){
+/*        String[] string = new String[GroupNameList.size()];
+        GroupNameList.toArray(string);*/
+        MyAdapterGroups adapter1 = new MyAdapterGroups(MainActivity.this, GroupNameList);
+/*        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, string);*/
         ListViewGroups.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        ListViewGroups.setAdapter(adapter);
-//        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position,
-//                                    long id) {
-//
-//                System.out.println("hello");
-//
-//            }
-//        });
+        ListViewGroups.setAdapter(adapter1);
     }
 
     public void signOut() {
@@ -329,8 +315,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onClick(View v) {
         Intent myIntent = new Intent(MainActivity.this, CreateGroupActivity.class);
         startActivity(myIntent);
-        //Check if your adapter has changed
-        adapter.notifyDataSetChanged();
+/*        //Check if your adapter has changed
+        adapter.notifyDataSetChanged();*/
     }
 
     //On Connection Failed Listeners

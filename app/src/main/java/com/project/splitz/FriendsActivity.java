@@ -2,13 +2,31 @@ package com.project.splitz;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,10 +40,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendsActivity extends Activity implements View.OnClickListener {
+public class FriendsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public FirebaseAuth mAuth;
-    private ArrayAdapter<String> adapter;
     public ArrayList<Items> FriendDataList = new ArrayList<Items>();
 
     @Override
@@ -69,7 +86,6 @@ public class FriendsActivity extends Activity implements View.OnClickListener {
                             MyAdapter adapter = new MyAdapter(FriendsActivity.this, FriendDataList);
                             ListView friendList = (ListView) findViewById(R.id.listViewFriends);
                             friendList.setAdapter(adapter);
-
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -84,7 +100,12 @@ public class FriendsActivity extends Activity implements View.OnClickListener {
 
         // Add friend button
         findViewById(R.id.AddFriendBtn).setOnClickListener(this);
+
+        //Initialize Auth
+        mAuth = FirebaseAuth.getInstance();
+
     }
+
 
     @Override
     public void onClick(View v) {
