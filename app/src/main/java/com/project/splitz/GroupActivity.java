@@ -11,10 +11,18 @@ public class GroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
+        //Handle bundle extras
         Bundle b = getIntent().getExtras();
-        TextView name = (TextView) findViewById(R.id.testtext);
+        String GroupId = b.getCharSequence("GroupId").toString();
+        String GroupName = b.getCharSequence("GroupName").toString();
 
-        name.setText(b.getCharSequence("name"));
+        //Display
+        TextView GroupNameTV = (TextView) findViewById(R.id.GroupNameTV);
+        GroupNameTV.setText(GroupName);
+        TextView GroupIdTV = (TextView) findViewById(R.id.GroupIdTV);
+        GroupIdTV.setText(GroupId);
+
+
 
     }
 }

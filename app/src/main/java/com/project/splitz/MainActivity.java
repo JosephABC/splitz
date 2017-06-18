@@ -113,15 +113,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Items selectedGroup = (Items) (ListViewGroups.getItemAtPosition(position));
 
-                TextView tv = (TextView) view.findViewById(R.id.value_groups);
-                String textvalue= tv.getText().toString();
-                System.out.println(textvalue);
-
+                TextView GroupIdTV = (TextView) view.findViewById(R.id.value_groups);
+                String GroupId= GroupIdTV.getText().toString();
+                TextView GroupNameTV = (TextView) view.findViewById(R.id.label_groups);
+                String GroupName= GroupNameTV.getText().toString();
 
                 Intent myIntent = new Intent(MainActivity.this, GroupActivity.class);
 
                 Bundle b = new Bundle();
-                b.putString("name", textvalue);
+                b.putString("GroupId", GroupId);
+                b.putString("GroupName", GroupName);
                 myIntent.putExtras(b);
 
                 startActivity(myIntent);
@@ -168,6 +169,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case R.id.nav_about:
                 fragmentClass = Fragment.class;
+                Intent bIntent = new Intent(this, TabActivity.class);
+                startActivity(bIntent);
                 break;
             case R.id.nav_signout:
                 fragmentClass = Fragment.class;

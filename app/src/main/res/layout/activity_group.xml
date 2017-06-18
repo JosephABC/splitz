@@ -4,11 +4,20 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/testtext"
+        android:id="@+id/GroupNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:paddingLeft="5dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/GroupIdTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_below="@+id/GroupNameTV"
+        android:layout_alignLeft="@+id/GroupNameTV">
     </TextView>
 
 
