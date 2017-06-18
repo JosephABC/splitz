@@ -101,8 +101,6 @@ public class FriendsActivity extends AppCompatActivity implements View.OnClickLi
         // Add friend button
         findViewById(R.id.AddFriendBtn).setOnClickListener(this);
 
-        //Initialize Auth
-        mAuth = FirebaseAuth.getInstance();
 
     }
 

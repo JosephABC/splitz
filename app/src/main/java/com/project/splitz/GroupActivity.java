@@ -1,13 +1,15 @@
 package com.project.splitz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
-public class GroupActivity extends AppCompatActivity {
+public class GroupActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
@@ -23,6 +25,17 @@ public class GroupActivity extends AppCompatActivity {
         GroupIdTV.setText(GroupId);
 
 
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i= v.getId();
+        if (i == R.id.NewExpenseBtn) {
+            Intent myIntent = new Intent(GroupActivity.this, NewExpenseActivity.class);
+            startActivity(myIntent);
+
+        }
 
     }
 }

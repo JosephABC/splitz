@@ -45,7 +45,8 @@
         <activity android:name=".AddFriendActivity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".GroupActivity" />
-        <activity android:name=".TabActivity"></activity>
+        <activity android:name=".TabActivity" />
+        <activity android:name=".NewExpenseActivity"></activity>
     </application>
 
 </manifest>

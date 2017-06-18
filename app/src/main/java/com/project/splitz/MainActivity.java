@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
 
-    private ArrayAdapter<String> adapter;
+//    private ArrayAdapter<String> adapter;
 
     final String[] fragments = {
             "com.project.splitz.FriendsFragment"
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Items selectedGroup = (Items) (ListViewGroups.getItemAtPosition(position));
 
                 TextView GroupIdTV = (TextView) view.findViewById(R.id.value_groups);
                 String GroupId= GroupIdTV.getText().toString();
@@ -318,8 +317,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onClick(View v) {
         Intent myIntent = new Intent(MainActivity.this, CreateGroupActivity.class);
         startActivity(myIntent);
-/*        //Check if your adapter has changed
-        adapter.notifyDataSetChanged();*/
     }
 
     //On Connection Failed Listeners
