@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.project.splitz.AddFriendActivity">
+
+    <EditText
+        android:id="@+id/ExpenseTitleET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter Title"
+        android:inputType="text"
+        android:paddingRight="30dp"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="187dp"
+        android:layout_marginTop="49dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp" />
+
+    <EditText
+        android:id="@+id/ExpenseDescriptionET"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:ems="10"
+        android:hint="Enter Description"
+        android:inputType="text"
+        android:paddingRight="30dp"
+        android:layout_below="@+id/ExpenseTitleET"
+        android:layout_alignLeft="@+id/ExpenseTitleET"
+        android:layout_alignStart="@+id/ExpenseTitleET" />
+
+    <EditText
+        android:id="@+id/ExpenseAmountET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter Amount"
+        android:inputType="numberDecimal"
+        android:paddingRight="30dp"
+        android:layout_below="@+id/ExpenseDescriptionET"
+        android:layout_alignLeft="@+id/ExpenseDescriptionET"
+        android:layout_alignStart="@+id/ExpenseDescriptionET" />
+
+
+    <Button
+        android:id="@+id/AddExpenseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Expense"
+        android:layout_below="@+id/ExpenseAmountET"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp" />
+
+</RelativeLayout>
+

@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private String GroupId;
+    private String GroupName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -22,8 +25,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
         //Handle bundle extras
         Bundle b = getIntent().getExtras();
-        String GroupId = b.getCharSequence("GroupId").toString();
-        String GroupName = b.getCharSequence("GroupName").toString();
+        GroupId = b.getCharSequence("GroupId").toString();
+        GroupName = b.getCharSequence("GroupName").toString();
 
         //Display
         TextView GroupNameTV = (TextView) findViewById(R.id.GroupNameTV);
@@ -65,7 +68,12 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         int i= v.getId();
         if (i == R.id.NewExpenseBtn) {
-            Intent myIntent = new Intent(GroupActivity.this, NewExpenseActivity.class);
+            Intent myIntent = new Intent(GroupActivity.this, AddExpenseActivity.class);
+
+            Bundle b = new Bundle();
+            b.putString("GroupId", GroupId);
+            myIntent.putExtras(b);
+
             startActivity(myIntent);
 
         }

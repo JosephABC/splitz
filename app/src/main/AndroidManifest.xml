@@ -44,10 +44,11 @@
         <activity android:name=".FriendsActivity" />
         <activity android:name=".AddFriendActivity" />
         <activity android:name=".Main2Activity" />
-        <activity android:name=".GroupActivity"
-            android:parentActivityName=".TabActivity"/>
+        <activity
+            android:name=".GroupActivity"
+            android:parentActivityName=".TabActivity" />
         <activity android:name=".TabActivity" />
-        <activity android:name=".NewExpenseActivity" />
+        <activity android:name=".AddExpenseActivity"></activity>
     </application>
 
 </manifest>
