@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".GroupActivity">
+
+
+    <item
+        android:id="@+id/GroupInfo"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="GroupInfo"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/More"
+        android:title="More"
+        android:icon="@drawable/ic_overflow"
+        android:orderInCategory="101"
+        app:showAsAction="always">
+        <menu>
+
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_settings"
+                app:showAsAction="always"
+                android:title="settings">
+            </item>
+
+            <item
+                android:id="@+id/Delete"
+                android:icon="@drawable/ic_delete"
+                app:showAsAction="always"
+                android:title="Delete">
+            </item>
+        </menu>
+    </item>
+</menu>

@@ -3,11 +3,16 @@ package com.project.splitz;
 import android.app.Activity;
 import android.content.Intent;
 import android.provider.ContactsContract;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class CreateGroupActivity extends Activity implements View.OnClickListener{
+public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView toolbarText;
     private Toolbar toolbar;
     private EditText groupField;
@@ -49,22 +54,37 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
-        findViewById(R.id.backBtn).setOnClickListener(this);
         findViewById(R.id.submitBtn).setOnClickListener(this);
-//        findViewById(R.id.listViewFriends).setOnClickListener(this);
         groupField = (EditText) findViewById(R.id.groupnameET);
         listViewFriends = (ListView) findViewById(R.id.listViewFriends);
 
         //Generate Friend List
         GenerateFriendList();
 
-/*        // Toolbar
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.includetoolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbarText = (TextView) toolbar.findViewById(R.id.toolbarText);
-        toolbarText.setText("Create New Group");*/
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Create Group");
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            Intent parentIntent = NavUtils.getParentActivityIntent(this);
+            if(parentIntent == null) {
+                finish();
+                return true;
+            } else {
+                parentIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(parentIntent);
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void GenerateFriendList(){
         mAuth = FirebaseAuth.getInstance();
 
@@ -124,10 +144,7 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
     public void onClick(View v) {
 
         int i = v.getId();
-        if (i == R.id.backBtn) {
-            Intent myIntent = new Intent(CreateGroupActivity.this, MainActivity.class);
-            startActivity(myIntent);
-        } else if (i == R.id.submitBtn) {
+        if (i == R.id.submitBtn) {
             if (!validateForm()) {
                 return;
             }
@@ -184,8 +201,19 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
                 }
             });
         }
-        Intent myIntent = new Intent(CreateGroupActivity.this, MainActivity.class);
-        startActivity(myIntent);
+        Intent parentIntent = NavUtils.getParentActivityIntent(this);
+        if(parentIntent == null) {
+            finish();
+        } else {
+            parentIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(parentIntent);
+//            Fragment frg = getSupportFragmentManager().findFragmentById(R.id.GroupsFragment);
+//            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            ft.detach(frg).attach(frg).commit();
+
+            finish();
+
+        }
 
     }
     //Add selected friend to Group Database
@@ -224,4 +252,6 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         }
         return valid;
     }
+
+
 }

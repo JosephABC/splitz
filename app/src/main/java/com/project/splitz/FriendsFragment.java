@@ -2,6 +2,7 @@ package com.project.splitz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +25,15 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
     public FirebaseAuth mAuth;
     public ArrayList<Items> FriendDataList = new ArrayList<Items>();
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
 
         mAuth = FirebaseAuth.getInstance();
+
+        //Button
+        rootView.findViewById(R.id.NewFriendBtn).setOnClickListener(this);
 
         // Display friend list
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -76,16 +81,18 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        // Add friend button
-        rootView.findViewById(R.id.AddFriendBtn).setOnClickListener(this);
+
 
         return rootView;
     }
 
+
+
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.AddFriendBtn) {
+        if (i == R.id.NewFriendBtn) {
             Intent aIntent = new Intent(getActivity(), AddFriendActivity.class);
             startActivity(aIntent);
 

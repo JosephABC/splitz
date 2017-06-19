@@ -3,6 +3,7 @@ package com.project.splitz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -39,10 +40,12 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
 
     public ListView ListViewGroups;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
+
 
         //Create Google Sign in option
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -90,6 +93,7 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
 
             }
         });
+
 
     }
 

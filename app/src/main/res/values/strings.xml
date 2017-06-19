@@ -36,5 +36,6 @@
         <item>Hockey</item>
         <item>Swimming</item>
     </string-array>
+    <string name="title_activity_main3">Main3Activity</string>
 
 </resources>

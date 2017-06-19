@@ -2,7 +2,10 @@ package com.project.splitz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +29,19 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
     public FirebaseAuth mAuth;
     public ListView ListViewGroups;
 
+    private boolean shouldRefreshOnResume = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_groups, container, false);
-//        return inflater.inflate(R.layout.fragment_groups, container, false);
+
 
         // Group view
         ListViewGroups = (ListView) rootView.findViewById(R.id.listViewGroups);
 
         // Button
         rootView.findViewById(R.id.NewGroupBtn).setOnClickListener(this);
-
+        rootView.findViewById(R.id.refreshBtn).setOnClickListener(this);
         //Initialize Auth
         mAuth = FirebaseAuth.getInstance();
         //Find Current User
@@ -64,6 +69,8 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
         });
         return rootView;
     }
+
+
 
     private void updateUI(FirebaseUser user) {
         final ArrayList<String> GroupIdList = new ArrayList<String>();
@@ -119,7 +126,11 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
         if (i == R.id.NewGroupBtn) {
             Intent myIntent = new Intent(getActivity(), CreateGroupActivity.class);
             startActivity(myIntent);
-
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).commit();
+        }else if (i == R.id.refreshBtn) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
         }
     }
 }
