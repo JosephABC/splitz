@@ -13,6 +13,18 @@
         android:layout_height="wrap_content"/>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/RefreshBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/NewGroupBtn"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/green"
+        android:src="@drawable/ic_refresh"
+        app:elevation="6dp" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/NewFriendBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -114,7 +115,6 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
 
         return super.onOptionsItemSelected(item);
     }
-
 
     public void signOut() {
         // Firebase sign out

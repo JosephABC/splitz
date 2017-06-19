@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,9 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         if (i == R.id.NewFriendBtn) {
             Intent aIntent = new Intent(getActivity(), AddFriendActivity.class);
             startActivity(aIntent);
-
+        }else if (i == R.id.RefreshBtn) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
         }
     }
 }

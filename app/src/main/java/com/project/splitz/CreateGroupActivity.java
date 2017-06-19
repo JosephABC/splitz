@@ -201,6 +201,9 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                 }
             });
         }
+//        Intent myIntent = new Intent(this, TabActivity.class);
+//        startActivity(myIntent);
+
         Intent parentIntent = NavUtils.getParentActivityIntent(this);
         if(parentIntent == null) {
             finish();
