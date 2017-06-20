@@ -19,6 +19,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+        findViewById(R.id.NewExpenseBtn).setOnClickListener(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,16 +69,16 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         int i= v.getId();
+
         if (i == R.id.NewExpenseBtn) {
             Intent myIntent = new Intent(GroupActivity.this, AddExpenseActivity.class);
-
             Bundle b = new Bundle();
             b.putString("GroupId", GroupId);
+            b.putString("GroupName", GroupName);
             myIntent.putExtras(b);
 
             startActivity(myIntent);
 
         }
-
     }
 }

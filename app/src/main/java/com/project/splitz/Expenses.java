@@ -12,21 +12,19 @@ public class Expenses {
     public String description;
     public float amount;
     public String ownerUID;
-    public String groupId;
-    public List<String> participants;
+    public List<String> payers;
 
     public Expenses(){
 
     }
 
 
-    public Expenses(String title, String description, float amount, String ownerUID, String groupId, List<String> participants) {
+    public Expenses(String title, String description, float amount, String ownerUID, List<String> payers) {
         this.title = title;
         this.description = description;
         this.amount = amount;
         this.ownerUID = ownerUID;
-        this.groupId = groupId;
-        this.participants = participants;
+        this.payers = payers;
 
     }
 

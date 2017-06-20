@@ -180,7 +180,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                 selectedFriends.add(adapter.getItem(position));
             }
         }
-        //Retrive Uid of selected Friend and add to Group Database
+        //Retrieve Uid of selected Friend and add to Group Database
         for (String Email: selectedFriends){
 
 
