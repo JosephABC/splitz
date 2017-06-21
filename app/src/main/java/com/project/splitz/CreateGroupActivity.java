@@ -45,8 +45,8 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     private ListView listViewFriends;
 
     public FirebaseAuth mAuth;
-    private ArrayAdapter<String> adapter;
-    public ArrayList<String> FriendDataList = new ArrayList<String>();
+    private ArrayAdapter<Items> adapter;
+    public ArrayList<Items> FriendDataList = new ArrayList<Items>();
     public ArrayList<String> FriendUidList = new ArrayList<String>();
 
     @Override
@@ -114,8 +114,8 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
 //                                String Name = child.child("Name").getValue().toString();
                                 String Email = child.child("Email").getValue().toString();
-//                                String StringItem = Name + "\n     " + Email;
-                                FriendDataList.add(Email);
+                                String Uid = child.getKey();
+                                FriendDataList.add(new Items(Email, Uid));
                             }
                             generate(FriendDataList);
 
@@ -132,11 +132,8 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         });
 
     }
-    public void generate(ArrayList<String> FriendDataList){
-        String[] string = new String[FriendDataList.size()];
-        FriendDataList.toArray(string);
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_multiple_choice, string);
+    public void generate(ArrayList<Items> FriendDataList){
+        adapter = new MyAdapterMembers(this, FriendDataList);
         listViewFriends.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listViewFriends.setAdapter(adapter);
     }
@@ -177,32 +174,15 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         for (int c = 0; c < checked.size(); c++) {
             int position = checked.keyAt(c);
             if (checked.valueAt(c)) {
-                selectedFriends.add(adapter.getItem(position));
+                selectedFriends.add(adapter.getItem(position).getDescription());
             }
         }
-        //Retrieve Uid of selected Friend and add to Group Database
-        for (String Email: selectedFriends){
-
-
-            Query UserQuery = uDatabase.orderByChild("Email").equalTo(Email);
-            UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        GroupUidList.add(child.getKey().toString());
-                        addParticipant(groupId, GroupUidList);
-                        addGroup(child.getKey().toString(),groupId);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+        selectedFriends.add(currentUser.getUid());
+        //Add Users to new group database and add group to user database
+        addParticipant(groupId, selectedFriends);
+        for (String Uid: selectedFriends){
+            addGroup(Uid,groupId);
         }
-//        Intent myIntent = new Intent(this, TabActivity.class);
-//        startActivity(myIntent);
 
         Intent parentIntent = NavUtils.getParentActivityIntent(this);
         if(parentIntent == null) {
@@ -210,10 +190,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         } else {
             parentIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(parentIntent);
-//            Fragment frg = getSupportFragmentManager().findFragmentById(R.id.GroupsFragment);
-//            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//            ft.detach(frg).attach(frg).commit();
-
             finish();
 
         }

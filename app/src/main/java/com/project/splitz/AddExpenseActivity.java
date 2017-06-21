@@ -1,5 +1,6 @@
 package com.project.splitz;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,6 +51,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         // Generate payer list options
         GenerateMembers();
+
     }
 
     @Override
@@ -79,6 +82,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         // Get emails of selected members
         ArrayList<String> selectedMembers = GeneratePayers();
 
+
         // Add expense to expense database
         DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
         String expenseId = eDatabase.push().getKey();
@@ -93,11 +97,15 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     protected ArrayList<String> GeneratePayers() {
         //Check Which Friends are selected
         SparseBooleanArray checked = listViewMembers.getCheckedItemPositions();
+
         ArrayList<String> selectedMembers = new ArrayList<String>();
         for (int c = 0; c < checked.size(); c++) {
+
             int position = checked.keyAt(c);
             if (checked.valueAt(c)) {
-                selectedMembers.add(adapter.getItem(position));
+
+                selectedMembers.add(adapter.getItem(position).getDescription());
+
                 // either somehow only extract the id, or make selectedMembers an arraylist of "items" and retrieve the id later,.
             }
         }
@@ -145,12 +153,12 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void generate(ArrayList<Items> MembersDataList){
-/*        String[] string = new String[MembersDataList.size()];
-        MembersDataList.toArray(string);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, string);*/
-        adapter = new MyAdapterMembers(AddExpenseActivity.this, MembersDataList);
+    public void generate(ArrayList<Items> MembersDataList) {
+        adapter = new MyAdapterMembers(this, MembersDataList);
         listViewMembers.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listViewMembers.setAdapter(adapter);
+
     }
 }
+
+
