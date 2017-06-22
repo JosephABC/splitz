@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -41,14 +40,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateGroupActivity" />
-        <activity android:name=".FriendsActivity" />
         <activity android:name=".AddFriendActivity" />
-        <activity android:name=".Main2Activity" />
         <activity
             android:name=".GroupActivity"
             android:parentActivityName=".TabActivity" />
         <activity android:name=".TabActivity" />
-        <activity android:name=".AddExpenseActivity"></activity>
+        <activity android:name=".AddExpenseActivity" />
+        <activity android:name=".GroupInfoActivity"></activity>
     </application>
 
 </manifest>

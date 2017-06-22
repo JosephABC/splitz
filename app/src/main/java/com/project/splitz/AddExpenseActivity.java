@@ -2,9 +2,12 @@ package com.project.splitz;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseBooleanArray;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -48,10 +51,32 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         GroupId = b.getCharSequence("GroupId").toString();
         GroupName = b.getCharSequence("GroupName").toString();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Add Expense to " + GroupName);
+
 
         // Generate payer list options
         GenerateMembers();
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            Intent parentIntent = NavUtils.getParentActivityIntent(this);
+            if(parentIntent == null) {
+                finish();
+                return true;
+            } else {
+                parentIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(parentIntent);
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

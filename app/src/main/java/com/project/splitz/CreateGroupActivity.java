@@ -71,6 +71,11 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
+//            Intent myIntent = new Intent(CreateGroupActivity.this, TabActivity.class);
+//            Bundle b = new Bundle();
+//            b.putInt("TabId", 1);
+//            myIntent.putExtras(b);
+//            startActivity(myIntent);
             Intent parentIntent = NavUtils.getParentActivityIntent(this);
             if(parentIntent == null) {
                 finish();

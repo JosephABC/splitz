@@ -18,28 +18,26 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <TextView
-        android:id="@+id/GroupNameTV"
+        android:id="@+id/Header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:paddingLeft="5dp"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/toolbar">
     </TextView>
 
-    <TextView
-        android:id="@+id/GroupIdTV"
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/listViewParticipants"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:layout_below="@+id/GroupNameTV"
-        android:layout_alignLeft="@+id/GroupNameTV">
-    </TextView>
+        android:layout_below="@+id/Header"/>
+
+
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/NewExpenseBtn"
+        android:id="@+id/AddParticipantBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        
         android:src="@drawable/ic_new_expense"
         app:elevation="6dp"
         android:layout_marginRight="18dp"

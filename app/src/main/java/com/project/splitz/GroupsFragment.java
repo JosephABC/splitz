@@ -29,7 +29,6 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
     public FirebaseAuth mAuth;
     public ListView ListViewGroups;
 
-    private boolean shouldRefreshOnResume = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

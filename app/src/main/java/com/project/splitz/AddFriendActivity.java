@@ -3,8 +3,11 @@ package com.project.splitz;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -55,6 +58,28 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.SearchBtn).setOnClickListener(this);
         findViewById(R.id.AddFriendBtn).setOnClickListener(this);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Add Friend");
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            Intent parentIntent = NavUtils.getParentActivityIntent(this);
+            if(parentIntent == null) {
+                finish();
+                return true;
+            } else {
+                parentIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(parentIntent);
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void updateUI(String SearchUserEmail){

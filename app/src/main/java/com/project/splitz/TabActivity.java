@@ -96,6 +96,17 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
         });
 
 
+        //Handle bundle extras
+//        Bundle b = getIntent().getExtras();
+//        if (b != null){
+//            int TabId = b.getInt("TabId");
+//            viewPager.setCurrentItem(TabId);
+//        }
+
+
+
+
+
     }
 
 

@@ -124,7 +124,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent myIntent = new Intent(LoginActivity.this, TabActivity.class);
             startActivity(myIntent);
         }
     }
@@ -147,7 +147,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                             //Insert New User into Firebase Database
                             NewUser(user);
 
-                            Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent main = new Intent(LoginActivity.this, TabActivity.class);
                             startActivity(main);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -207,7 +207,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                             FirebaseUser user = mAuth.getCurrentUser();
                             //Insert New User into Firebase Database
                             NewUser(user);
-                            Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent main = new Intent(LoginActivity.this, TabActivity.class);
                             startActivity(main);
                             finish();
                         } else {
@@ -259,7 +259,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
-                    Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent myIntent = new Intent(LoginActivity.this, TabActivity.class);
                     startActivity(myIntent);
                 } else {
                     // If sign in fails, display a message to the user.

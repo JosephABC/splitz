@@ -1,5 +1,6 @@
 package com.project.splitz;
 
+
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -62,9 +63,19 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 finish();
                 return true;
             }
+        }else if (id == R.id.GroupInfo){
+            Intent GroupInfoIntent = new Intent(this, GroupInfoActivity.class);
+            Bundle b = new Bundle();
+            b.putString("GroupId", GroupId);
+            b.putString("GroupName", GroupName);
+            GroupInfoIntent.putExtras(b);
+            startActivity(GroupInfoIntent);
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
     @Override
     public void onClick(View v) {
