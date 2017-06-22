@@ -21,16 +21,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.security.acl.Group;
+import java.security.acl.Owner;
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String GroupId;
     private String GroupName;
     public ListView ListViewExpenses;
+    public TextView OwnerNameStore;
 
-    private String OwnerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -38,6 +42,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_group);
         findViewById(R.id.NewExpenseBtn).setOnClickListener(this);
         ListViewExpenses = (ListView) findViewById(R.id.listViewExpenses);
+        OwnerNameStore = (TextView) findViewById(R.id.OwnerNameStore);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,19 +67,24 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String ExpenseID = child.getValue().toString();
-                    String ExpenseTitle = child.child("title").getValue().toString();
-
-                    String Amount = child.child("amount").getValue().toString();
-                    String OwnerUID = child.child("ownerUID").getValue().toString();
+                    final String ExpenseID = child.getKey();
+                    Expenses expense = child.getValue(Expenses.class);
+                    final String ExpenseTitle = expense.title;
+                    final Float Amount = expense.amount;
+                    final String OwnerUID = expense.ownerUID;
+//                    String ExpenseTitle = child.child("title").getValue().toString();
+//                    String Amount = child.child("amount").getValue().toString();
+//                    String OwnerUID = child.child("ownerUID").getValue().toString();
 
                     DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
-                    Query UserNameQuery = uDatabase.child(OwnerUID);
+                    Query UserNameQuery = uDatabase.orderByKey().equalTo(OwnerUID);
                     UserNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                OwnerName = child.getValue().toString();
+                                String OwnerName = child.child("Name").getValue().toString();
+                                OwnerNameStore.setText(OwnerName);
+
                             }
                         }
                         @Override
@@ -82,10 +92,11 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                         }
                     });
 
-                    String ListTitle = ExpenseTitle + "  |  " + OwnerName;
-                    ExpenseDetailsList.add(new Items3(ListTitle, OwnerName, ExpenseID));
-                    generateAdapter(ExpenseDetailsList);
+                    ExpenseDetailsList.add(new Items3(ExpenseTitle, OwnerNameStore.getText().toString(), ExpenseID, Amount));
+//
                 }
+                generateAdapter(ExpenseDetailsList);
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -95,7 +106,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     public void generateAdapter(ArrayList<Items3> ExpenseDetailsList){
         MyAdapterExpenses adapter = new MyAdapterExpenses(this, ExpenseDetailsList);
-        ListViewExpenses.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+//        ListViewExpenses.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ListViewExpenses.setAdapter(adapter);
     }
 

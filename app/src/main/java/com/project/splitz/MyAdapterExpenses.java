@@ -34,15 +34,17 @@ public class MyAdapterExpenses extends ArrayAdapter<Items3> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // 2. Get rowView from inflater
-        View rowView = inflater.inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
+        View rowView = inflater.inflate(R.layout.row_expenses, parent, false);
 
         // 3. Get the two text view from the rowView
-        TextView labelView = (TextView) rowView.findViewById(R.id.label_groups);
-        TextView valueView = (TextView) rowView.findViewById(R.id.value_groups);
+        TextView TitleView = (TextView) rowView.findViewById(R.id.title_expenses);
+        TextView OwnerView = (TextView) rowView.findViewById(R.id.Owner_expenses);
+        TextView AmountView = (TextView) rowView.findViewById(R.id.Amount_expenses);
 
         // 4. Set the text for textView
-        labelView.setText(itemsArrayList.get(position).getTitle());
-        valueView.setText(itemsArrayList.get(position).getDescription());
+        TitleView.setText(itemsArrayList.get(position).getTitle());
+        OwnerView.setText("Owner: " + itemsArrayList.get(position).getOwnerName());
+        AmountView.setText("$ " + itemsArrayList.get(position).getAmount().toString());
 
         // 5. return rowView
         return rowView;

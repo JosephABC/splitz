@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/label_expenses"
+        android:id="@+id/title_expenses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -12,10 +12,20 @@
     </TextView>
 
     <TextView
-        android:id="@+id/value_expenses"
+        android:id="@+id/Owner_expenses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/label_expenses"
+        android:layout_below="@+id/title_expenses"
+        android:textSize="10sp"
+        android:paddingLeft="5dp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/Amount_expenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Owner_expenses"
         android:textSize="10sp"
         android:paddingLeft="5dp"
         >
