@@ -149,7 +149,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                     MembersUidList.add(Entry);
                 }
 
-                // Retrieve email data
+                // Retrieve name data
                 final ArrayList<Items> MembersDataList = new ArrayList<Items>();
                 for (final String uid: MembersUidList){
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -158,8 +158,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                String Email = child.child("Email").getValue().toString();
-                                MembersDataList.add(new Items(Email,uid));
+                                String Name = child.child("Name").getValue().toString();
+                                MembersDataList.add(new Items(Name,uid));
                             }
                             generate(MembersDataList);
                         }

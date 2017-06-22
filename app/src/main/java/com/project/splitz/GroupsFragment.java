@@ -46,6 +46,7 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
         //Find Current User
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+
         ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

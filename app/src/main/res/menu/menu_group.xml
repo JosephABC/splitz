@@ -23,7 +23,7 @@
                 android:id="@+id/settings"
                 android:icon="@drawable/ic_settings"
                 app:showAsAction="always"
-                android:title="settings">
+                android:title="Settings">
             </item>
 
             <item

@@ -85,7 +85,7 @@ public class GroupInfoActivity extends AppCompatActivity {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         String UserEmail = child.child("Email").getValue().toString();
                         String UserName = child.child("Name").getValue().toString();
-                        UserList.add(new Items(UserEmail, UserName));
+                        UserList.add(new Items(UserName, UserEmail));
                     }
                     generate(UserList);
                 }

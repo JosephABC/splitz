@@ -6,6 +6,11 @@
     android:layout_height="wrap_content"
     tools:context="com.project.splitz.GroupActivity">
 
+    <ListView
+        android:id="@+id/listViewExpenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -17,7 +22,9 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <TextView
+
+
+<!--    <TextView
         android:id="@+id/GroupNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +40,7 @@
         android:textSize="10sp"
         android:layout_below="@+id/GroupNameTV"
         android:layout_alignLeft="@+id/GroupNameTV">
-    </TextView>
+    </TextView>-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/NewExpenseBtn"
