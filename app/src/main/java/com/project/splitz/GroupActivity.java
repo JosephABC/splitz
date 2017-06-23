@@ -33,7 +33,6 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     private String GroupId;
     private String GroupName;
     public ListView ListViewExpenses;
-    public TextView OwnerNameStore;
 
 
     @Override
@@ -42,7 +41,6 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_group);
         findViewById(R.id.NewExpenseBtn).setOnClickListener(this);
         ListViewExpenses = (ListView) findViewById(R.id.listViewExpenses);
-        OwnerNameStore = (TextView) findViewById(R.id.OwnerNameStore);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,6 +55,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         setTitle(GroupName);
 
 
+
+
     }
 
     private void GenerateListView() {
@@ -67,32 +67,14 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    final String ExpenseID = child.getKey();
+                    String ExpenseID = child.getKey();
                     Expenses expense = child.getValue(Expenses.class);
-                    final String ExpenseTitle = expense.title;
-                    final Float Amount = expense.amount;
-                    final String OwnerUID = expense.ownerUID;
-//                    String ExpenseTitle = child.child("title").getValue().toString();
-//                    String Amount = child.child("amount").getValue().toString();
-//                    String OwnerUID = child.child("ownerUID").getValue().toString();
+                    String ExpenseTitle = expense.title;
+                    Float Amount = expense.amount;
+                    String OwnerUID = expense.ownerUID;
+                    String OwnerName = expense.ownerName;
 
-                    DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
-                    Query UserNameQuery = uDatabase.orderByKey().equalTo(OwnerUID);
-                    UserNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                String OwnerName = child.child("Name").getValue().toString();
-                                OwnerNameStore.setText(OwnerName);
-
-                            }
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-
-                    ExpenseDetailsList.add(new Items3(ExpenseTitle, OwnerNameStore.getText().toString(), ExpenseID, Amount));
+                    ExpenseDetailsList.add(new Items3(ExpenseTitle, OwnerUID, OwnerName, ExpenseID, Amount));
 //
                 }
                 generateAdapter(ExpenseDetailsList);
@@ -105,9 +87,29 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void generateAdapter(ArrayList<Items3> ExpenseDetailsList){
-        MyAdapterExpenses adapter = new MyAdapterExpenses(this, ExpenseDetailsList);
-//        ListViewExpenses.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        final MyAdapterExpenses adapter = new MyAdapterExpenses(this, ExpenseDetailsList);
+        ListViewExpenses.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ListViewExpenses.setAdapter(adapter);
+        ListViewExpenses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Intent myIntent = new Intent(GroupActivity.this, ExpenseActivity.class);
+
+                Bundle b = new Bundle();
+                b.putString("Title",adapter.getItem(position).getTitle());
+                b.putString("OwnerUID", adapter.getItem(position).getOwnerUID());
+                b.putString("OwnerName", adapter.getItem(position).getOwnerName());
+                b.putString("ExpenseID", adapter.getItem(position).getID());
+                b.putFloat("Amount", adapter.getItem(position).getAmount());
+                b.putString("GroupID",GroupId);
+                myIntent.putExtras(b);
+
+                startActivity(myIntent);
+
+            }
+        });
     }
 
     @Override

@@ -39,12 +39,10 @@ public class MyAdapterExpenses extends ArrayAdapter<Items3> {
         // 3. Get the two text view from the rowView
         TextView TitleView = (TextView) rowView.findViewById(R.id.title_expenses);
         TextView OwnerView = (TextView) rowView.findViewById(R.id.Owner_expenses);
-        TextView AmountView = (TextView) rowView.findViewById(R.id.Amount_expenses);
 
         // 4. Set the text for textView
-        TitleView.setText(itemsArrayList.get(position).getTitle());
+        TitleView.setText(itemsArrayList.get(position).getTitle() + " | $ " + itemsArrayList.get(position).getAmount().toString() );
         OwnerView.setText("Owner: " + itemsArrayList.get(position).getOwnerName());
-        AmountView.setText("$ " + itemsArrayList.get(position).getAmount().toString());
 
         // 5. return rowView
         return rowView;

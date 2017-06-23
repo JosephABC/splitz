@@ -21,14 +21,6 @@
         >
     </TextView>
 
-    <TextView
-        android:id="@+id/Amount_expenses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Owner_expenses"
-        android:textSize="10sp"
-        android:paddingLeft="5dp"
-        >
-    </TextView>
+
 
 </RelativeLayout>

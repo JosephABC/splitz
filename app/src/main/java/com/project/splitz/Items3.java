@@ -10,13 +10,15 @@ import com.google.firebase.database.ValueEventListener;
 public class Items3 {
 
     private String title;
+    private String OwnerUID;
     private String OwnerName;
     private String ID;
     private Float Amount;
 
-    public Items3(String title, String OwnerName, String ID, Float Amount) {
+    public Items3(String title, String OwnerUID, String OwnerName, String ID, Float Amount) {
         super();
         this.title = title;
+        this.OwnerUID = OwnerUID;
         this.OwnerName = OwnerName;
         this.ID = ID;
         this.Amount = Amount;
@@ -27,6 +29,10 @@ public class Items3 {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getOwnerUID() {
+        return OwnerUID;
     }
 
     public String getOwnerName() {

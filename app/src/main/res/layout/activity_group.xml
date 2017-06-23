@@ -35,23 +35,6 @@
         android:visibility="invisible">
     </TextView>
 
-<!--    <TextView
-        android:id="@+id/GroupNameTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:paddingLeft="5dp"
-        android:layout_below="@+id/toolbar">
-    </TextView>
-
-    <TextView
-        android:id="@+id/GroupIdTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:layout_below="@+id/GroupNameTV"
-        android:layout_alignLeft="@+id/GroupNameTV">
-    </TextView>-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/NewExpenseBtn"

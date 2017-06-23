@@ -96,26 +96,54 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         EditText descriptionField = (EditText) findViewById(R.id.ExpenseDescriptionET);
         EditText amountField = (EditText) findViewById(R.id.ExpenseAmountET);
 
-        String title = titleField.getText().toString();
-        String description = descriptionField.getText().toString();
-        float amount = Float.valueOf(amountField.getText().toString());
+        final String title = titleField.getText().toString();
+        final String description = descriptionField.getText().toString();
+        final Float amount = Float.valueOf(amountField.getText().toString());
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         currentUid = currentUser.getUid();
 
+        //Get Owner UserName from database
+        DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+        Query UserNameQuery = uDatabase.orderByKey().equalTo(currentUid);
+        UserNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    String OwnerName = child.child("Name").getValue().toString();
+
+                    // Get emails of selected members
+                    ArrayList<String> selectedMembers = GeneratePayers();
+
+                    // Add expense to expense database
+                    DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+                    String expenseId = eDatabase.push().getKey();
+                    Expenses expense = new Expenses(title, description, amount, currentUid, OwnerName, selectedMembers);
+                    eDatabase.child(GroupId).child(expenseId).setValue(expense);
+
+                    //Add expense to group database
+                    gDatabase.child(GroupId).child("expenses").child(expenseId).setValue(expense);
+
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
         // Get emails of selected members
-        ArrayList<String> selectedMembers = GeneratePayers();
+//        ArrayList<String> selectedMembers = GeneratePayers();
 
 
         // Add expense to expense database
-        DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-        String expenseId = eDatabase.push().getKey();
-        Expenses expense = new Expenses(title, description, amount, currentUid, selectedMembers);
-        eDatabase.child(GroupId).child(expenseId).setValue(expense);
+//        DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+//        String expenseId = eDatabase.push().getKey();
+//        Expenses expense = new Expenses(title, description, amount, currentUid, selectedMembers);
+//        eDatabase.child(GroupId).child(expenseId).setValue(expense);
 
-        //Add expense to group database
-        gDatabase.child(GroupId).child("expenses").child(expenseId).setValue(expense);
+//        //Add expense to group database
+//        gDatabase.child(GroupId).child("expenses").child(expenseId).setValue(expense);
 
     }
 
