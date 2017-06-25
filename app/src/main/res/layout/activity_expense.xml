@@ -51,9 +51,9 @@
         android:id="@+id/Participants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
+        android:textSize="25sp"
         android:layout_below="@+id/OwnerName"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:paddingLeft="5dp"
         android:text="Participants:">
     </TextView>
@@ -62,7 +62,8 @@
         android:id="@+id/listViewParticipants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Participants"/>
+        android:layout_below="@+id/Participants"
+        android:layout_marginTop="8dp"/>
 
 
 </RelativeLayout>

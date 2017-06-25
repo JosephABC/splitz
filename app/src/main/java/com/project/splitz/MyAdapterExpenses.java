@@ -13,12 +13,12 @@ import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-public class MyAdapterExpenses extends ArrayAdapter<Items3> {
+public class MyAdapterExpenses extends ArrayAdapter<Items5> {
 
     private final Context context;
-    private final ArrayList<Items3> itemsArrayList;
+    private final ArrayList<Items5> itemsArrayList;
 
-    public MyAdapterExpenses(Context context, ArrayList<Items3> itemsArrayList) {
+    public MyAdapterExpenses(Context context, ArrayList<Items5> itemsArrayList) {
 
         super(context, R.layout.row_expenses, itemsArrayList);
 

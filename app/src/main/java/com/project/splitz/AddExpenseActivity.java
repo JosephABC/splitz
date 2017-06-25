@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.acl.Group;
 import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,6 +145,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 //
 //
 //                }
+                updateTotalAmount(currentUid, EachAmount, selectedMembers);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -218,6 +220,27 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         adapter = new MyAdapterMembers(this, MembersDataList);
         listViewMembers.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listViewMembers.setAdapter(adapter);
+
+    }
+
+    public void updateTotalAmount(String currentUid, Float EachAmount, ArrayList<String> selectedMembers) {
+        DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
+        Query UserMapQuery = gDatabase
+        UserMapQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Groups group = dataSnapshot.getValue(Groups.class);
+                Map<String, Float> ParticipantData = group.participants;
+                String currentAmount = ParticipantData.
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 }

@@ -14,7 +14,6 @@ public class Expenses {
     public String ownerUID;
     public String ownerName;
     public Map<String, Float> payers;
-//    public List<String> payers;
 
     public Expenses(){
 

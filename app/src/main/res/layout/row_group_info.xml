@@ -19,8 +19,7 @@
     android:layout_height="wrap_content"
     android:layout_below="@+id/nameTV"
     android:textSize="12sp"
-    android:paddingLeft="5dp"
-    >
+    android:paddingLeft="5dp">
     </TextView>
 
     <TextView
@@ -30,8 +29,7 @@
         android:layout_alignTop="@+id/nameTV"
         android:layout_alignParentRight="true"
         android:textSize="35sp"
-        android:paddingRight="10dp"
-        >
+        android:paddingRight="10dp">
     </TextView>
 
 </RelativeLayout>

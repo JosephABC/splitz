@@ -85,7 +85,6 @@ public class ExpenseActivity extends AppCompatActivity {
                 Expenses expense = dataSnapshot.getValue(Expenses.class);
                 ExpenseDescriptionTV.setText(expense.description);
                 Map<String, Float> ParticipantsData = expense.payers;
-//                List<String> ParticipantsUID = expense.payers;
                 generateParticipantData(ParticipantsData);
             }
             @Override

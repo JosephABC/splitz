@@ -7,7 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class Items3 {
+public class Items5 {
 
     private String title;
     private String OwnerUID;
@@ -15,7 +15,7 @@ public class Items3 {
     private String ID;
     private Float TotalAmount;
 
-    public Items3(String title, String OwnerUID, String OwnerName, String ID, Float TotalAmount) {
+    public Items5(String title, String OwnerUID, String OwnerName, String ID, Float TotalAmount) {
         super();
         this.title = title;
         this.OwnerUID = OwnerUID;

@@ -60,7 +60,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void GenerateListView() {
-        final ArrayList<Items3> ExpenseDetailsList = new ArrayList<Items3>();
+        final ArrayList<Items5> ExpenseDetailsList = new ArrayList<Items5>();
         DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
         Query GroupQuery = eDatabase.child(GroupId);
         GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -74,7 +74,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                     String OwnerUID = expense.ownerUID;
                     String OwnerName = expense.ownerName;
 
-                    ExpenseDetailsList.add(new Items3(ExpenseTitle, OwnerUID, OwnerName, ExpenseID, TotalAmount));
+                    ExpenseDetailsList.add(new Items5(ExpenseTitle, OwnerUID, OwnerName, ExpenseID, TotalAmount));
 //
                 }
                 generateAdapter(ExpenseDetailsList);
@@ -86,7 +86,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void generateAdapter(ArrayList<Items3> ExpenseDetailsList){
+    public void generateAdapter(ArrayList<Items5> ExpenseDetailsList){
         final MyAdapterExpenses adapter = new MyAdapterExpenses(this, ExpenseDetailsList);
         ListViewExpenses.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ListViewExpenses.setAdapter(adapter);
