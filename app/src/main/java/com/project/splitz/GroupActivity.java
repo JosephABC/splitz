@@ -70,11 +70,11 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                     String ExpenseID = child.getKey();
                     Expenses expense = child.getValue(Expenses.class);
                     String ExpenseTitle = expense.title;
-                    Float Amount = expense.amount;
+                    Float TotalAmount = expense.totalAmount;
                     String OwnerUID = expense.ownerUID;
                     String OwnerName = expense.ownerName;
 
-                    ExpenseDetailsList.add(new Items3(ExpenseTitle, OwnerUID, OwnerName, ExpenseID, Amount));
+                    ExpenseDetailsList.add(new Items3(ExpenseTitle, OwnerUID, OwnerName, ExpenseID, TotalAmount));
 //
                 }
                 generateAdapter(ExpenseDetailsList);
@@ -102,7 +102,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 b.putString("OwnerUID", adapter.getItem(position).getOwnerUID());
                 b.putString("OwnerName", adapter.getItem(position).getOwnerName());
                 b.putString("ExpenseID", adapter.getItem(position).getID());
-                b.putFloat("Amount", adapter.getItem(position).getAmount());
+                b.putFloat("TotalAmount", adapter.getItem(position).getTotalAmount());
                 b.putString("GroupID",GroupId);
                 myIntent.putExtras(b);
 

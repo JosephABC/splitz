@@ -10,20 +10,21 @@ public class Expenses {
 
     public String title;
     public String description;
-    public float amount;
+    public float totalAmount;
     public String ownerUID;
     public String ownerName;
-    public List<String> payers;
+    public Map<String, Float> payers;
+//    public List<String> payers;
 
     public Expenses(){
 
     }
 
 
-    public Expenses(String title, String description, float amount, String ownerUID, String ownerName, List<String> payers) {
+    public Expenses(String title, String description, float totalAmount, String ownerUID, String ownerName, Map<String, Float> payers) {
         this.title = title;
         this.description = description;
-        this.amount = amount;
+        this.totalAmount = totalAmount;
         this.ownerUID = ownerUID;
         this.ownerName = ownerName;
         this.payers = payers;

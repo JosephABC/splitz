@@ -13,15 +13,15 @@ public class Items3 {
     private String OwnerUID;
     private String OwnerName;
     private String ID;
-    private Float Amount;
+    private Float TotalAmount;
 
-    public Items3(String title, String OwnerUID, String OwnerName, String ID, Float Amount) {
+    public Items3(String title, String OwnerUID, String OwnerName, String ID, Float TotalAmount) {
         super();
         this.title = title;
         this.OwnerUID = OwnerUID;
         this.OwnerName = OwnerName;
         this.ID = ID;
-        this.Amount = Amount;
+        this.TotalAmount = TotalAmount;
 
     }
 
@@ -43,5 +43,5 @@ public class Items3 {
         return ID;
     }
 
-    public Float getAmount() { return Amount;};
+    public Float getTotalAmount() { return TotalAmount;};
 }

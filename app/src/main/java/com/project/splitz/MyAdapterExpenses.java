@@ -41,7 +41,7 @@ public class MyAdapterExpenses extends ArrayAdapter<Items3> {
         TextView OwnerView = (TextView) rowView.findViewById(R.id.Owner_expenses);
 
         // 4. Set the text for textView
-        TitleView.setText(itemsArrayList.get(position).getTitle() + " | $ " + itemsArrayList.get(position).getAmount().toString() );
+        TitleView.setText(itemsArrayList.get(position).getTitle() + " | $ " + itemsArrayList.get(position).getTotalAmount().toString() );
         OwnerView.setText("Owner: " + itemsArrayList.get(position).getOwnerName());
 
         // 5. return rowView

@@ -36,7 +36,9 @@ import java.security.Principal;
 import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView toolbarText;
@@ -112,7 +114,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                                String Name = child.child("Name").getValue().toString();
                                 String Email = child.child("Email").getValue().toString();
                                 String Uid = child.getKey();
                                 FriendDataList.add(new Items(Email, Uid));
@@ -151,11 +152,14 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     }
     protected void groupSubmit(final String GroupName){
         //Initialise ArrayLists
-        final ArrayList<String> GroupUidList = new ArrayList<String>();
+        final Map<String, Float> GroupUidList = new HashMap<String, Float>();
+//        final ArrayList<String> GroupUidList = new ArrayList<String>();
+
 
         //Add Current user by default to the group
         final FirebaseUser currentUser = mAuth.getCurrentUser();
-        GroupUidList.add(currentUser.getUid());
+        GroupUidList.put(currentUser.getUid(), 0.0f);
+//        GroupUidList.add(currentUser.getUid());
 
         //Group Database
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
@@ -169,17 +173,22 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
         //Check Which Friends are selected
         SparseBooleanArray checked = listViewFriends.getCheckedItemPositions();
-        ArrayList<String> selectedFriends = new ArrayList<String>();
+        Map<String, Float> selectedFriends = new HashMap<String, Float>();
+//        ArrayList<String> selectedFriends = new ArrayList<String>();
         for (int c = 0; c < checked.size(); c++) {
             int position = checked.keyAt(c);
             if (checked.valueAt(c)) {
-                selectedFriends.add(adapter.getItem(position).getDescription());
+                selectedFriends.put(adapter.getItem(position).getDescription(), 0.0f);
+//                selectedFriends.add(adapter.getItem(position).getDescription());
             }
         }
-        selectedFriends.add(currentUser.getUid());
+        selectedFriends.put(currentUser.getUid(), 0.0f);
+//        selectedFriends.add(currentUser.getUid());
+
         //Add Users to new group database and add group to user database
         addParticipant(groupId, selectedFriends);
-        for (String Uid: selectedFriends){
+        List<String> selectedFriendsArray = new ArrayList<>(selectedFriends.keySet());
+        for (String Uid: selectedFriendsArray){
             addGroup(Uid,groupId);
         }
 
@@ -195,7 +204,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
     }
     //Add selected friend to Group Database
-    public void addParticipant(String groupId, List<String> GroupUidList){
+    public void addParticipant(String groupId, Map<String, Float> GroupUidList){
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(groupId).child("participants");
         gDatabase.setValue(GroupUidList);
     }

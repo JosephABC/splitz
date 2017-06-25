@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GroupInfoActivity extends AppCompatActivity {
     public FirebaseAuth mAuth;
@@ -56,14 +57,17 @@ public class GroupInfoActivity extends AppCompatActivity {
     public void updateUI(String GroupId){
         final ArrayList<String> UserIdList = new ArrayList<String>();
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
-        Query GroupQuery = gDatabase.child(GroupId).child("participants");
+        Query GroupQuery = gDatabase.child(GroupId);
         GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    UserIdList.add(child.getValue().toString());
-                }
-                GenerateUsers(UserIdList);
+                Groups group = dataSnapshot.getValue(Groups.class);
+                Map<String, Float> ParticipantsDataList = group.participants;
+                GenerateUsers(ParticipantsDataList);
+//                for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                    UserIdList.add(child.getKey().toString());
+//                }
+//                GenerateUsers(UserIdList);
             }
 
 
@@ -74,8 +78,9 @@ public class GroupInfoActivity extends AppCompatActivity {
         });
     }
 
-    public void GenerateUsers(ArrayList<String> UserIdList){
-        final ArrayList<Items> UserList = new ArrayList<Items>();
+    public void GenerateUsers(final Map<String, Float> ParticipantsDataList){
+        ArrayList<String> UserIdList = new ArrayList<>(ParticipantsDataList.keySet());
+        final ArrayList<ItemsUserInfo> UserList = new ArrayList<>();
         for (final String userId: UserIdList){
             DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
             Query GroupQuery = uDatabase.orderByKey().equalTo(userId);
@@ -85,7 +90,8 @@ public class GroupInfoActivity extends AppCompatActivity {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         String UserEmail = child.child("Email").getValue().toString();
                         String UserName = child.child("Name").getValue().toString();
-                        UserList.add(new Items(UserName, UserEmail));
+                        Float UserAmount = ParticipantsDataList.get(userId);
+                        UserList.add(new ItemsUserInfo(UserName, UserEmail, UserAmount ));
                     }
                     generate(UserList);
                 }
@@ -96,10 +102,32 @@ public class GroupInfoActivity extends AppCompatActivity {
         }
     }
 
-    public void generate(ArrayList<Items> UserList){
-        MyAdapterFriends adapter1 = new MyAdapterFriends(this, UserList);
+//    public void GenerateUsers(ArrayList<String> UserIdList){
+//        final ArrayList<Items> UserList = new ArrayList<Items>();
+//        for (final String userId: UserIdList){
+//            DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+//            Query GroupQuery = uDatabase.orderByKey().equalTo(userId);
+//            GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                        String UserEmail = child.child("Email").getValue().toString();
+//                        String UserName = child.child("Name").getValue().toString();
+//                        UserList.add(new Items(UserName, UserEmail));
+//                    }
+//                    generate(UserList);
+//                }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                }
+//            });
+//        }
+//    }
+
+    public void generate(ArrayList<ItemsUserInfo> UserList){
+        MyAdapterGroupInfo adapterGroupInfo = new MyAdapterGroupInfo(this, UserList);
 //        ListViewParticipants.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        ListViewParticipants.setAdapter(adapter1);
+        ListViewParticipants.setAdapter(adapterGroupInfo);
     }
 
     @Override

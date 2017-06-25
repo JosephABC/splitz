@@ -103,7 +103,7 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
 //            viewPager.setCurrentItem(TabId);
 //        }
 
-
+        setTitle("Welcome, " + currentUser.getDisplayName());
 
 
 

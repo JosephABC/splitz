@@ -23,7 +23,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.acl.Owner;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,7 +38,6 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     private MyAdapterMembers adapter;
 
     public FirebaseAuth mAuth;
-    private DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         final String title = titleField.getText().toString();
         final String description = descriptionField.getText().toString();
-        final Float amount = Float.valueOf(amountField.getText().toString());
+        final Float totalAmount = Float.valueOf(amountField.getText().toString());
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -106,47 +108,53 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         //Get Owner UserName from database
         DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
-        Query UserNameQuery = uDatabase.orderByKey().equalTo(currentUid);
+        Query UserNameQuery = uDatabase.child(currentUid);
         UserNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String OwnerName = child.child("Name").getValue().toString();
+                User user = dataSnapshot.getValue(User.class);
+                String OwnerName = user.Name;
 
-                    // Get emails of selected members
-                    ArrayList<String> selectedMembers = GeneratePayers();
+                // Get emails of selected members
+                ArrayList<String> selectedMembers = GeneratePayers();
 
-                    // Add expense to expense database
-                    DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-                    String expenseId = eDatabase.push().getKey();
-                    Expenses expense = new Expenses(title, description, amount, currentUid, OwnerName, selectedMembers);
-                    eDatabase.child(GroupId).child(expenseId).setValue(expense);
+                //Equal Splitting Calculation
+                Float EachAmount = EqualSplitCalc(totalAmount, selectedMembers.size());
 
-                    //Add expense to group database
-                    gDatabase.child(GroupId).child("expenses").child(expenseId).setValue(expense);
-
-
+                // Add expense to expense database
+                DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+                String expenseId = eDatabase.push().getKey();
+                Map<String, Float> selectedMembersData = new HashMap<String, Float>();
+                for (String member : selectedMembers){
+                    selectedMembersData.put(member, EachAmount);
                 }
+                Expenses expense = new Expenses(title, description, totalAmount, currentUid, OwnerName, selectedMembersData);
+                eDatabase.child(GroupId).child(expenseId).setValue(expense);
+//                for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                    String OwnerName = child.child("Name").getValue().toString();
+//
+//                    // Get emails of selected members
+//                    ArrayList<String> selectedMembers = GeneratePayers();
+//
+//                    // Add expense to expense database
+//                    DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+//                    String expenseId = eDatabase.push().getKey();
+//                    Expenses expense = new Expenses(title, description, totalAmount, currentUid, OwnerName, selectedMembers);
+//                    eDatabase.child(GroupId).child(expenseId).setValue(expense);
+//
+//
+//                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        // Get emails of selected members
-//        ArrayList<String> selectedMembers = GeneratePayers();
-
-
-        // Add expense to expense database
-//        DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-//        String expenseId = eDatabase.push().getKey();
-//        Expenses expense = new Expenses(title, description, amount, currentUid, selectedMembers);
-//        eDatabase.child(GroupId).child(expenseId).setValue(expense);
-
-//        //Add expense to group database
-//        gDatabase.child(GroupId).child("expenses").child(expenseId).setValue(expense);
 
     }
-
+    protected Float EqualSplitCalc(Float TotalAmount, int PayerNumbers){
+        Float EachAmount = TotalAmount/PayerNumbers;
+        return EachAmount;
+    }
     protected ArrayList<String> GeneratePayers() {
         //Check Which Friends are selected
         SparseBooleanArray checked = listViewMembers.getCheckedItemPositions();
@@ -159,7 +167,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
                 selectedMembers.add(adapter.getItem(position).getDescription());
 
-                // either somehow only extract the id, or make selectedMembers an arraylist of "items" and retrieve the id later,.
+
             }
         }
         return selectedMembers;
@@ -167,21 +175,21 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     // Generate list of payers from group
     protected void GenerateMembers() {
-
+        DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
         Query UserQuery = gDatabase.child(GroupId).child("participants");
         UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String Entry = child.getValue().toString();
+                    String Entry = child.getKey().toString();
                     MembersUidList.add(Entry);
                 }
 
                 // Retrieve name data
                 final ArrayList<Items> MembersDataList = new ArrayList<Items>();
                 for (final String uid: MembersUidList){
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
-                    Query UserQuery2 = mDatabase.orderByKey().equalTo(uid);
+                    DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+                    Query UserQuery2 = uDatabase.orderByKey().equalTo(uid);
                     UserQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {

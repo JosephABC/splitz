@@ -24,18 +24,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ExpenseActivity extends AppCompatActivity {
     public String Title;
     public String OwnerUID;
     public String OwnerName;
     public String ExpenseID;
-    public Float Amount;
+    public Float TotalAmount;
     public String GroupID;
 
     public TextView OwnerNameTV;
     public TextView ExpenseDescriptionTV;
-    public TextView AmountTV;
+    public TextView TotalAmountTV;
     public ListView ParticipantsListView;
 
     public FirebaseAuth mAuth;
@@ -53,7 +54,7 @@ public class ExpenseActivity extends AppCompatActivity {
         //Views
         OwnerNameTV = (TextView) findViewById(R.id.OwnerName);
         ExpenseDescriptionTV = (TextView) findViewById(R.id.ExpenseDescription);
-        AmountTV = (TextView) findViewById(R.id.Amount);
+        TotalAmountTV = (TextView) findViewById(R.id.Amount);
         ParticipantsListView= (ListView) findViewById(R.id.listViewParticipants);
 
         //Handle Bundle Extras
@@ -62,12 +63,12 @@ public class ExpenseActivity extends AppCompatActivity {
         OwnerUID= b.getCharSequence("OwnerUID").toString();
         OwnerName= b.getCharSequence("OwnerName").toString();
         ExpenseID= b.getCharSequence("ExpenseID").toString();
-        Amount= b.getFloat("Amount");
+        TotalAmount= b.getFloat("TotalAmount");
         GroupID = b.getCharSequence("GroupID").toString();
 
         //Populating Views
         OwnerNameTV.setText("Expense Paid By: " + OwnerName);
-        AmountTV.setText("Total Amount: $" + Amount);
+        TotalAmountTV.setText("Total Amount: $" + TotalAmount);
         setTitle(Title);
         updateUI(ExpenseID, GroupID);
 
@@ -83,8 +84,9 @@ public class ExpenseActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Expenses expense = dataSnapshot.getValue(Expenses.class);
                 ExpenseDescriptionTV.setText(expense.description);
-                List<String> ParticipantsUID = expense.payers;
-                generateParticipantData(ParticipantsUID);
+                Map<String, Float> ParticipantsData = expense.payers;
+//                List<String> ParticipantsUID = expense.payers;
+                generateParticipantData(ParticipantsData);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -92,9 +94,10 @@ public class ExpenseActivity extends AppCompatActivity {
         });
     }
 
-    public void generateParticipantData(List<String> ParticipantsUIDList){
-        final ArrayList<Items> ParticipantsData = new ArrayList<Items>();
-        for (String ParticipantUID : ParticipantsUIDList){
+    public void generateParticipantData(final Map<String, Float> ParticipantsDataList){
+        final ArrayList<ItemsUserInfo> ParticipantsData = new ArrayList<ItemsUserInfo>();
+        ArrayList<String> ParticipantsUIDList = new ArrayList<>(ParticipantsDataList.keySet());
+        for (final String ParticipantUID : ParticipantsUIDList){
             mAuth = FirebaseAuth.getInstance();
             final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
             Query UserQuery = uDatabase.child(ParticipantUID);
@@ -104,7 +107,7 @@ public class ExpenseActivity extends AppCompatActivity {
                     User participant= dataSnapshot.getValue(User.class);
                     String Email = participant.Email;
                     String Name = participant.Name;
-                    ParticipantsData.add(new Items(Name, Email));
+                    ParticipantsData.add(new ItemsUserInfo(Name, Email, ParticipantsDataList.get(ParticipantUID)));
                     MyAdapterExpPart adapter = new MyAdapterExpPart(ExpenseActivity.this, ParticipantsData);
                     ParticipantsListView.setAdapter(adapter);
                 }
@@ -193,7 +196,6 @@ public class ExpenseActivity extends AppCompatActivity {
 
         //delete expense from group database
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
-        gDatabase.child(GroupID).child("expenses").child(ExpenseID).removeValue();
         Query GroupQuery = gDatabase.child(GroupID);
         GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
