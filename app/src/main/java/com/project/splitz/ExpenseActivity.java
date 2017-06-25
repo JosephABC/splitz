@@ -105,7 +105,7 @@ public class ExpenseActivity extends AppCompatActivity {
                     String Email = participant.Email;
                     String Name = participant.Name;
                     ParticipantsData.add(new Items(Name, Email));
-                    MyAdapterFriends adapter = new MyAdapterFriends(ExpenseActivity.this, ParticipantsData);
+                    MyAdapterExpPart adapter = new MyAdapterExpPart(ExpenseActivity.this, ParticipantsData);
                     ParticipantsListView.setAdapter(adapter);
                 }
                 @Override

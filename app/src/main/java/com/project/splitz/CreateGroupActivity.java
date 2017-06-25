@@ -153,7 +153,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         //Initialise ArrayLists
         final ArrayList<String> GroupUidList = new ArrayList<String>();
 
-
         //Add Current user by default to the group
         final FirebaseUser currentUser = mAuth.getCurrentUser();
         GroupUidList.add(currentUser.getUid());

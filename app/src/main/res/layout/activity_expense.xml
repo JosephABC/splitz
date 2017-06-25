@@ -19,10 +19,11 @@
 
     <TextView
         android:id="@+id/OwnerName"
+        android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_below="@+id/toolbar">
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/Amount">
     </TextView>
 
     <TextView
@@ -30,7 +31,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_below="@+id/OwnerName">
+        android:textStyle="italic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/toolbar">
     </TextView>
 
     <TextView
@@ -39,6 +43,7 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/ExpenseDescription">
     </TextView>
 
@@ -46,32 +51,18 @@
         android:id="@+id/Participants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/Amount"
-        android:text="Participants">
+        android:textSize="22sp"
+        android:layout_below="@+id/OwnerName"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="5dp"
+        android:text="Participants:">
     </TextView>
 
     <ListView
         android:id="@+id/listViewParticipants"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Participants"/>
-
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/AddParticipantBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_new_expense"
-        app:elevation="6dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="27dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
-
-
+        android:layout_below="@+id/Participants"/>
 
 
 </RelativeLayout>
