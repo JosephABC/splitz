@@ -2,6 +2,8 @@ package com.project.splitz;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.icu.text.DecimalFormat;
+import android.icu.text.MessagePattern;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import java.security.acl.Group;
 import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
@@ -131,21 +134,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 }
                 Expenses expense = new Expenses(title, description, totalAmount, currentUid, OwnerName, selectedMembersData);
                 eDatabase.child(GroupId).child(expenseId).setValue(expense);
-//                for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                    String OwnerName = child.child("Name").getValue().toString();
 //
-//                    // Get emails of selected members
-//                    ArrayList<String> selectedMembers = GeneratePayers();
-//
-//                    // Add expense to expense database
-//                    DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-//                    String expenseId = eDatabase.push().getKey();
-//                    Expenses expense = new Expenses(title, description, totalAmount, currentUid, OwnerName, selectedMembers);
-//                    eDatabase.child(GroupId).child(expenseId).setValue(expense);
-//
-//
-//                }
-                updateTotalAmount(currentUid, EachAmount, selectedMembers);
+                updateTotalAmount(currentUid, selectedMembersData, totalAmount, GroupId);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -154,8 +144,12 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     }
     protected Float EqualSplitCalc(Float TotalAmount, int PayerNumbers){
-        Float EachAmount = TotalAmount/PayerNumbers;
+        Float EachAmount = format(TotalAmount/PayerNumbers);
         return EachAmount;
+    }
+    protected Float format(Float n){
+        Float fn = Math.round(n*100.00f)/100.00f;
+        return fn;
     }
     protected ArrayList<String> GeneratePayers() {
         //Check Which Friends are selected
@@ -223,16 +217,22 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void updateTotalAmount(String currentUid, Float EachAmount, ArrayList<String> selectedMembers) {
-        DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
-        Query UserMapQuery = gDatabase
+    public void updateTotalAmount(final String currentUid, final Map<String, Float> selectedMembersData, final Float totalAmount, String groupId) {
+        final DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(groupId);
+        Query UserMapQuery = gDatabase;
         UserMapQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Groups group = dataSnapshot.getValue(Groups.class);
                 Map<String, Float> ParticipantData = group.participants;
-                String currentAmount = ParticipantData.
-
+                for (Map.Entry<String, Float> Data : selectedMembersData.entrySet()){
+                    String UID = Data.getKey();
+                    Float UpdatedAmount = ParticipantData.get(UID) - selectedMembersData.get(UID);
+                    ParticipantData.put(UID, UpdatedAmount);
+                }
+                Float CurrentUserAmount = ParticipantData.get(currentUid) + totalAmount;
+                ParticipantData.put(currentUid, CurrentUserAmount);
+                gDatabase.child("participants").setValue(ParticipantData);
             }
 
             @Override

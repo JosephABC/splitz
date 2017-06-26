@@ -73,8 +73,9 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                     Float TotalAmount = expense.totalAmount;
                     String OwnerUID = expense.ownerUID;
                     String OwnerName = expense.ownerName;
+                    String ExpenseDescription = expense.description;
 
-                    ExpenseDetailsList.add(new Items5(ExpenseTitle, OwnerUID, OwnerName, ExpenseID, TotalAmount));
+                    ExpenseDetailsList.add(new Items5(ExpenseTitle, ExpenseDescription, OwnerUID, OwnerName, ExpenseID, TotalAmount));
 //
                 }
                 generateAdapter(ExpenseDetailsList);
@@ -99,6 +100,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
                 Bundle b = new Bundle();
                 b.putString("Title",adapter.getItem(position).getTitle());
+                b.putString("Description", adapter.getItem(position).getDescription());
                 b.putString("OwnerUID", adapter.getItem(position).getOwnerUID());
                 b.putString("OwnerName", adapter.getItem(position).getOwnerName());
                 b.putString("ExpenseID", adapter.getItem(position).getID());

@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.EventLogTags;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 public class ExpenseActivity extends AppCompatActivity {
     public String Title;
+    public String Description;
     public String OwnerUID;
     public String OwnerName;
     public String ExpenseID;
@@ -60,6 +62,7 @@ public class ExpenseActivity extends AppCompatActivity {
         //Handle Bundle Extras
         Bundle b = getIntent().getExtras();
         Title = b.getCharSequence("Title").toString();
+        Description = b.getCharSequence("Description").toString();
         OwnerUID= b.getCharSequence("OwnerUID").toString();
         OwnerName= b.getCharSequence("OwnerName").toString();
         ExpenseID= b.getCharSequence("ExpenseID").toString();
@@ -67,8 +70,9 @@ public class ExpenseActivity extends AppCompatActivity {
         GroupID = b.getCharSequence("GroupID").toString();
 
         //Populating Views
+        ExpenseDescriptionTV.setText(Description);
         OwnerNameTV.setText("Expense Paid By: " + OwnerName);
-        TotalAmountTV.setText("Total Amount: $" + TotalAmount);
+        TotalAmountTV.setText("Total Amount: $" + String.format("%.2f", TotalAmount));
         setTitle(Title);
         updateUI(ExpenseID, GroupID);
 
@@ -83,7 +87,6 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Expenses expense = dataSnapshot.getValue(Expenses.class);
-                ExpenseDescriptionTV.setText(expense.description);
                 Map<String, Float> ParticipantsData = expense.payers;
                 generateParticipantData(ParticipantsData);
             }
@@ -189,11 +192,30 @@ public class ExpenseActivity extends AppCompatActivity {
     public void delete(){
         mAuth = FirebaseAuth.getInstance();
 
-        //delete expense from expense database
-        DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-        eDatabase.child(GroupID).child(ExpenseID).removeValue();
+        //Update Group Participants List
+        //Generate payers Map
+        final DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+        Query ExpenseQuery = eDatabase.child(GroupID).child(ExpenseID);
+        ExpenseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Expenses expense = dataSnapshot.getValue(Expenses.class);
+                Map<String, Float> PayersData = expense.payers;
+                Float totalAmount = expense.totalAmount;
+                UpdateAmount(PayersData, totalAmount);
 
-        //delete expense from group database
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
         Query GroupQuery = gDatabase.child(GroupID);
         GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -213,5 +235,36 @@ public class ExpenseActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    public void UpdateAmount(final Map<String, Float> PayersData, final Float totalAmount){
+        //Generate Participants Data
+        final DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupID);
+        Query ParticipantsQuery = gDatabase;
+        ParticipantsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Groups groups = dataSnapshot.getValue(Groups.class);
+                Map<String, Float> ParticipantData = groups.participants;
+                for (Map.Entry<String, Float> Data : PayersData.entrySet()){
+                    String UID = Data.getKey();
+                    Float UpdatedAmount = ParticipantData.get(UID) + PayersData.get(UID);
+                    ParticipantData.put(UID, UpdatedAmount);
+                }
+                String currentUid = mAuth.getCurrentUser().getUid().toString();
+                Float CurrentUserAmount = ParticipantData.get(currentUid) - totalAmount;
+                ParticipantData.put(currentUid, CurrentUserAmount);
+                gDatabase.child("participants").setValue(ParticipantData);
+                //delete expense from expense database
+                DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+                eDatabase.child(GroupID).child(ExpenseID).removeValue();
+        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

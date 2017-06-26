@@ -14,10 +14,12 @@ public class Items5 {
     private String OwnerName;
     private String ID;
     private Float TotalAmount;
+    private String Description;
 
-    public Items5(String title, String OwnerUID, String OwnerName, String ID, Float TotalAmount) {
+    public Items5(String title, String Description, String OwnerUID, String OwnerName, String ID, Float TotalAmount) {
         super();
         this.title = title;
+        this.Description = Description;
         this.OwnerUID = OwnerUID;
         this.OwnerName = OwnerName;
         this.ID = ID;
@@ -44,4 +46,6 @@ public class Items5 {
     }
 
     public Float getTotalAmount() { return TotalAmount;};
+
+    public String getDescription() { return Description;};
 }
