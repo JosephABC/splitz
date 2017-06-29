@@ -24,11 +24,6 @@ public class Groups {
 
     }
 
-//    public Groups(String groupName, List<String> participants) {
-//        this.groupName = groupName;
-//        this.participants = participants;
-//
-//    }
 
 
 }

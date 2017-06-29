@@ -14,20 +14,21 @@ public class Expenses {
     public String ownerUID;
     public String ownerName;
     public Map<String, Float> payers;
+    public String GroupName;
 
     public Expenses(){
 
     }
 
 
-    public Expenses(String title, String description, float totalAmount, String ownerUID, String ownerName, Map<String, Float> payers) {
+    public Expenses(String title, String description, float totalAmount, String ownerUID, String ownerName, Map<String, Float> payers, String GroupName) {
         this.title = title;
         this.description = description;
         this.totalAmount = totalAmount;
         this.ownerUID = ownerUID;
         this.ownerName = ownerName;
         this.payers = payers;
-
+        this.GroupName = GroupName;
     }
 
 

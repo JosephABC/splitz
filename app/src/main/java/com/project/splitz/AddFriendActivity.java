@@ -112,21 +112,47 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
     public void addFriend(){
         FirebaseUser currentUser = mAuth.getCurrentUser();
         final String currentUid = currentUser.getUid();
-        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users").child(currentUid).child("Friends");
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users").child(currentUid);
         Query UserQuery = mDatabase;
         UserQuery.addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
                 List<String> FriendList = new ArrayList<String>();
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String Entry = child.getValue().toString();
-                    FriendList.add(Entry);
+                if (currentUser.Friends != null){
+                    FriendList = currentUser.Friends;
                 }
+//                for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                    String Entry = child.getValue().toString();
+//                    FriendList.add(Entry);
+//                }
                 if (FriendList.contains(UserIDField.getText().toString())){
                     Toast.makeText(AddFriendActivity.this, "User is already your Friend", Toast.LENGTH_SHORT).show();
                 }else{
-                    FriendList.add(UserIDField.getText().toString());
-                    mDatabase.setValue(FriendList);
+                    //Add User to current User Friend List
+                    final String FriendUid = UserIDField.getText().toString();
+                    FriendList.add(FriendUid);
+                    mDatabase.child("Friends").setValue(FriendList);
+
+                    //Add Current User to User Friend List
+                    final DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("users").child(FriendUid);
+                    Query FriendQuery = fDatabase;
+                    FriendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User Friend = dataSnapshot.getValue(User.class);
+                            List<String> FriendFriendList = new ArrayList<String>();
+                            if (Friend.Friends != null){
+                                FriendFriendList = Friend.Friends;
+                            }
+                            FriendFriendList.add(currentUid);
+                            fDatabase.child("Friends").setValue(FriendFriendList);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+
                     Toast.makeText(AddFriendActivity.this, "User has been added as Friend", Toast.LENGTH_SHORT).show();
                 }
             }

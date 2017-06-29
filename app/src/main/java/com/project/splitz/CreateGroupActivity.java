@@ -153,13 +153,11 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     protected void groupSubmit(final String GroupName){
         //Initialise ArrayLists
         final Map<String, Float> GroupUidList = new HashMap<String, Float>();
-//        final ArrayList<String> GroupUidList = new ArrayList<String>();
 
 
         //Add Current user by default to the group
         final FirebaseUser currentUser = mAuth.getCurrentUser();
         GroupUidList.put(currentUser.getUid(), 0.0f);
-//        GroupUidList.add(currentUser.getUid());
 
         //Group Database
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
@@ -174,16 +172,13 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         //Check Which Friends are selected
         SparseBooleanArray checked = listViewFriends.getCheckedItemPositions();
         Map<String, Float> selectedFriends = new HashMap<String, Float>();
-//        ArrayList<String> selectedFriends = new ArrayList<String>();
         for (int c = 0; c < checked.size(); c++) {
             int position = checked.keyAt(c);
             if (checked.valueAt(c)) {
                 selectedFriends.put(adapter.getItem(position).getDescription(), 0.0f);
-//                selectedFriends.add(adapter.getItem(position).getDescription());
             }
         }
         selectedFriends.put(currentUser.getUid(), 0.0f);
-//        selectedFriends.add(currentUser.getUid());
 
         //Add Users to new group database and add group to user database
         addParticipant(groupId, selectedFriends);

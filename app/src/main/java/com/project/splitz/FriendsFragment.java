@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class FriendsFragment extends Fragment implements View.OnClickListener {
 
     public FirebaseAuth mAuth;
-    public ArrayList<Items> FriendDataList = new ArrayList<Items>();
 
 
     @Override
@@ -35,6 +34,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
 
         //Button
         rootView.findViewById(R.id.NewFriendBtn).setOnClickListener(this);
+        rootView.findViewById(R.id.RefreshBtn).setOnClickListener(this);
 
         // Display friend list
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -54,6 +54,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
                 }
 
                 // Retrieve name and email data
+                final ArrayList<Items> FriendDataList = new ArrayList<Items>();
                 for (String uid: FriendUidList){
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
                     Query UserQuery = mDatabase.orderByKey().equalTo(uid);

@@ -11,13 +11,33 @@
         android:paddingLeft="5dp">
     </TextView>
 
+    <TextView
+        android:id="@+id/Group_expenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_expenses"
+        android:textSize="10sp"
+        android:paddingLeft="5dp"
+        >
+    </TextView>
 
     <TextView
         android:id="@+id/Owner_expenses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_expenses"
+        android:layout_below="@+id/Group_expenses"
         android:textSize="10sp"
+        android:paddingLeft="5dp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/Amount_expenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/title_expenses"
+        android:layout_alignParentRight="true"
+        android:textSize="20sp"
         android:paddingLeft="5dp"
         >
     </TextView>

@@ -125,16 +125,24 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 //Equal Splitting Calculation
                 Float EachAmount = EqualSplitCalc(totalAmount, selectedMembers.size());
 
-                // Add expense to expense database
+                // Prepare Data for Expense Database
                 DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
                 String expenseId = eDatabase.push().getKey();
                 Map<String, Float> selectedMembersData = new HashMap<String, Float>();
                 for (String member : selectedMembers){
                     selectedMembersData.put(member, EachAmount);
+                    //Add expense ID to User
+                    AddExpenseToUser(member,expenseId);
                 }
-                Expenses expense = new Expenses(title, description, totalAmount, currentUid, OwnerName, selectedMembersData);
+                //Add ExpenseID to currentUser if not done
+                AddExpenseToUser(currentUid,expenseId);
+                //Add Expense to Expense Database
+                Expenses expense = new Expenses(title, description, totalAmount, currentUid, OwnerName, selectedMembersData, GroupName);
                 eDatabase.child(GroupId).child(expenseId).setValue(expense);
-//
+
+
+
+                //update total Amount owed to the group in the group database
                 updateTotalAmount(currentUid, selectedMembersData, totalAmount, GroupId);
             }
             @Override
@@ -142,6 +150,28 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+    }
+    protected void AddExpenseToUser(String Member, final String ExpenseID){
+        final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users").child(Member);
+        Query UserQuery = uDatabase;
+        UserQuery.addListenerForSingleValueEvent(new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                Map<String, String> ExpenseList = new HashMap<String, String>();
+                if (user.Expenses != null){
+                    ExpenseList = user.Expenses;
+                }
+                ExpenseList.put(ExpenseID, GroupId);
+                uDatabase.child("Expenses").setValue(ExpenseList);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
     protected Float EqualSplitCalc(Float TotalAmount, int PayerNumbers){
         Float EachAmount = format(TotalAmount/PayerNumbers);

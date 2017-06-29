@@ -79,6 +79,7 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
         GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     GroupIdList.add(child.getValue().toString());
                 }
