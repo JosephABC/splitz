@@ -26,6 +26,7 @@ import org.w3c.dom.Text;
 import java.security.acl.Group;
 import java.security.acl.Owner;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener {
@@ -51,40 +52,57 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         GroupId = b.getCharSequence("GroupId").toString();
         GroupName = b.getCharSequence("GroupName").toString();
 
-        GenerateListView();
+        GenerateExpenseList();
         setTitle(GroupName);
 
 
 
 
     }
-
-    private void GenerateListView() {
-        final ArrayList<Items5> ExpenseDetailsList = new ArrayList<Items5>();
-        DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-        Query GroupQuery = eDatabase.child(GroupId);
+    private void GenerateExpenseList(){
+        DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupId);
+        Query GroupQuery = gDatabase;
         GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String ExpenseID = child.getKey();
-                    Expenses expense = child.getValue(Expenses.class);
+                Groups group = dataSnapshot.getValue(Groups.class);
+                if (group.Expenses != null){
+                    List<String> ExpensesIDList = group.Expenses;
+                    GenerateListView(ExpensesIDList);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void GenerateListView(List<String> ExpensesIDList) {
+        final ArrayList<Items5> ExpenseDetailsList = new ArrayList<Items5>();
+        for (final String ExpenseID : ExpensesIDList){
+            DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+            Query ExpenseQuery = eDatabase.child(ExpenseID);
+            ExpenseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Expenses expense = dataSnapshot.getValue(Expenses.class);
                     String ExpenseTitle = expense.title;
                     Float TotalAmount = expense.totalAmount;
                     String OwnerUID = expense.ownerUID;
                     String OwnerName = expense.ownerName;
                     String ExpenseDescription = expense.description;
-
                     ExpenseDetailsList.add(new Items5(ExpenseTitle, ExpenseDescription, OwnerUID, OwnerName, ExpenseID, TotalAmount));
-//
+                    generateAdapter(ExpenseDetailsList);
                 }
-                generateAdapter(ExpenseDetailsList);
 
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
     }
 
     public void generateAdapter(ArrayList<Items5> ExpenseDetailsList){
@@ -136,7 +154,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 return true;
             }
         }else if (id == R.id.GroupInfo){
-            Intent GroupInfoIntent = new Intent(this, GroupInfoActivity.class);
+            Intent GroupInfoIntent = new Intent(this, GroupInfoTabActivity.class);
             Bundle b = new Bundle();
             b.putString("GroupId", GroupId);
             b.putString("GroupName", GroupName);

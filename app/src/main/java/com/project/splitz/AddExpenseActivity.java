@@ -30,6 +30,7 @@ import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
@@ -89,12 +90,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         addExpense();
 
-        Intent myIntent = new Intent(this, GroupActivity.class);
-        Bundle b = new Bundle();
-        b.putString("GroupId", GroupId);
-        b.putString("GroupName", GroupName);
-        myIntent.putExtras(b);
-        startActivity(myIntent);
+
     }
 
     protected void addExpense() {
@@ -137,10 +133,11 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 //Add ExpenseID to currentUser if not done
                 AddExpenseToUser(currentUid,expenseId);
                 //Add Expense to Expense Database
-                Expenses expense = new Expenses(title, description, totalAmount, currentUid, OwnerName, selectedMembersData, GroupName);
-                eDatabase.child(GroupId).child(expenseId).setValue(expense);
+                Expenses expense = new Expenses(title, description, totalAmount, currentUid, OwnerName, selectedMembersData, GroupName, GroupId);
+                eDatabase.child(expenseId).setValue(expense);
 
-
+                //Add Expense to Group Database
+                AddExpenseToGroup(GroupId, expenseId);
 
                 //update total Amount owed to the group in the group database
                 updateTotalAmount(currentUid, selectedMembersData, totalAmount, GroupId);
@@ -151,6 +148,34 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         });
 
     }
+    protected void AddExpenseToGroup(String GroupID, final String ExpenseID){
+        final DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupID);
+        Query GroupQuery = gDatabase;
+        GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Groups group = dataSnapshot.getValue(Groups.class);
+                List<String> ExpenseList = new ArrayList<String>();
+                if (group.Expenses != null){
+                    ExpenseList = group.Expenses;
+                }
+                ExpenseList.add(ExpenseID);
+
+                gDatabase.child("Expenses").setValue(ExpenseList);
+                Intent myIntent = new Intent(AddExpenseActivity.this, GroupActivity.class);
+                Bundle b = new Bundle();
+                b.putString("GroupId", GroupId);
+                b.putString("GroupName", GroupName);
+                myIntent.putExtras(b);
+                startActivity(myIntent);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     protected void AddExpenseToUser(String Member, final String ExpenseID){
         final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users").child(Member);
         Query UserQuery = uDatabase;
@@ -158,11 +183,11 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Map<String, String> ExpenseList = new HashMap<String, String>();
+                List<String> ExpenseList = new ArrayList<String>();
                 if (user.Expenses != null){
                     ExpenseList = user.Expenses;
                 }
-                ExpenseList.put(ExpenseID, GroupId);
+                ExpenseList.add(ExpenseID);
                 uDatabase.child("Expenses").setValue(ExpenseList);
 
             }

@@ -12,12 +12,12 @@ public class User {
     public String Name;
     public String Email;
     public List<String> Friends;
-    public Map<String, String> Expenses;
+    public List<String> Expenses;
 
     public User(){
 
     }
-    public User(String Email, String Name, List<String> Friends, Map<String, String> Expenses) {
+    public User(String Email, String Name, List<String> Friends, List<String> Expenses) {
 
         this.Email = Email;
         this.Name = Name;

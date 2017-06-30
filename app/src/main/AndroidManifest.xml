@@ -47,7 +47,8 @@
         <activity android:name=".TabActivity" />
         <activity android:name=".AddExpenseActivity" />
         <activity android:name=".GroupInfoActivity" />
-        <activity android:name=".ExpenseActivity"></activity>
+        <activity android:name=".ExpenseActivity" />
+        <activity android:name=".GroupInfoTabActivity"></activity>
     </application>
 
 </manifest>

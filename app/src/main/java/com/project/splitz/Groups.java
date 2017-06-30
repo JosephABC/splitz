@@ -10,17 +10,16 @@ public class Groups {
 
     public String groupName;
     public Map<String, Float> participants = new HashMap<String, Float>();
-//    public List<String> participants;
-
-
+    public List<String> Expenses;
 
     public Groups(){
 
     }
 
-    public Groups(String groupName, Map<String, Float> participants) {
+    public Groups(String groupName, Map<String, Float> participants, List<String> Expenses) {
         this.groupName = groupName;
         this.participants = participants;
+        this.Expenses = Expenses;
 
     }
 

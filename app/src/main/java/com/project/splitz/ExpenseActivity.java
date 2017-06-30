@@ -82,7 +82,7 @@ public class ExpenseActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         final DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-        Query ExpenseQuery = eDatabase.child(GroupID).child(ExpenseID);
+        Query ExpenseQuery = eDatabase.child(ExpenseID);
         ExpenseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -195,7 +195,7 @@ public class ExpenseActivity extends AppCompatActivity {
         //Update Group Participants List
         //Generate payers Map
         final DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-        Query ExpenseQuery = eDatabase.child(GroupID).child(ExpenseID);
+        Query ExpenseQuery = eDatabase.child(ExpenseID);
         ExpenseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -203,7 +203,30 @@ public class ExpenseActivity extends AppCompatActivity {
                 Map<String, Float> PayersData = expense.payers;
                 Float totalAmount = expense.totalAmount;
                 UpdateAmount(PayersData, totalAmount);
+                List<String> PayersIDList = new ArrayList<String>(PayersData.keySet());
+                String currentUid = mAuth.getCurrentUser().getUid();
+                if (PayersIDList.contains(currentUid)){
+                }else{
+                    PayersIDList.add(currentUid);
+                }
+                for (String PayerID : PayersIDList){
+                    final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users").child(PayerID);
+                    Query UserQuery = uDatabase;
+                    UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            List<String> ExpenseList = user.Expenses;
+                            ExpenseList.remove(ExpenseID);
+                            uDatabase.child("Expenses").setValue(ExpenseList);
+                        }
 
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
 
             @Override
@@ -214,14 +237,16 @@ public class ExpenseActivity extends AppCompatActivity {
 
 
 
-
-
-        DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
-        Query GroupQuery = gDatabase.child(GroupID);
+        final DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupID);
+        Query GroupQuery = gDatabase;
         GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Groups group = dataSnapshot.getValue(Groups.class);
+                //Delete Expense from Groups
+                List<String> ExpenseList= group.Expenses;
+                ExpenseList.remove(ExpenseID);
+                gDatabase.child("Expenses").setValue(ExpenseList);
                 String GroupName = group.groupName;
                 Intent myIntent = new Intent(ExpenseActivity.this, GroupActivity.class);
                 Bundle b = new Bundle();
@@ -236,7 +261,6 @@ public class ExpenseActivity extends AppCompatActivity {
             }
         });
     }
-
     public void UpdateAmount(final Map<String, Float> PayersData, final Float totalAmount){
         //Generate Participants Data
         final DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupID);
@@ -257,7 +281,7 @@ public class ExpenseActivity extends AppCompatActivity {
                 gDatabase.child("participants").setValue(ParticipantData);
                 //delete expense from expense database
                 DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-                eDatabase.child(GroupID).child(ExpenseID).removeValue();
+                eDatabase.child(ExpenseID).removeValue();
         }
 
             @Override

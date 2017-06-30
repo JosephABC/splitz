@@ -162,7 +162,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         //Group Database
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
         final String groupId = gDatabase.push().getKey();
-        Groups group = new Groups(GroupName, GroupUidList);
+        Groups group = new Groups(GroupName, GroupUidList, null);
         gDatabase.child(groupId).setValue(group);
         //User Database
         final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");

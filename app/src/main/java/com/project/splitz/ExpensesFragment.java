@@ -20,6 +20,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ExpensesFragment extends Fragment {
@@ -54,7 +55,7 @@ public class ExpensesFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 if (user.Expenses != null){
-                    Map<String, String> ExpenseList = user.Expenses;
+                    List<String> ExpenseList = user.Expenses;
                     GenerateExpenseData(ExpenseList, currentUser);
                 }
             }
@@ -66,14 +67,13 @@ public class ExpensesFragment extends Fragment {
         });
     }
 
-    public void GenerateExpenseData(Map<String, String> ExpenseList, final FirebaseUser currentUser){
+    public void GenerateExpenseData(List<String> ExpenseList, final FirebaseUser currentUser){
         final ArrayList<ExpenseFragmentItems> ExpenseDataList = new ArrayList<ExpenseFragmentItems>();
 
-        for (Map.Entry<String, String> Expense:  ExpenseList.entrySet()){
-            final String GroupID = Expense.getValue();
-            final String ExpenseID = Expense.getKey();
+        for (String Expense :  ExpenseList){
+            final String ExpenseID = Expense;
             DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
-            Query ExpenseQuery = eDatabase.child(GroupID).child(ExpenseID);
+            Query ExpenseQuery = eDatabase.child(ExpenseID);
             ExpenseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -84,6 +84,7 @@ public class ExpensesFragment extends Fragment {
                     Float TotalAmount = expense.totalAmount;
                     String Description = expense.description;
                     String GroupName = expense.GroupName;
+                    String GroupID = expense.GroupID;
                     String currentUid = currentUser.getUid();
                     Float Amount = expense.payers.get(currentUid);
                     ExpenseDataList.add(new ExpenseFragmentItems(title, Description, OwnerUID, OwnerName, ExpenseID, TotalAmount, GroupID, GroupName, Amount));

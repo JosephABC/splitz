@@ -15,13 +15,14 @@ public class Expenses {
     public String ownerName;
     public Map<String, Float> payers;
     public String GroupName;
+    public String GroupID;
 
     public Expenses(){
 
     }
 
 
-    public Expenses(String title, String description, float totalAmount, String ownerUID, String ownerName, Map<String, Float> payers, String GroupName) {
+    public Expenses(String title, String description, float totalAmount, String ownerUID, String ownerName, Map<String, Float> payers, String GroupName, String GroupID) {
         this.title = title;
         this.description = description;
         this.totalAmount = totalAmount;
@@ -29,6 +30,7 @@ public class Expenses {
         this.ownerName = ownerName;
         this.payers = payers;
         this.GroupName = GroupName;
+        this.GroupID = GroupID;
     }
 
 
