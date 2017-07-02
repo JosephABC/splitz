@@ -117,6 +117,7 @@ public class ExpensesFragment extends Fragment {
                 b.putString("ExpenseID", eAdapter.getItem(position).getID());
                 b.putFloat("TotalAmount", eAdapter.getItem(position).getTotalAmount());
                 b.putString("GroupID",eAdapter.getItem(position).getGroupID());
+
                 myIntent.putExtras(b);
 
                 startActivity(myIntent);

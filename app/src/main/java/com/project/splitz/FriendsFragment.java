@@ -64,7 +64,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
                                 String Name = child.child("Name").getValue().toString();
                                 String Email = child.child("Email").getValue().toString();
-                                FriendDataList.add(new Items(Name, Email));
+                                FriendDataList.add(new Items(Name, Email, null));
                             }
 
                             //Friend List Adapter

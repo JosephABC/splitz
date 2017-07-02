@@ -21,13 +21,23 @@
         android:id="@+id/groupnameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/toolbar"
         android:ems="10"
         android:hint="Group Name"
         android:inputType="text"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp" />
+
+    <Spinner
+        android:id="@+id/currencySpinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:prompt="@string/currency_prompt"
+        android:textSize="15dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_toRightOf="@+id/groupnameET"
+        android:paddingTop="40dp" />
+
 
     <ListView
         android:id="@+id/listViewFriends"

@@ -21,10 +21,10 @@
         android:id="@+id/ExpenseTitleET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:textSize="15dp"
         android:hint="Enter Title"
         android:inputType="text"
-        android:paddingRight="30dp"
+        android:paddingRight="20dp"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp"
         android:layout_marginTop="25dp"
@@ -37,31 +37,63 @@
         android:id="@+id/ExpenseDescriptionET"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="Enter Description"
         android:inputType="text"
-        android:paddingRight="30dp"
+        android:paddingRight="20dp"
+        android:textSize="15dp"
         android:layout_below="@+id/ExpenseTitleET"
         android:layout_alignLeft="@+id/ExpenseTitleET"
         android:layout_alignStart="@+id/ExpenseTitleET" />
 
     <EditText
         android:id="@+id/ExpenseAmountET"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="Enter Amount"
         android:inputType="numberDecimal"
-        android:paddingRight="30dp"
+        android:paddingRight="20dp"
+        android:textSize="15dp"
         android:layout_below="@+id/ExpenseDescriptionET"
         android:layout_alignLeft="@+id/ExpenseDescriptionET"
         android:layout_alignStart="@+id/ExpenseDescriptionET" />
+
+    <Spinner
+        android:id="@+id/currencySpinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:prompt="@string/currency_prompt"
+        android:textSize="15dp"
+        android:layout_alignBaseline="@+id/ExpenseAmountET"
+        android:layout_alignBottom="@+id/ExpenseAmountET"
+        android:layout_toRightOf="@+id/ExpenseAmountET" />
+
+    <EditText
+        android:id="@+id/ExchangeRateET"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="1.000"
+        android:inputType="numberDecimal"
+        android:paddingRight="20dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/ExpenseDescriptionET"
+        android:layout_toRightOf="@+id/currencySpinner" />
+
+    <TextView
+        android:id="@+id/EndAmountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="End Amount"
+        android:paddingRight="20dp"
+        android:paddingTop="40dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/ExpenseDescriptionET"
+        android:layout_alignLeft="@+id/ExpenseDescriptionET" />
 
     <ListView
         android:id="@+id/listViewMembers"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@+id/ExpenseAmountET"
+        android:layout_below="@+id/EndAmountTV"
         android:layout_alignLeft="@+id/ExpenseDescriptionET">
 
     </ListView>

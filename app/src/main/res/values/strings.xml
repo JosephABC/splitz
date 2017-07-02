@@ -26,16 +26,16 @@
 
     <string name="title_activity_add_friend">AddFriendActivity</string>
 
-    <string-array name="sports_array">
-        <item>Shuttle Badminton</item>
-        <item>Tennis</item>
-        <item>Table Tennis</item>
-        <item>Basket Ball</item>
-        <item>Foot Ball</item>
-        <item>Volley Ball</item>
-        <item>Hockey</item>
-        <item>Swimming</item>
+    <string name="currency_prompt">Choose a currency</string>
+
+    <string-array name="currency_arrays">
+        <item>SGD</item>
+        <item>USD</item>
+        <item>AUD</item>
+        <item>GBP</item>
+        <item>EUR</item>
+        <item>JPY</item>
+        <item>MYR</item>
     </string-array>
-    <string name="title_activity_main3">Main3Activity</string>
 
 </resources>

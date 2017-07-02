@@ -7,6 +7,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.acl.Group;
+
 public class Items5 {
 
     private String title;
@@ -15,8 +17,9 @@ public class Items5 {
     private String ID;
     private Float TotalAmount;
     private String Description;
+    private String GroupCurrencyID;
 
-    public Items5(String title, String Description, String OwnerUID, String OwnerName, String ID, Float TotalAmount) {
+    public Items5(String title, String Description, String OwnerUID, String OwnerName, String ID, Float TotalAmount, String GroupCurrencyID) {
         super();
         this.title = title;
         this.Description = Description;
@@ -24,6 +27,7 @@ public class Items5 {
         this.OwnerName = OwnerName;
         this.ID = ID;
         this.TotalAmount = TotalAmount;
+        this.GroupCurrencyID = GroupCurrencyID;
 
     }
 
@@ -48,4 +52,6 @@ public class Items5 {
     public Float getTotalAmount() { return TotalAmount;};
 
     public String getDescription() { return Description;};
+
+    public String getGroupCurrencyID() { return GroupCurrencyID;};
 }

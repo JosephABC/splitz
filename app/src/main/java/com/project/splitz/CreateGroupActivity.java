@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import org.w3c.dom.Text;
 import java.security.Principal;
 import java.security.acl.Group;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +47,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     private Toolbar toolbar;
     private EditText groupField;
     private ListView listViewFriends;
+    private Spinner CurrencySpinner;
 
     public FirebaseAuth mAuth;
     private ArrayAdapter<Items> adapter;
@@ -59,6 +62,12 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         findViewById(R.id.submitBtn).setOnClickListener(this);
         groupField = (EditText) findViewById(R.id.groupnameET);
         listViewFriends = (ListView) findViewById(R.id.listViewFriends);
+
+        CurrencySpinner = (Spinner) findViewById(R.id.currencySpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.currency_arrays, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        CurrencySpinner.setAdapter(adapter);
 
         //Generate Friend List
         GenerateFriendList();
@@ -116,7 +125,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
                                 String Email = child.child("Email").getValue().toString();
                                 String Uid = child.getKey();
-                                FriendDataList.add(new Items(Email, Uid));
+                                FriendDataList.add(new Items(Email, Uid, null));
                             }
                             generate(FriendDataList);
 
@@ -162,7 +171,8 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         //Group Database
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
         final String groupId = gDatabase.push().getKey();
-        Groups group = new Groups(GroupName, GroupUidList, null);
+        String CurrencyID = String.valueOf(CurrencySpinner.getSelectedItem());
+        Groups group = new Groups(GroupName, GroupUidList, null, CurrencyID);
         gDatabase.child(groupId).setValue(group);
         //User Database
         final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");

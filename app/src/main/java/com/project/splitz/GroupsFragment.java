@@ -47,26 +47,7 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
 
-        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                TextView GroupIdTV = (TextView) view.findViewById(R.id.value_groups);
-                String GroupId= GroupIdTV.getText().toString();
-                TextView GroupNameTV = (TextView) view.findViewById(R.id.label_groups);
-                String GroupName= GroupNameTV.getText().toString();
-
-                Intent myIntent = new Intent(getActivity(), GroupActivity.class);
-
-                Bundle b = new Bundle();
-                b.putString("GroupId", GroupId);
-                b.putString("GroupName", GroupName);
-                myIntent.putExtras(b);
-
-                startActivity(myIntent);
-
-            }
-        });
         return rootView;
     }
 
@@ -98,14 +79,15 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
         final ArrayList<Items> GroupNameList = new ArrayList<Items>();
         for (final String groupId: GroupIdList){
             DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
-            Query GroupQuery = gDatabase.orderByKey().equalTo(groupId);
+            Query GroupQuery = gDatabase.child(groupId);
             GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        String GroupName = child.child("groupName").getValue().toString();
-                        GroupNameList.add(new Items(GroupName, groupId));
-                    }
+                    Groups group = dataSnapshot.getValue(Groups.class);
+                    String GroupName = group.groupName;
+                    System.out.println(GroupName);
+                    String GroupCurrencyID = group.CurrencyID;
+                    GroupNameList.add(new Items(GroupName, groupId, GroupCurrencyID));
                     generate(GroupNameList);
                 }
                 @Override
@@ -116,9 +98,26 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
     }
 
     public void generate(ArrayList<Items> GroupNameList){
-        MyAdapterGroups adapter1 = new MyAdapterGroups(getActivity(), GroupNameList);
+        final MyAdapterGroups adapter1 = new MyAdapterGroups(getActivity(), GroupNameList);
         ListViewGroups.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ListViewGroups.setAdapter(adapter1);
+        ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Intent myIntent = new Intent(getActivity(), GroupActivity.class);
+
+                Bundle b = new Bundle();
+                b.putString("GroupId", adapter1.getItem(position).getDescription());
+                b.putString("GroupName", adapter1.getItem(position).getTitle());
+                b.putString("GroupCurrencyID", adapter1.getItem(position).getGroupCurrencyID());
+                myIntent.putExtras(b);
+
+                startActivity(myIntent);
+
+            }
+        });
     }
 
 

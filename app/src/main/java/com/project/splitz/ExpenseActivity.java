@@ -35,6 +35,7 @@ public class ExpenseActivity extends AppCompatActivity {
     public String ExpenseID;
     public Float TotalAmount;
     public String GroupID;
+    public String GroupCurrencyID;
 
     public TextView OwnerNameTV;
     public TextView ExpenseDescriptionTV;
@@ -68,12 +69,13 @@ public class ExpenseActivity extends AppCompatActivity {
         ExpenseID= b.getCharSequence("ExpenseID").toString();
         TotalAmount= b.getFloat("TotalAmount");
         GroupID = b.getCharSequence("GroupID").toString();
+        GroupCurrencyID = b.getCharSequence("GroupCurrencyID").toString();
 
         //Populating Views
         ExpenseDescriptionTV.setText(Description);
         OwnerNameTV.setText("Expense Paid By: " + OwnerName);
         TotalAmountTV.setText("Total Amount: $" + String.format("%.2f", TotalAmount));
-        setTitle(Title);
+        setTitle(Title + "Base Currency: " + GroupCurrencyID);
         updateUI(ExpenseID, GroupID);
 
     }

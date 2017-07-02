@@ -34,11 +34,9 @@ public class MyAdapterGroups extends ArrayAdapter<Items> {
 
         // 3. Get the two text view from the rowView
         TextView labelView = (TextView) rowView.findViewById(R.id.label_groups);
-        TextView valueView = (TextView) rowView.findViewById(R.id.value_groups);
 
         // 4. Set the text for textView
         labelView.setText(itemsArrayList.get(position).getTitle());
-        valueView.setText(itemsArrayList.get(position).getDescription());
 
         // 5. return rowView
         return rowView;

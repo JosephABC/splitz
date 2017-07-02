@@ -4,11 +4,13 @@ public class Items {
 
     private String title;
     private String description;
+    private String GroupCurrencyID;
 
-    public Items(String title, String description) {
+    public Items(String title, String description, String GroupCurrencyID) {
         super();
         this.title = title;
         this.description = description;
+        this.GroupCurrencyID = GroupCurrencyID;
     }
 
     // getters and setters...
@@ -20,4 +22,6 @@ public class Items {
     public String getDescription() {
         return description;
     }
+
+    public String getGroupCurrencyID(){ return GroupCurrencyID;};
 }

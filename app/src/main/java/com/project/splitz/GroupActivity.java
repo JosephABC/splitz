@@ -33,6 +33,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
 
     private String GroupId;
     private String GroupName;
+    private String GroupCurrencyID;
     public ListView ListViewExpenses;
 
 
@@ -51,6 +52,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
         Bundle b = getIntent().getExtras();
         GroupId = b.getCharSequence("GroupId").toString();
         GroupName = b.getCharSequence("GroupName").toString();
+        GroupCurrencyID = b.getCharSequence("GroupCurrencyID").toString();
 
         GenerateExpenseList();
         setTitle(GroupName);
@@ -68,7 +70,8 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 Groups group = dataSnapshot.getValue(Groups.class);
                 if (group.Expenses != null){
                     List<String> ExpensesIDList = group.Expenses;
-                    GenerateListView(ExpensesIDList);
+                    GroupCurrencyID = group.CurrencyID;
+                    GenerateListView(ExpensesIDList, GroupCurrencyID);
                 }
             }
 
@@ -78,7 +81,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-    private void GenerateListView(List<String> ExpensesIDList) {
+    private void GenerateListView(List<String> ExpensesIDList, final String GroupCurrencyID) {
         final ArrayList<Items5> ExpenseDetailsList = new ArrayList<Items5>();
         for (final String ExpenseID : ExpensesIDList){
             DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
@@ -92,7 +95,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                     String OwnerUID = expense.ownerUID;
                     String OwnerName = expense.ownerName;
                     String ExpenseDescription = expense.description;
-                    ExpenseDetailsList.add(new Items5(ExpenseTitle, ExpenseDescription, OwnerUID, OwnerName, ExpenseID, TotalAmount));
+                    ExpenseDetailsList.add(new Items5(ExpenseTitle, ExpenseDescription, OwnerUID, OwnerName, ExpenseID, TotalAmount, GroupCurrencyID));
                     generateAdapter(ExpenseDetailsList);
                 }
 
@@ -123,6 +126,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
                 b.putString("OwnerName", adapter.getItem(position).getOwnerName());
                 b.putString("ExpenseID", adapter.getItem(position).getID());
                 b.putFloat("TotalAmount", adapter.getItem(position).getTotalAmount());
+                b.putString("GroupCurrencyID", adapter.getItem(position).getGroupCurrencyID());
                 b.putString("GroupID",GroupId);
                 myIntent.putExtras(b);
 
@@ -176,6 +180,7 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             Bundle b = new Bundle();
             b.putString("GroupId", GroupId);
             b.putString("GroupName", GroupName);
+            b.putString("GroupCurrencyID", GroupCurrencyID);
             myIntent.putExtras(b);
 
             startActivity(myIntent);
