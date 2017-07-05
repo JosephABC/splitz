@@ -13,16 +13,18 @@ public class User {
     public String Email;
     public List<String> Friends;
     public List<String> Expenses;
+    public List<String> groups;
 
     public User(){
 
     }
-    public User(String Email, String Name, List<String> Friends, List<String> Expenses) {
+    public User(String Email, String Name, List<String> Friends, List<String> Expenses, List<String> groups) {
 
         this.Email = Email;
         this.Name = Name;
         this.Friends = Friends;
         this.Expenses = Expenses;
+        this.groups = groups;
     }
 
     @Exclude

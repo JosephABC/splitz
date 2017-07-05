@@ -75,7 +75,7 @@ public class ExpenseActivity extends AppCompatActivity {
         ExpenseDescriptionTV.setText(Description);
         OwnerNameTV.setText("Expense Paid By: " + OwnerName);
         TotalAmountTV.setText("Total Amount: $" + String.format("%.2f", TotalAmount));
-        setTitle(Title + "Base Currency: " + GroupCurrencyID);
+        setTitle(Title);
         updateUI(ExpenseID, GroupID);
 
     }
@@ -89,6 +89,11 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Expenses expense = dataSnapshot.getValue(Expenses.class);
+                String CurrencyID = expense.CurencyID;
+                String ExchangeRate = String.format("%.3f", expense.ExchangeRate);
+                String OriginalAmount = String.format("%.2f", TotalAmount / expense.ExchangeRate);
+                OwnerNameTV.setText(OriginalAmount + " " + CurrencyID + " Paid By: " + OwnerName + "\n Exchange Rate: " + ExchangeRate +
+                        " " + CurrencyID + "/" + GroupCurrencyID);
                 Map<String, Float> ParticipantsData = expense.payers;
                 generateParticipantData(ParticipantsData);
             }
@@ -250,10 +255,12 @@ public class ExpenseActivity extends AppCompatActivity {
                 ExpenseList.remove(ExpenseID);
                 gDatabase.child("Expenses").setValue(ExpenseList);
                 String GroupName = group.groupName;
+                String GroupCurrencyID = group.CurrencyID;
                 Intent myIntent = new Intent(ExpenseActivity.this, GroupActivity.class);
                 Bundle b = new Bundle();
                 b.putString("GroupId", GroupID);
                 b.putString("GroupName", GroupName);
+                b.putString("GroupCurrencyID", GroupCurrencyID);
                 myIntent.putExtras(b);
 
                 startActivity(myIntent);

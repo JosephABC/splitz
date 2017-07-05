@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class GeneralInfoFragment extends Fragment {
     public FirebaseAuth mAuth;
     public ListView ListViewParticipants;
+    public TextView BaseCurrencyTV;
     public String GroupId;
     public String GroupName;
     @Override
@@ -35,6 +37,9 @@ public class GeneralInfoFragment extends Fragment {
 
         // Group view
         ListViewParticipants = (ListView) rootView.findViewById(R.id.listViewParticipants);
+
+        //View
+        BaseCurrencyTV = (TextView) rootView.findViewById(R.id.BaseCurrencyTV);
 
         //Initialize Auth
         mAuth = FirebaseAuth.getInstance();
@@ -57,6 +62,8 @@ public class GeneralInfoFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Groups group = dataSnapshot.getValue(Groups.class);
                 Map<String, Float> ParticipantsDataList = group.participants;
+                String GroupCurrencyID = group.CurrencyID;
+                BaseCurrencyTV.setText("Base Currency: " + GroupCurrencyID);
                 GenerateUsers(ParticipantsDataList);
             }
 

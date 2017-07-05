@@ -32,6 +32,7 @@ public class UserInfoFragment extends Fragment {
     public String GroupId;
     public String GroupName;
     public String currentUID;
+    public String GroupCurrencyID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,10 +91,11 @@ public class UserInfoFragment extends Fragment {
                 Groups group = dataSnapshot.getValue(Groups.class);
                 if (group.Expenses != null){
                     List<String> GroupExpensesIDList = group.Expenses;
+                    GroupCurrencyID = group.CurrencyID;
                     List<String> List1 = new ArrayList<String>(ExpenseIDList);
                     List1.removeAll(GroupExpensesIDList);
                     ExpenseIDList.removeAll(List1);
-                    GenerateExpenseData(ExpenseIDList);
+                    GenerateExpenseData(ExpenseIDList, GroupCurrencyID);
                 }else{
                     String msg1 = "You Owe Nothing";
                     TextViewAmountMsg.setText(msg1);
@@ -122,7 +124,7 @@ public class UserInfoFragment extends Fragment {
         });
     }
 
-    public void GenerateExpenseData(List<String> ExpenseIDList){
+    public void GenerateExpenseData(List<String> ExpenseIDList, final String GroupCurrencyID){
         final ArrayList<ExpenseFragmentItems> ExpenseDataList = new ArrayList<ExpenseFragmentItems>();
         for (final String ExpenseID : ExpenseIDList){
             DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses").child(ExpenseID);
@@ -147,7 +149,7 @@ public class UserInfoFragment extends Fragment {
                     if (ownerID.equals(currentUID)) {
                         Amount += totalAmount;
                     }
-                    ExpenseDataList.add(new ExpenseFragmentItems(title, description, ownerID, ownerName, ExpenseID, totalAmount, GroupId, GroupName, Amount));
+                    ExpenseDataList.add(new ExpenseFragmentItems(title, description, ownerID, ownerName, ExpenseID, totalAmount, GroupId, GroupName, Amount, GroupCurrencyID));
                     generate(ExpenseDataList);
                 }
 
@@ -178,6 +180,7 @@ public class UserInfoFragment extends Fragment {
                 b.putString("ExpenseID", eAdapter.getItem(position).getID());
                 b.putFloat("TotalAmount", eAdapter.getItem(position).getTotalAmount());
                 b.putString("GroupID",eAdapter.getItem(position).getGroupID());
+                b.putString("GroupCurrencyID", eAdapter.getItem(position).getGroupCurrencyID());
                 myIntent.putExtras(b);
 
                 startActivity(myIntent);

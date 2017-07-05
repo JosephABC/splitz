@@ -78,17 +78,32 @@ public class ExpensesFragment extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Expenses expense = dataSnapshot.getValue(Expenses.class);
-                    String title = expense.title;
-                    String OwnerUID = expense.ownerUID;
-                    String OwnerName = expense.ownerName;
-                    Float TotalAmount = expense.totalAmount;
-                    String Description = expense.description;
-                    String GroupName = expense.GroupName;
-                    String GroupID = expense.GroupID;
-                    String currentUid = currentUser.getUid();
-                    Float Amount = expense.payers.get(currentUid);
-                    ExpenseDataList.add(new ExpenseFragmentItems(title, Description, OwnerUID, OwnerName, ExpenseID, TotalAmount, GroupID, GroupName, Amount));
-                    generate(ExpenseDataList);
+                    final String title = expense.title;
+                    final String OwnerUID = expense.ownerUID;
+                    final String OwnerName = expense.ownerName;
+                    final Float TotalAmount = expense.totalAmount;
+                    final String Description = expense.description;
+                    final String GroupName = expense.GroupName;
+                    final String GroupID = expense.GroupID;
+                    final String currentUid = currentUser.getUid();
+                    final Float Amount = expense.payers.get(currentUid);
+                    DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupID);
+                    Query GroupQuery = gDatabase;
+                    GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Groups group = dataSnapshot.getValue(Groups.class);
+                            String GroupCurrencyID = group.CurrencyID;
+                            ExpenseDataList.add(new ExpenseFragmentItems(title, Description, OwnerUID, OwnerName, ExpenseID, TotalAmount, GroupID, GroupName, Amount, GroupCurrencyID));
+                            generate(ExpenseDataList);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
 
                 @Override
@@ -117,6 +132,8 @@ public class ExpensesFragment extends Fragment {
                 b.putString("ExpenseID", eAdapter.getItem(position).getID());
                 b.putFloat("TotalAmount", eAdapter.getItem(position).getTotalAmount());
                 b.putString("GroupID",eAdapter.getItem(position).getGroupID());
+                b.putString("GroupCurrencyID", eAdapter.getItem(position).getGroupCurrencyID());
+
 
                 myIntent.putExtras(b);
 

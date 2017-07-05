@@ -14,8 +14,10 @@ public class ExpenseFragmentItems {
     private String GroupID;
     private String GroupName;
     private Float Amount;
+    private String GroupCurrencyID;
 
-    public ExpenseFragmentItems(String title, String Description, String OwnerUID, String OwnerName, String ID, Float TotalAmount, String GroupID, String GroupName, Float Amount){
+
+    public ExpenseFragmentItems(String title, String Description, String OwnerUID, String OwnerName, String ID, Float TotalAmount, String GroupID, String GroupName, Float Amount, String GroupCurrencyID){
         super();
         this.title = title;
         this.Description = Description;
@@ -26,6 +28,8 @@ public class ExpenseFragmentItems {
         this.GroupID = GroupID;
         this.GroupName = GroupName;
         this.Amount = Amount;
+        this.GroupCurrencyID = GroupCurrencyID;
+
     }
     // getters and setters...
 
@@ -54,4 +58,6 @@ public class ExpenseFragmentItems {
     public String getGroupName() { return GroupName;};
 
     public Float getAmount() { return Amount;};
+
+    public String getGroupCurrencyID() { return GroupCurrencyID;};
 }

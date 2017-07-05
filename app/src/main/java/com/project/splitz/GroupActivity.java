@@ -2,6 +2,7 @@ package com.project.splitz;
 
 
 import android.content.Intent;
+import android.icu.text.MessagePattern;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import java.security.acl.Group;
 import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 public class GroupActivity extends AppCompatActivity implements View.OnClickListener {
@@ -164,11 +166,127 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             b.putString("GroupName", GroupName);
             GroupInfoIntent.putExtras(b);
             startActivity(GroupInfoIntent);
+        }else if (id == R.id.Delete){
+            final DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupId);
+            Query GroupQuery = gDatabase;
+            GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Groups group = dataSnapshot.getValue(Groups.class);
+                    List<String> ExpenseIDList = null;
+                    Map<String, Float> ParticipantsData = group.participants;
+                    List<String> ParticipantsIDList = new ArrayList<String>(ParticipantsData.keySet());
+                    if (group.Expenses != null){
+                        ExpenseIDList = group.Expenses;
+                    }
+                    System.out.println("hello" + ExpenseIDList);
+                    RemoveParticipants(ParticipantsIDList, ExpenseIDList);
+                    gDatabase.removeValue();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
     }
 
+    public void RemoveParticipants(List<String> ParticipantsIDLIst, final List<String> ExpensesIDList){
+        final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+        for (final String ParticipantsID : ParticipantsIDLIst){
+            Query UserQuery = uDatabase.child(ParticipantsID);
+            UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    List<String> GroupIDList = new ArrayList<String>(user.groups);
+                    GroupIDList.remove(GroupId);
+                    uDatabase.child(ParticipantsID).child("groups").setValue(GroupIDList);
+                    if (ExpensesIDList != null && user.Expenses != null){
+                        List<String> UserExpensesIDList = new ArrayList<String>(user.Expenses);
+                        UserExpensesIDList.removeAll(ExpensesIDList);
+                        uDatabase.child(ParticipantsID).child("Expenses").setValue(UserExpensesIDList);
+                    }
+                }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+        if (ExpensesIDList != null){
+            DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+            for (String ExpensesID : ExpensesIDList){
+                eDatabase.child(ExpensesID).removeValue();
+            }
+        }
+    }
+
+//    public void RemoveExpenses(List<String> ExpenseIDList){
+//        final DatabaseReference eDatabase = FirebaseDatabase.getInstance().getReference("expenses");
+//        for (final String ExpenseID : ExpenseIDList){
+//            Query ExpenseQuery = eDatabase.child(ExpenseID);
+//            ExpenseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    Expenses expense = dataSnapshot.getValue(Expenses.class);
+//                    String OwnerUID;
+//                    OwnerUID = expense.ownerUID;
+//                    Map<String, Float> PayersData = expense.payers;
+//                    PayersData.put(OwnerUID, 0f);
+//                    List<String> PayersIDList = new ArrayList<String>(PayersData.keySet());
+////                    RemovePayer(PayersIDList, ExpenseID);
+//                    final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+//                    for (final String PayerID : PayersIDList){
+//                        Query UserQuery = uDatabase.child(PayerID);
+//                        UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                User user = dataSnapshot.getValue(User.class);
+//                                List<String> ExpensesIDList = new ArrayList<String>(user.Expenses);
+//                                ExpensesIDList.remove(ExpenseID);
+//                                uDatabase.child(PayerID).child("Expenses").setValue(ExpensesIDList);
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//                    }
+//                    eDatabase.child(ExpenseID).removeValue();
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+//        }
+//    }
+    public void RemovePayer(List<String> PayerIDList, final String ExpenseID){
+        final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+        for (final String PayerID : PayerIDList){
+            Query UserQuery = uDatabase.child(PayerID);
+            UserQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    List<String> ExpensesIDList = new ArrayList<String>(user.Expenses);
+                    ExpensesIDList.remove(ExpenseID);
+                    uDatabase.child(PayerID).child("Expenses").setValue(ExpensesIDList);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
 
 
     @Override
