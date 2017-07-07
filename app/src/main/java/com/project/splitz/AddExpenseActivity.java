@@ -90,6 +90,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         //Buttons
         findViewById(R.id.AddExpenseBtn).setOnClickListener(this);
+        findViewById(R.id.UnequalSplittingBtn).setOnClickListener(this);
 
         //Views
         EndAmountTV = (TextView) findViewById(R.id.EndAmountTV);
@@ -175,9 +176,60 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        addExpense();
+        int i = v.getId();
+        if (i == R.id.AddExpenseBtn) {
+            addExpense();
+        }else if (i == R.id.UnequalSplittingBtn){
+            UnequalSplit();
+        }
+    }
 
+    protected void UnequalSplit(){
+        EditText titleField = (EditText) findViewById(R.id.ExpenseTitleET);
+        EditText descriptionField = (EditText) findViewById(R.id.ExpenseDescriptionET);
+        EditText amountField = (EditText) findViewById(R.id.ExpenseAmountET);
 
+        final String title = titleField.getText().toString();
+        final String description = descriptionField.getText().toString();
+        final Float originalAmount = Float.valueOf(amountField.getText().toString());
+        final String CurrencyID = CurrencySpinner.getSelectedItem().toString();
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUid = currentUser.getUid();
+        DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+        Query UserNameQuery = uDatabase.child(currentUid);
+        UserNameQuery.addListenerForSingleValueEvent(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                String OwnerName = user.Name;
+                ArrayList<String> selectedMembers = GeneratePayers();
+
+                Intent unequalSplittingIntent = new Intent(AddExpenseActivity.this, UnequalSplittingActivity.class);
+                Bundle b = new Bundle();
+                b.putString("GroupId", GroupId);
+                b.putString("GroupName", GroupName);
+                b.putString("GroupCurrencyID", GroupCurrencyID);
+                b.putString("CurrencyID", CurrencyID);
+                b.putString("OwnerID", currentUid);
+                b.putString("OwnerName", OwnerName);
+                b.putString("Title", title);
+                b.putString("Description", description);
+                b.putFloat("OriginalAmount", OriginalAmount);
+                b.putFloat("ExchangeRate", ExchangeRate);
+                b.putStringArrayList("SelectedMembers", selectedMembers);
+                unequalSplittingIntent.putExtras(b);
+
+                startActivity(unequalSplittingIntent);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     protected void addExpense() {
@@ -188,7 +240,6 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         final String title = titleField.getText().toString();
         final String description = descriptionField.getText().toString();
-//        final Float totalAmount = Float.valueOf(EndAmountTV.getText().toString());
         final Float totalAmount = EndAmount;
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -205,7 +256,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 User user = dataSnapshot.getValue(User.class);
                 String OwnerName = user.Name;
 
-                // Get emails of selected members
+                // Get ID of selected members
                 ArrayList<String> selectedMembers = GeneratePayers();
 
                 //Equal Splitting Calculation

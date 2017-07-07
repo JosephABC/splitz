@@ -48,7 +48,8 @@
         <activity android:name=".AddExpenseActivity" />
         <activity android:name=".GroupInfoActivity" />
         <activity android:name=".ExpenseActivity" />
-        <activity android:name=".GroupInfoTabActivity"></activity>
+        <activity android:name=".GroupInfoTabActivity" />
+        <activity android:name=".UnequalSplittingActivity"></activity>
     </application>
 
 </manifest>

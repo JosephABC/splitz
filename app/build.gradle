@@ -12,7 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
-    useLibrary  'org.apache.http.legacy'
+    useLibrary 'org.apache.http.legacy'
     buildTypes {
         release {
             minifyEnabled false

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple" />
+
+    <TextView
+        android:id="@+id/UserNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:paddingLeft="5dp"
+        android:layout_toRightOf="@+id/checkbox"
+        android:layout_alignTop="@+id/checkbox">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/UserEmailTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:paddingLeft="5dp"
+        android:layout_alignLeft="@+id/UserNameTV"
+        android:layout_below="@+id/UserNameTV">
+    </TextView>
+
+    <TextView
+        android:id="@+id/UserOriginalCurrencyTV"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_toLeftOf="@+id/UserAmountET"
+        android:layout_alignBottom="@+id/UserAmountET">
+    </TextView>
+
+    <EditText
+        android:id="@+id/UserAmountET"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:textSize="15dp"
+        android:layout_toLeftOf="@+id/UserEndCurrencyTV"
+        android:layout_alignTop="@+id/UserNameTV"
+        android:cursorVisible="true"/>
+
+    <TextView
+        android:id="@+id/UserEndCurrencyTV"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_toLeftOf="@+id/UserEndAmountTV"
+        android:layout_alignBottom="@+id/UserAmountET">
+    </TextView>
+
+    <TextView
+        android:id="@+id/UserEndAmountTV"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/UserAmountET">
+    </TextView>
+
+
+
+</RelativeLayout>
