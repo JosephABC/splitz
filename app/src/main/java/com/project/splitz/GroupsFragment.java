@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,17 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static android.app.Activity.RESULT_OK;
 
 public class GroupsFragment extends Fragment implements View.OnClickListener{
 
     public FirebaseAuth mAuth;
     public ListView ListViewGroups;
+    MyAdapterGroups adapter1;
+    Boolean AllowRefresh = false;
 
 
     @Override
@@ -85,7 +92,6 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Groups group = dataSnapshot.getValue(Groups.class);
                     String GroupName = group.groupName;
-                    System.out.println(GroupName);
                     String GroupCurrencyID = group.CurrencyID;
                     GroupNameList.add(new Items(GroupName, groupId, GroupCurrencyID));
                     generate(GroupNameList);
@@ -96,9 +102,27 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
             });
         }
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (AllowRefresh){
+            AllowRefresh = false;
+            new Timer().schedule(
+                    new TimerTask() {
+                        @Override
+                        public void run() {
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.detach(GroupsFragment.this).attach(GroupsFragment.this).commit();
+                        }
+                    },
+                    1000
+            );
+        }
+    }
+
 
     public void generate(ArrayList<Items> GroupNameList){
-        final MyAdapterGroups adapter1 = new MyAdapterGroups(getActivity(), GroupNameList);
+        adapter1 = new MyAdapterGroups(getActivity(), GroupNameList);
         ListViewGroups.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ListViewGroups.setAdapter(adapter1);
         ListViewGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,6 +139,7 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
                 myIntent.putExtras(b);
 
                 startActivity(myIntent);
+                AllowRefresh = true;
 
             }
         });
@@ -127,7 +152,9 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
         if (i == R.id.NewGroupBtn) {
             Intent myIntent = new Intent(getActivity(), CreateGroupActivity.class);
             startActivity(myIntent);
+            AllowRefresh = true;
         }else if (i == R.id.RefreshBtn) {
+
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(this).attach(this).commit();
         }

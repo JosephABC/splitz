@@ -74,7 +74,7 @@ public class ExpenseActivity extends AppCompatActivity {
         //Populating Views
         ExpenseDescriptionTV.setText(Description);
         OwnerNameTV.setText("Expense Paid By: " + OwnerName);
-        TotalAmountTV.setText("Total Amount: $" + String.format("%.2f", TotalAmount));
+        TotalAmountTV.setText("Total Amount: " + GroupCurrencyID + " $" + String.format("%.2f", TotalAmount));
         setTitle(Title);
         updateUI(ExpenseID, GroupID);
 
@@ -116,7 +116,7 @@ public class ExpenseActivity extends AppCompatActivity {
                     User participant= dataSnapshot.getValue(User.class);
                     String Email = participant.Email;
                     String Name = participant.Name;
-                    ParticipantsData.add(new ItemsUserInfo(Name, Email, ParticipantsDataList.get(ParticipantUID)));
+                    ParticipantsData.add(new ItemsUserInfo(Name, Email, ParticipantsDataList.get(ParticipantUID), GroupCurrencyID));
                     MyAdapterExpPart adapter = new MyAdapterExpPart(ExpenseActivity.this, ParticipantsData);
                     ParticipantsListView.setAdapter(adapter);
                 }
@@ -155,8 +155,6 @@ public class ExpenseActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
 
-        }else if (id == R.id.Edit){
-            //add edit function
         }
         return super.onOptionsItemSelected(item);
     }

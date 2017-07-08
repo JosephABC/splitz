@@ -20,10 +20,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class FriendsFragment extends Fragment implements View.OnClickListener {
 
     public FirebaseAuth mAuth;
+    public Boolean AllowRefresh1 = false;
 
 
     @Override
@@ -88,6 +91,23 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (AllowRefresh1){
+            AllowRefresh1 = false;
+            new Timer().schedule(
+                    new TimerTask() {
+                        @Override
+                        public void run() {
+                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            ft.detach(FriendsFragment.this).attach(FriendsFragment.this).commit();
+                        }
+                    },
+                    1000
+            );
+        }
+    }
 
 
 
@@ -97,6 +117,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
         if (i == R.id.NewFriendBtn) {
             Intent aIntent = new Intent(getActivity(), AddFriendActivity.class);
             startActivity(aIntent);
+            AllowRefresh1 = true;
         }else if (i == R.id.RefreshBtn) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(this).attach(this).commit();

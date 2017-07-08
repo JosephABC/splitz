@@ -53,6 +53,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
     private ArrayAdapter<Items> adapter;
     public ArrayList<Items> FriendDataList = new ArrayList<Items>();
     public ArrayList<String> FriendUidList = new ArrayList<String>();
+    public static final int RequestCode = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

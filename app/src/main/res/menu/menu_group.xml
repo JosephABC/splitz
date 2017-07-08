@@ -18,14 +18,6 @@
         android:orderInCategory="101"
         app:showAsAction="always">
         <menu>
-
-            <item
-                android:id="@+id/settings"
-                android:icon="@drawable/ic_settings"
-                app:showAsAction="always"
-                android:title="Settings">
-            </item>
-
             <item
                 android:id="@+id/Delete"
                 android:icon="@drawable/ic_delete"

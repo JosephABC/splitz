@@ -40,7 +40,7 @@ public class MyAdapterExpPart extends ArrayAdapter<ItemsUserInfo> {
         // 4. Set the text for textView
         nameView.setText(itemsArrayList.get(position).getName());
         emailView.setText(itemsArrayList.get(position).getEmail());
-        amountView.setText("$ " + String.format("%.2f", itemsArrayList.get(position).getAmount()));
+        amountView.setText(itemsArrayList.get(position).getCurrencyID()+ " $ " + String.format("%.2f", itemsArrayList.get(position).getAmount()));
 
 
         // 5. return rowView

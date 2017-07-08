@@ -64,7 +64,7 @@ public class GeneralInfoFragment extends Fragment {
                 Map<String, Float> ParticipantsDataList = group.participants;
                 String GroupCurrencyID = group.CurrencyID;
                 BaseCurrencyTV.setText("Base Currency: " + GroupCurrencyID);
-                GenerateUsers(ParticipantsDataList);
+                GenerateUsers(ParticipantsDataList, GroupCurrencyID);
             }
 
 
@@ -75,7 +75,7 @@ public class GeneralInfoFragment extends Fragment {
         });
     }
 
-    public void GenerateUsers(final Map<String, Float> ParticipantsDataList){
+    public void GenerateUsers(final Map<String, Float> ParticipantsDataList, final String GroupCurrencyID){
         ArrayList<String> UserIdList = new ArrayList<>(ParticipantsDataList.keySet());
         final ArrayList<ItemsUserInfo> UserList = new ArrayList<>();
         for (final String userId: UserIdList){
@@ -88,7 +88,7 @@ public class GeneralInfoFragment extends Fragment {
                         String UserEmail = child.child("Email").getValue().toString();
                         String UserName = child.child("Name").getValue().toString();
                         Float UserAmount = ParticipantsDataList.get(userId);
-                        UserList.add(new ItemsUserInfo(UserName, UserEmail, UserAmount ));
+                        UserList.add(new ItemsUserInfo(UserName, UserEmail, UserAmount, GroupCurrencyID));
                     }
                     generate(UserList);
                 }
