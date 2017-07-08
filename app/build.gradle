@@ -46,5 +46,6 @@ dependencies {
     compile 'com.android.support:transition:25.3.1'
     compile 'com.android.support:support-annotations:25.3.1'
     testCompile 'junit:junit:4.12'
+    compile 'javax.inject:javax.inject:1'
 }
 apply plugin: 'com.google.gms.google-services'
