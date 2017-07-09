@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context="com.project.splitz.AddFriendActivity">
 
     <android.support.v7.widget.Toolbar
@@ -24,29 +25,79 @@
         android:layout_below="@+id/toolbar"
         android:ems="10"
         android:hint="Search User Email"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:layout_marginTop="25dp"
-        android:paddingRight="30dp"
+        android:layout_marginLeft="@dimen/padding"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp" />
 
+    <Button
+        android:id="@+id/SearchBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_grey_button"
+        android:text="Search"
+        android:textColor="@android:color/white"
+        android:layout_alignBottom="@+id/SearchUsers"
+        android:layout_toRightOf="@+id/SearchUsers"/>
+
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/SearchUsers"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/darker_gray"/>
+    <TextView
+        android:id="@+id/SearchResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:text="Search Results  "
+        android:background="@color/background"
+        android:layout_below="@+id/SearchUsers"
+        android:layout_marginTop="19dp"
+        android:layout_marginLeft="@dimen/padding"/>
+
+    <TextView
+        android:id="@+id/Email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/text"
+        android:text="Email: "
+        android:layout_below="@+id/SearchResults"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="@dimen/padding"/>
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="Email"
-        android:layout_below="@+id/SearchUsers"/>
+        android:text=""
+        android:layout_toRightOf="@id/Email"
+        android:layout_alignBottom="@id/Email"/>
 
-
+    <TextView
+        android:id="@+id/Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/text"
+        android:text="Name: "
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/padding"
+        android:layout_below="@+id/textViewEmail" />
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="Name"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/textViewEmail" />
+        android:text=""
+        android:layout_alignBaseline="@+id/Name"
+        android:layout_alignBottom="@+id/Name"
+        android:layout_toRightOf="@+id/Name"/>
+
     <TextView
         android:id="@+id/textViewUserID"
         android:layout_width="wrap_content"
@@ -56,21 +107,28 @@
         android:layout_marginTop="10dp"
         android:visibility="invisible"
         android:layout_below="@+id/textViewName" />
+
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/Name"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/darker_gray"/>
+
     <Button
         android:id="@+id/AddFriendBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ADD"
+        android:layout_width="@dimen/login_button_width"
+        android:layout_height="@dimen/login_button_height"
+        android:background="@drawable/rounded_button"
+        android:text="Add user as friend"
+        android:textColor="@android:color/white"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="240dp"
-        android:layout_below="@+id/textViewUserID"/>
-    <Button
-        android:id="@+id/SearchBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:layout_alignBottom="@+id/SearchUsers"
-        android:layout_toRightOf="@+id/SearchUsers"/>
+        android:layout_below="@+id/textViewUserID"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
 

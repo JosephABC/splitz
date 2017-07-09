@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black_overlay"
     tools:context="com.project.splitz.GroupsFragment">
 
     <ListView
         android:id="@+id/listViewGroups"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/RefreshBtn"

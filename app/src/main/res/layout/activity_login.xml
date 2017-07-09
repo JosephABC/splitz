@@ -25,10 +25,10 @@
         android:id="@+id/emailET"
         android:layout_width="@dimen/login_button_width"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:drawableLeft="@drawable/ic_email_black_24dp"
-        android:drawablePadding="@dimen/drawable_padding"
+        android:drawablePadding="@dimen/padding"
         android:hint="Email"
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="85dp"
@@ -44,7 +44,7 @@
         android:ems="10"
         android:hint="Password"
         android:drawableLeft="@drawable/ic_lock_black_24dp"
-        android:drawablePadding="@dimen/drawable_padding"
+        android:drawablePadding="@dimen/padding"
         android:fontFamily="sans-serif"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="85dp"
@@ -57,7 +57,7 @@
         android:layout_width="@dimen/login_button_width"
         android:layout_height="@dimen/login_button_height"
         android:text="Login"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:background="@drawable/rounded_button"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="240dp"
@@ -66,27 +66,38 @@
         android:layout_alignLeft="@+id/passwordET"
         android:layout_alignStart="@+id/passwordET" />
 
+    <View
+        android:layout_width="320dp"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/signInBtn"
+        android:layout_marginTop="39dp"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/darker_gray"/>
+
     <TextView
         android:id="@+id/or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Or..."
-        android:textSize="15sp"
+        android:text="  or  "
+        android:textSize="16sp"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="148dp"
         android:layout_below="@+id/signInBtn"
-        android:layout_marginTop="15dp"
-        android:layout_alignLeft="@+id/signInBtn"
-        android:layout_alignStart="@+id/signInBtn" />
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/background"/>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/FBsignInBtn"
+        android:textSize="15sp"
         android:layout_width="242dp"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="240dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/or"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_centerHorizontal="true"/>
 
     <com.google.android.gms.common.SignInButton

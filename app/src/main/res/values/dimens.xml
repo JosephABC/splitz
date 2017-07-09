@@ -4,5 +4,15 @@
     <dimen name="login_button_height">45dp</dimen>
     <dimen name="edit_text_height">35dp</dimen>
     <dimen name="rounded_button_radius">25dp</dimen>
-    <dimen name="drawable_padding">10dp</dimen>
+    <dimen name="rounded_list_radius">10dp</dimen>
+    <dimen name="padding">10dp</dimen>
+    <dimen name="dividerW">340dp</dimen>
+    <dimen name="dividerH">1dp</dimen>
+
+<!--    <dimen name="fb_margin_override_top">10dp</dimen>
+    <dimen name="fb_margin_override_bottom">10dp</dimen>
+    &lt;!&ndash;The next value changes the margin between the FB icon and the left border:&ndash;&gt;
+    <dimen name="fb_margin_override_lr">10dp</dimen>
+    &lt;!&ndash;The next value changes the margin between the FB icon and the login text:&ndash;&gt;
+    <dimen name="fb_margin_override_textpadding">17dp</dimen>-->
 </resources>

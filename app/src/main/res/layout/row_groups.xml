@@ -5,11 +5,27 @@
 
     <TextView
         android:id="@+id/label_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_listview_entries"
+        android:textSize="25sp"
+        android:textColor="@color/text"
+        android:paddingLeft="@dimen/padding"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+    </TextView>
+
+    <ImageView
+        android:id="@+id/imageIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:paddingLeft="5dp">
-    </TextView>
+        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+        android:tint="@color/colorPrimaryDark"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="15dp">
+    </ImageView>
 
 
 

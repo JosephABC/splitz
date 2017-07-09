@@ -1,12 +1,15 @@
 package com.project.splitz;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -64,6 +68,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //googleBtnUi();
 
         // initialize auth
         mAuth = FirebaseAuth.getInstance();
@@ -92,6 +97,17 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.FBsignInBtn);
         loginButton.setReadPermissions("email", "public_profile");
+
+        /*loginButton.setPadding(
+                this.getResources().getDimensionPixelSize(
+                        R.dimen.fb_margin_override_lr),
+                this.getResources().getDimensionPixelSize(
+                        R.dimen.fb_margin_override_top),
+                this.getResources().getDimensionPixelSize(
+                        R.dimen.fb_margin_override_lr),
+                this.getResources().getDimensionPixelSize(
+                        R.dimen.fb_margin_override_bottom));*/
+
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -295,6 +311,40 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         return valid;
     }
 
+    private void googleBtnUi() {
+        // TODO Auto-generated method stub
+
+        SignInButton googleButton = (SignInButton) findViewById(R.id.GoogleSignInBtn);
+        googleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        for (int i = 0; i < googleButton.getChildCount(); i++) {
+            View v = googleButton.getChildAt(i);
+
+            if (v instanceof TextView)
+            {
+                TextView tv = (TextView) v;
+                tv.setTextSize(14);
+                tv.setTypeface(null, Typeface.NORMAL);
+                tv.setText("Continue with Google");
+                tv.setTextColor(Color.parseColor("#808080"));
+                //tv.setBackgroundDrawable(getResources().getDrawable(R.drawable.google_button));
+                tv.setSingleLine(true);
+                //tv.setPadding(15, 15, 15, 15);
+
+                ViewGroup.LayoutParams params = tv.getLayoutParams();
+                params.width = 750;
+                params.height = 170;
+                tv.setLayoutParams(params);
+
+                return;
+            }
+        }
+    }
     //Click Listeners
     @Override
     public void onClick(View v) {
