@@ -4,92 +4,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context="com.project.splitz.SignUpActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up with US"
-        android:textSize="25dp"
+        android:text="Sign Up"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/text"
         tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="148dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
     <EditText
         android:id="@+id/nameET"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/login_button_width"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
-        android:hint="Enter username"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:drawablePadding="@dimen/drawable_padding"
+        android:hint="Name"
         android:inputType="text"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp" />
 
     <EditText
         android:id="@+id/emailET"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/login_button_width"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/nameET"
         android:ems="10"
-        android:hint="Enter email"
-        android:inputType="text"
+        android:drawableLeft="@drawable/ic_email_black_24dp"
+        android:drawablePadding="@dimen/drawable_padding"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp"
-        android:layout_alignLeft="@+id/nameET"
-        android:layout_marginTop="110dp"/>
+        android:layout_alignLeft="@+id/nameET"/>
 
     <EditText
         android:id="@+id/passwordET"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/login_button_width"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/emailET"
         android:ems="10"
-        android:hint="Enter password"
+        android:hint="Password"
+        android:drawableLeft="@drawable/ic_lock_black_24dp"
+        android:drawablePadding="@dimen/drawable_padding"
         android:inputType="textPassword"
+        android:fontFamily="sans-serif"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_centerHorizontal="true"/>
 
     <EditText
         android:id="@+id/confirmPasswordET"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/login_button_width"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordET"
         android:ems="10"
         android:hint="Confirm password"
+        android:drawableLeft="@drawable/ic_lock_black_24dp"
+        android:drawablePadding="@dimen/drawable_padding"
         android:inputType="textPassword"
+        android:fontFamily="sans-serif"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="187dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/signUpBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sign Up Now"
+        android:layout_width="@dimen/login_button_width"
+        android:layout_height="@dimen/login_button_height"
+        android:text="Sign Up"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_button"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="240dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"/>
+        android:layout_below="@+id/confirmPasswordET"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/backBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/login_button_width"
+        android:layout_height="@dimen/login_button_height"
         android:text="BACK"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_back_button"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="240dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"/>
+        android:layout_below="@+id/signUpBtn"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

@@ -4,4 +4,5 @@
     <dimen name="login_button_height">45dp</dimen>
     <dimen name="edit_text_height">35dp</dimen>
     <dimen name="rounded_button_radius">25dp</dimen>
+    <dimen name="drawable_padding">10dp</dimen>
 </resources>
