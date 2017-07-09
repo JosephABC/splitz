@@ -83,11 +83,12 @@
         android:id="@+id/FBsignInBtn"
         android:layout_width="242dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteX="300dp"
         tools:layout_editor_absoluteY="240dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/or"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/GoogleSignInBtn"
@@ -123,6 +124,7 @@
         android:layout_alignBottom="@+id/signInBtnText"
         android:layout_toRightOf="@+id/signInBtnText"
         android:layout_toEndOf="@+id/signInBtnText" />
+
 
 </RelativeLayout>
 

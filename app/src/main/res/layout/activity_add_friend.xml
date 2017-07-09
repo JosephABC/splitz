@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="Email"
+        android:hint = "Email"
         android:layout_below="@+id/SearchUsers"/>
 
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="Name"
+        android:hint="Name"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/textViewEmail" />
     <TextView
@@ -52,7 +52,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="UserID"
         android:layout_marginTop="10dp"
         android:visibility="invisible"
         android:layout_below="@+id/textViewName" />

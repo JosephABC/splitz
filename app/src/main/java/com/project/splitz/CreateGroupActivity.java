@@ -161,7 +161,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
     }
     protected void groupSubmit(final String GroupName){
-        
+
         //Add Current user by default to the group
         final FirebaseUser currentUser = mAuth.getCurrentUser();
         //Group Database
