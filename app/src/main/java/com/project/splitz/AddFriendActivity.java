@@ -7,6 +7,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -93,6 +96,8 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
                 if (dataSnapshot.getValue() == null){
                     Toast.makeText(AddFriendActivity.this, "No Such User Found", Toast.LENGTH_SHORT).show();
                 } else {
+                    User user = dataSnapshot.getValue(User.class);
+                    System.out.println(user.Email);
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         EmailField.setText(child.child("Email").getValue().toString());
                         NameField.setText(child.child("Name").getValue().toString());
@@ -122,20 +127,19 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
                 if (currentUser.Friends != null){
                     FriendList = currentUser.Friends;
                 }
-//                for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                    String Entry = child.getValue().toString();
-//                    FriendList.add(Entry);
-//                }
-                if (FriendList.contains(UserIDField.getText().toString())){
+                final String FriendUID = UserIDField.getText().toString();
+                if (FriendList.contains(FriendUID)){
                     Toast.makeText(AddFriendActivity.this, "User is already your Friend", Toast.LENGTH_SHORT).show();
+                }else if(FriendUID.equals(currentUid)){
+                    Toast.makeText(AddFriendActivity.this, "You Cannot Add yourself as Friend", Toast.LENGTH_SHORT).show();
                 }else{
                     //Add User to current User Friend List
-                    final String FriendUid = UserIDField.getText().toString();
-                    FriendList.add(FriendUid);
+
+                    FriendList.add(FriendUID);
                     mDatabase.child("Friends").setValue(FriendList);
 
                     //Add Current User to User Friend List
-                    final DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("users").child(FriendUid);
+                    final DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("users").child(FriendUID);
                     Query FriendQuery = fDatabase;
                     FriendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -170,8 +174,11 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         if (i == R.id.SearchBtn) {
             updateUI(SearchUsersField.getText().toString());
         }else if(i == R.id.AddFriendBtn){
-
-            addFriend();
+            if (TextUtils.isEmpty(UserIDField.getText().toString())){
+                Toast.makeText(AddFriendActivity.this, "Please Search for a User First", Toast.LENGTH_SHORT).show();
+            }else{
+                addFriend();
+            }
         }
 
     }

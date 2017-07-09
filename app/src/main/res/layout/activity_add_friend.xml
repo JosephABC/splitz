@@ -77,7 +77,9 @@
         android:textSize="25sp"
         android:text=""
         android:layout_toRightOf="@id/Email"
-        android:layout_alignBottom="@id/Email"/>
+        android:layout_alignBottom="@id/Email"
+        android:layout_below="@+id/SearchUsers"/>
+
 
     <TextView
         android:id="@+id/Name"
@@ -89,6 +91,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="@dimen/padding"
         android:layout_below="@+id/textViewEmail" />
+
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
