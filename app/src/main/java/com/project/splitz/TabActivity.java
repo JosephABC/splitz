@@ -72,7 +72,7 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Groups"));
         tabLayout.addTab(tabLayout.newTab().setText("Friends"));
         tabLayout.addTab(tabLayout.newTab().setText("expenses"));
@@ -101,14 +101,6 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
             }
         });
 
-
-        //Handle bundle extras
-//        Bundle b = getIntent().getExtras();
-//        if (b != null){
-//            int TabId = b.getInt("TabId");
-//            viewPager.setCurrentItem(TabId);
-//        }
-
         setTitle("Welcome, " + currentUser.getDisplayName());
 
 
@@ -119,17 +111,17 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
 
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabOne.setText("Groups");
-        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_delete, 0, 0);
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_group_fragment, 0, 0);
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabTwo.setText("Friends");
-        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_new_friend, 0, 0);
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_friends_fragment, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
         TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabThree.setText("Expenses");
-        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_edit, 0, 0);
+        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_expense_fragment, 0, 0);
         tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
