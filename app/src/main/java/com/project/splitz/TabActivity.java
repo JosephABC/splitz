@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,11 +42,15 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
 
     public ListView ListViewGroups;
 
+    public TabLayout tabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
+
+
 
 
         //Create Google Sign in option
@@ -72,6 +77,7 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
         tabLayout.addTab(tabLayout.newTab().setText("Friends"));
         tabLayout.addTab(tabLayout.newTab().setText("expenses"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        setupTabIcons();
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
@@ -107,6 +113,24 @@ public class TabActivity extends AppCompatActivity implements GoogleApiClient.On
 
 
 
+    }
+
+    private void setupTabIcons() {
+
+        TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabOne.setText("Groups");
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_delete, 0, 0);
+        tabLayout.getTabAt(0).setCustomView(tabOne);
+
+        TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabTwo.setText("Friends");
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_new_friend, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+
+        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabThree.setText("Expenses");
+        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_edit, 0, 0);
+        tabLayout.getTabAt(2).setCustomView(tabThree);
     }
 
 

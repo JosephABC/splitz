@@ -36,21 +36,20 @@
     <View
         android:layout_width="@dimen/dividerW"
         android:layout_height="@dimen/dividerH"
-        android:layout_below="@+id/groupnameET"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/CurrencyText"
         android:layout_centerHorizontal="true"
-        android:background="@android:color/darker_gray"/>
-
+        android:background="@color/text"/>
     <TextView
         android:id="@+id/CurrencyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Base Currency:"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:text="Base Currency  "
+        android:textSize="17sp"
         android:textColor="@color/text"
+        android:textStyle="bold"
+        android:background="@color/background"
         android:layout_below="@+id/groupnameET"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="18dp"
         android:layout_marginLeft="@dimen/padding"/>
 
     <Spinner
@@ -58,28 +57,28 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:prompt="@string/currency_prompt"
-        android:textSize="18sp"
-        android:layout_alignBottom="@+id/CurrencyText"
-        android:layout_toRightOf="@+id/CurrencyText" />
+        android:textSize="25sp"
+        android:layout_below="@+id/CurrencyText"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/padding"/>
 
     <View
         android:layout_width="@dimen/dividerW"
         android:layout_height="@dimen/dividerH"
-        android:layout_below="@+id/currencySpinner"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/AddMembersText"
         android:layout_centerHorizontal="true"
-        android:background="@android:color/darker_gray"/>
-
+        android:background="@color/text"/>
     <TextView
         android:id="@+id/AddMembersText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Group Members:"
-        android:textSize="20sp"
+        android:text="Group Members "
+        android:textSize="17sp"
         android:textColor="@color/text"
         android:textStyle="bold"
+        android:background="@color/background"
         android:layout_below="@+id/currencySpinner"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="18dp"
         android:layout_marginLeft="@dimen/padding"/>
 
     <ListView

@@ -6,7 +6,7 @@
     <dimen name="rounded_button_radius">25dp</dimen>
     <dimen name="rounded_list_radius">10dp</dimen>
     <dimen name="padding">10dp</dimen>
-    <dimen name="dividerW">340dp</dimen>
+    <dimen name="dividerW">350dp</dimen>
     <dimen name="dividerH">1dp</dimen>
 
 <!--    <dimen name="fb_margin_override_top">10dp</dimen>

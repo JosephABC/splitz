@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:textColor="@color/text"
         android:paddingLeft="@dimen/padding"
         android:layout_marginTop="@dimen/padding">
     </TextView>
@@ -22,6 +23,17 @@
         android:textSize="10sp"
         android:paddingLeft="@dimen/padding"
         android:layout_marginBottom="@dimen/padding">
+    </TextView>
+
+    <TextView
+        android:id="@+id/Amount_expenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/colorAccent"
+        android:paddingRight="50dp"
+        android:gravity="right"
+        android:layout_marginTop="@dimen/padding">
     </TextView>
 
     <ImageView
