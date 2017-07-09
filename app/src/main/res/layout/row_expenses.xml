@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_listview_entries">
 
     <TextView
         android:id="@+id/title_expenses"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:paddingLeft="5dp">
+        android:paddingLeft="@dimen/padding"
+        android:layout_marginTop="@dimen/padding">
     </TextView>
 
 
     <TextView
         android:id="@+id/Owner_expenses"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_expenses"
         android:textSize="10sp"
-        android:paddingLeft="5dp"
-        >
+        android:paddingLeft="@dimen/padding"
+        android:layout_marginBottom="@dimen/padding">
     </TextView>
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+        android:tint="@color/colorPrimaryDark"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="15dp">
+    </ImageView>
 
 
 

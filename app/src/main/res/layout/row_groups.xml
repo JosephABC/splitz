@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_listview_entries"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textColor="@color/text"
         android:paddingLeft="@dimen/padding"
         android:paddingTop="10dp"
