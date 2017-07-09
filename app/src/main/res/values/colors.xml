@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
-    <color name="orange">#BAE1D5</color>
+    <color name="button">#2cbaa0</color>
+    <color name="background">#ebfaf8</color>
+    <color name="text">#14524a</color>
     <color name="black_overlay">#66000000</color>
     <color name="green">#a4c639</color>
 </resources>
