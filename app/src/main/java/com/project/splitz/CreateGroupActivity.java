@@ -161,22 +161,15 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
     }
     protected void groupSubmit(final String GroupName){
-        //Initialise ArrayLists
-        final Map<String, Float> GroupUidList = new HashMap<String, Float>();
-
-
+        
         //Add Current user by default to the group
         final FirebaseUser currentUser = mAuth.getCurrentUser();
-        GroupUidList.put(currentUser.getUid(), 0.0f);
-
         //Group Database
         DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups");
         final String groupId = gDatabase.push().getKey();
         String CurrencyID = String.valueOf(CurrencySpinner.getSelectedItem());
-        Groups group = new Groups(GroupName, GroupUidList, null, CurrencyID);
-        gDatabase.child(groupId).setValue(group);
-        //User Database
-        final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+
         //Add GroupId to current User
         addGroup(currentUser.getUid(), groupId);
 
@@ -192,7 +185,8 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         selectedFriends.put(currentUser.getUid(), 0.0f);
 
         //Add Users to new group database and add group to user database
-        addParticipant(groupId, selectedFriends);
+        Groups group = new Groups(GroupName, selectedFriends, null, CurrencyID);
+        gDatabase.child(groupId).setValue(group);
         List<String> selectedFriendsArray = new ArrayList<>(selectedFriends.keySet());
         for (String Uid: selectedFriendsArray){
             addGroup(Uid,groupId);
@@ -209,23 +203,21 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         }
 
     }
-    //Add selected friend to Group Database
-    public void addParticipant(String groupId, Map<String, Float> GroupUidList){
-        DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(groupId).child("participants");
-        gDatabase.setValue(GroupUidList);
-    }
+    //Add selected friends to Group Database
+
     public void addGroup(final String UserUid, final String groupId){
-        final ArrayList<String> UserGroupList = new ArrayList<String>();
-        final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users");
-        Query GroupQuery = uDatabase.child(UserUid).child("groups");
+        final DatabaseReference uDatabase = FirebaseDatabase.getInstance().getReference("users").child(UserUid);
+        Query GroupQuery = uDatabase;
         GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    UserGroupList.add(child.getValue().toString());
+                User user = dataSnapshot.getValue(User.class);
+                List<String> UserGroupIDList = new ArrayList<String>();
+                if (user.groups != null){
+                    UserGroupIDList = user.groups;
                 }
-                UserGroupList.add(groupId);
-                uDatabase.child(UserUid).child("groups").setValue(UserGroupList);
+                UserGroupIDList.add(groupId);
+                uDatabase.child("groups").setValue(UserGroupIDList);
             }
 
             @Override
@@ -233,6 +225,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
             }
         });
     }
+
 
     protected boolean validateForm() {
         boolean valid = true;
