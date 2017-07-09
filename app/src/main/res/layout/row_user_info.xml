@@ -13,20 +13,11 @@
         android:layout_marginTop="5dp">
     </TextView>
 
-   <TextView
-        android:id="@+id/Group_expenses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title_expenses"
-        android:textSize="10sp"
-        android:paddingLeft="@dimen/padding">
-    </TextView>
-
     <TextView
         android:id="@+id/Owner_expenses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Group_expenses"
+        android:layout_below="@+id/title_expenses"
         android:textSize="10sp"
         android:paddingLeft="@dimen/padding"
         android:layout_marginBottom="5dp">

@@ -13,14 +13,14 @@ import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-public class MyAdapterExpenseFragment extends ArrayAdapter<ExpenseFragmentItems> {
+public class MyAdapterUserInfo extends ArrayAdapter<ExpenseFragmentItems> {
 
     private final Context context;
     private final ArrayList<ExpenseFragmentItems> itemsArrayList;
 
-    public MyAdapterExpenseFragment(Context context, ArrayList<ExpenseFragmentItems> itemsArrayList) {
+    public MyAdapterUserInfo(Context context, ArrayList<ExpenseFragmentItems> itemsArrayList) {
 
-        super(context, R.layout.row_expense_fragment, itemsArrayList);
+        super(context, R.layout.row_user_info, itemsArrayList);
 
         this.context = context;
         this.itemsArrayList = itemsArrayList;
@@ -34,17 +34,18 @@ public class MyAdapterExpenseFragment extends ArrayAdapter<ExpenseFragmentItems>
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // 2. Get rowView from inflater
-        View rowView = inflater.inflate(R.layout.row_expense_fragment, parent, false);
+        View rowView = inflater.inflate(R.layout.row_user_info, parent, false);
 
         // 3. Get the two text view from the rowView
         TextView TitleView = (TextView) rowView.findViewById(R.id.title_expenses);
-        TextView GroupView = (TextView) rowView.findViewById(R.id.Group_expenses);
+        //TextView GroupView = (TextView) rowView.findViewById(R.id.Group_expenses);
         TextView OwnerView = (TextView) rowView.findViewById(R.id.Owner_expenses);
         TextView AmountView = (TextView) rowView.findViewById(R.id.Amount_expenses);
 
         // 4. Set the text for textView
-        TitleView.setText(itemsArrayList.get(position).getTitle()+ " | " + itemsArrayList.get(position).getGroupCurrencyID() + " $ " + String.format("%.2f",itemsArrayList.get(position).getTotalAmount()));
-        GroupView.setText("Group: " + itemsArrayList.get(position).getGroupName());
+        TitleView.setText(itemsArrayList.get(position).getTitle());
+        //+ " | " + itemsArrayList.get(position).getGroupCurrencyID() + " $ " + String.format("%.2f",itemsArrayList.get(position).getTotalAmount())
+        //GroupView.setText("Group: " + itemsArrayList.get(position).getGroupName());
         OwnerView.setText("Owner: " + itemsArrayList.get(position).getOwnerName());
         AmountView.setText(" $" + String.format("%.2f",itemsArrayList.get(position).getAmount()));
 

@@ -33,24 +33,23 @@
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:id="@+id/CurrencyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Base Currency  "
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@+id/groupnameET"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="@dimen/padding"/>
     <View
         android:layout_width="@dimen/dividerW"
         android:layout_height="@dimen/dividerH"
         android:layout_below="@+id/CurrencyText"
         android:layout_centerHorizontal="true"
         android:background="@color/text"/>
-    <TextView
-        android:id="@+id/CurrencyText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Base Currency  "
-        android:textSize="17sp"
-        android:textColor="@color/text"
-        android:textStyle="bold"
-        android:background="@color/background"
-        android:layout_below="@+id/groupnameET"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="@dimen/padding"/>
 
     <Spinner
         android:id="@+id/currencySpinner"
@@ -62,24 +61,25 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="@dimen/padding"/>
 
+
+    <TextView
+        android:id="@+id/AddMembersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group Members "
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@+id/currencySpinner"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="@dimen/padding"/>
     <View
         android:layout_width="@dimen/dividerW"
         android:layout_height="@dimen/dividerH"
         android:layout_below="@+id/AddMembersText"
         android:layout_centerHorizontal="true"
         android:background="@color/text"/>
-    <TextView
-        android:id="@+id/AddMembersText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Group Members "
-        android:textSize="17sp"
-        android:textColor="@color/text"
-        android:textStyle="bold"
-        android:background="@color/background"
-        android:layout_below="@+id/currencySpinner"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="@dimen/padding"/>
+
 
     <ListView
         android:id="@+id/listViewFriends"

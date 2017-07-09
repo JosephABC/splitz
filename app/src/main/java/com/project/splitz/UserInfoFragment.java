@@ -163,7 +163,7 @@ public class UserInfoFragment extends Fragment {
 
 
     public void generate(ArrayList<ExpenseFragmentItems> ExpenseDataList){
-        final MyAdapterExpenseFragment eAdapter = new MyAdapterExpenseFragment(getActivity(), ExpenseDataList);
+        final MyAdapterUserInfo eAdapter = new MyAdapterUserInfo(getActivity(), ExpenseDataList);
         ListViewExpenses.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         ListViewExpenses.setAdapter(eAdapter);
         ListViewExpenses.setOnItemClickListener(new AdapterView.OnItemClickListener() {

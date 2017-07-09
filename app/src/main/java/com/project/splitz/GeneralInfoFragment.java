@@ -63,7 +63,7 @@ public class GeneralInfoFragment extends Fragment {
                 Groups group = dataSnapshot.getValue(Groups.class);
                 Map<String, Float> ParticipantsDataList = group.participants;
                 String GroupCurrencyID = group.CurrencyID;
-                BaseCurrencyTV.setText("Base Currency: " + GroupCurrencyID);
+                BaseCurrencyTV.setText(GroupCurrencyID);
                 GenerateUsers(ParticipantsDataList, GroupCurrencyID);
             }
 

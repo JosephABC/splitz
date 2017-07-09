@@ -41,7 +41,7 @@ public class MyAdapterGroupInfo extends ArrayAdapter<ItemsUserInfo> {
         nameView.setText(itemsArrayList.get(position).getName());
         emailView.setText(itemsArrayList.get(position).getEmail());
 
-        amountView.setText(itemsArrayList.get(position).getCurrencyID() + " $ " + String.format("%.2f", itemsArrayList.get(position).getAmount() ));
+        amountView.setText(" $ " + String.format("%.2f", itemsArrayList.get(position).getAmount() ));
 
         // 5. return rowView
         return rowView;
