@@ -72,13 +72,14 @@
 
     <Spinner
         android:id="@+id/currencySpinner"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:prompt="@string/currency_prompt"
         android:textSize="@dimen/textSize"
-        android:layout_alignBaseline="@+id/ExpenseAmountET"
         android:layout_alignBottom="@+id/ExpenseAmountET"
-        android:layout_toRightOf="@+id/ExpenseAmountET" />
+        android:layout_toRightOf="@+id/ExpenseAmountET"
+        android:layout_below="@+id/ExpenseDescriptionET"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/padding"/>
 
     <EditText
         android:id="@+id/ExchangeRateET"
