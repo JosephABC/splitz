@@ -6,32 +6,35 @@
 
     <TextView
         android:id="@+id/name_exp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:paddingLeft="5dp">
+        android:textSize="@dimen/textSize"
+        android:textColor="@color/dark_gray"
+        android:layout_marginLeft="@dimen/textMarginLeft"
+        android:layout_marginTop="@dimen/SmallRowMarginTop">
     </TextView>
 
 
     <TextView
         android:id="@+id/email_exp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name_exp"
-        android:textSize="12sp"
-        android:paddingLeft="5dp"
+        android:textSize="@dimen/subtitleSize"
+        android:layout_marginLeft="@dimen/textMarginLeft"
+        android:layout_marginBottom="@dimen/SmallRowMarginTop"
         >
     </TextView>
 
     <TextView
         android:id="@+id/amount_exp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/name_exp"
-        android:layout_alignParentRight="true"
-        android:textSize="30sp"
-        android:paddingRight="10dp"
-        >
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:paddingRight="@dimen/AmountMarginRightNoArrow"
+        android:gravity="right"
+        android:layout_marginTop="@dimen/SmallAmountMarginTop">
     </TextView>
 
 </RelativeLayout>

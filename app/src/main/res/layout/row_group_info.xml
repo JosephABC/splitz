@@ -7,10 +7,10 @@
         android:id="@+id/nameTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/textSizeBig"
         android:textColor="@color/dark_gray"
-        android:paddingLeft="@dimen/padding"
-        android:layout_marginTop="@dimen/padding">
+        android:paddingLeft="@dimen/textMarginLeft"
+        android:layout_marginTop="@dimen/BigRowMarginTop">
     </TextView>
 
 
@@ -19,19 +19,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameTV"
-        android:textSize="10sp"
-        android:paddingLeft="@dimen/padding"
-        android:layout_marginBottom="@dimen/padding"/>
+        android:textSize="@dimen/subtitleSize"
+        android:paddingLeft="@dimen/textMarginLeft"
+        android:layout_marginBottom="@dimen/BigRowMarginTop"/>
 
     <TextView
         android:id="@+id/amountTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="@dimen/amountSize"
         android:textColor="@color/colorAccent"
-        android:paddingRight="30dp"
+        android:paddingRight="@dimen/AmountMarginRightNoArrow"
         android:gravity="right"
-        android:layout_marginTop="@dimen/padding">
+        android:layout_marginTop="@dimen/BigAmountMarginTop">
     </TextView>
 
 </RelativeLayout>

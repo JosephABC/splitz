@@ -8,10 +8,10 @@
         android:id="@+id/title_expenses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/amountSize"
         android:textColor="@color/text"
         android:paddingLeft="@dimen/padding"
-        android:layout_marginTop="@dimen/padding">
+        android:layout_marginTop="@dimen/BigRowMarginTop">
     </TextView>
 
 
@@ -20,20 +20,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_expenses"
-        android:textSize="10sp"
+        android:textSize="@dimen/subtitleSize"
         android:paddingLeft="@dimen/padding"
-        android:layout_marginBottom="@dimen/padding">
+        android:layout_marginBottom="@dimen/BigRowMarginTop">
     </TextView>
 
     <TextView
         android:id="@+id/Amount_expenses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="@dimen/amountSize"
         android:textColor="@color/colorAccent"
-        android:paddingRight="50dp"
+        android:paddingRight="@dimen/AmountMarginRightArrow"
         android:gravity="right"
-        android:layout_marginTop="@dimen/padding">
+        android:layout_marginTop="@dimen/BigAmountMarginTop">
     </TextView>
 
     <ImageView

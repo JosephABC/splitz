@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="@color/background"
     tools:context="com.project.splitz.GroupActivity">
 
     <android.support.v7.widget.Toolbar
@@ -17,53 +18,141 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+
+    <TextView
+        android:id="@+id/About"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/About"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
+    <TextView
+        android:id="@+id/ExpenseDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_below="@+id/About"
+        android:layout_marginTop="@dimen/padding"
+        android:layout_marginLeft="@dimen/textMarginLeft">
+    </TextView>
+
+    <TextView
+        android:id="@+id/AmountTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Amount Paid"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/ExpenseDescription"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/AmountTitle"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
+    <TextView
+        android:id="@+id/Amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_below="@+id/AmountTitle"
+        android:layout_marginTop="@dimen/padding"
+        android:layout_marginLeft="@dimen/textMarginLeft">
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/ExchangeRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exchange Rate"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/Amount"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/ExchangeRate"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
+    <TextView
+        android:id="@+id/Rate"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ExchangeRate"
+        android:layout_marginTop="@dimen/padding"
+        android:layout_marginLeft="@dimen/textMarginLeft">
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/PaidBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Paid By"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/Rate"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/PaidBy"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
     <TextView
         android:id="@+id/OwnerName"
         android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/Amount">
+        android:layout_below="@+id/PaidBy"
+        android:layout_marginTop="@dimen/padding"
+        android:layout_marginLeft="@dimen/textMarginLeft">
     </TextView>
 
-    <TextView
-        android:id="@+id/ExpenseDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="italic"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/toolbar">
-    </TextView>
-
-    <TextView
-        android:id="@+id/Amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/ExpenseDescription">
-    </TextView>
 
     <TextView
         android:id="@+id/Participants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:layout_below="@+id/OwnerName"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="5dp"
-        android:text="Participants:">
-    </TextView>
-
+        android:text="Participants"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/OwnerName"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/Participants"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
     <ListView
         android:id="@+id/listViewParticipants"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/Participants"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="@dimen/padding"/>
 
 
 </RelativeLayout>

@@ -37,9 +37,10 @@ public class ExpenseActivity extends AppCompatActivity {
     public String GroupID;
     public String GroupCurrencyID;
 
-    public TextView OwnerNameTV;
     public TextView ExpenseDescriptionTV;
     public TextView TotalAmountTV;
+    public TextView OwnerNameTV;
+    public TextView ExchangeRateTV;
     public ListView ParticipantsListView;
 
     public FirebaseAuth mAuth;
@@ -55,9 +56,10 @@ public class ExpenseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Views
-        OwnerNameTV = (TextView) findViewById(R.id.OwnerName);
         ExpenseDescriptionTV = (TextView) findViewById(R.id.ExpenseDescription);
         TotalAmountTV = (TextView) findViewById(R.id.Amount);
+        OwnerNameTV = (TextView) findViewById(R.id.OwnerName);
+        ExchangeRateTV = (TextView) findViewById(R.id.Rate);
         ParticipantsListView= (ListView) findViewById(R.id.listViewParticipants);
 
         //Handle Bundle Extras
@@ -73,8 +75,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
         //Populating Views
         ExpenseDescriptionTV.setText(Description);
-        OwnerNameTV.setText("Expense Paid By: " + OwnerName);
-        TotalAmountTV.setText("Total Amount: " + GroupCurrencyID + " $" + String.format("%.2f", TotalAmount));
+        OwnerNameTV.setText(OwnerName);
         setTitle(Title);
         updateUI(ExpenseID, GroupID);
 
@@ -92,8 +93,14 @@ public class ExpenseActivity extends AppCompatActivity {
                 String CurrencyID = expense.CurencyID;
                 String ExchangeRate = String.format("%.3f", expense.ExchangeRate);
                 String OriginalAmount = String.format("%.2f", TotalAmount / expense.ExchangeRate);
-                OwnerNameTV.setText(OriginalAmount + " " + CurrencyID + " Paid By: " + OwnerName + "\n Exchange Rate: " + ExchangeRate +
-                        " " + CurrencyID + "/" + GroupCurrencyID);
+                if (GroupCurrencyID.equals(CurrencyID)) {
+                    TotalAmountTV.setText(String.format("%.2f", TotalAmount) + " " + GroupCurrencyID);
+                    ExchangeRateTV.setText("Not Applicable");
+                } else {
+                    TotalAmountTV.setText(OriginalAmount + " " + CurrencyID + " (Equivalent to " + String.format("%.2f", TotalAmount) + " " + GroupCurrencyID + ")");
+                    ExchangeRateTV.setText(ExchangeRate + " " + CurrencyID + "/" + GroupCurrencyID);
+                }
+
                 Map<String, Float> ParticipantsData = expense.payers;
                 generateParticipantData(ParticipantsData);
             }

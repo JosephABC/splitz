@@ -2,13 +2,32 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="login_button_width">250dp</dimen>
     <dimen name="login_button_height">45dp</dimen>
+    <dimen name="smaller_button_width">170dp</dimen>
     <dimen name="edit_text_height">35dp</dimen>
     <dimen name="rounded_button_radius">25dp</dimen>
     <dimen name="rounded_list_radius">10dp</dimen>
     <dimen name="padding">10dp</dimen>
     <dimen name="dividerW">350dp</dimen>
     <dimen name="dividerH">1dp</dimen>
+
+    <dimen name="headerMarginLeft">15dp</dimen>
+    <dimen name="headerMarginTop">18dp</dimen>
+    <dimen name="textMarginLeft">25dp</dimen>
+    <dimen name="textMarginTop">10dp</dimen>
+
+    <dimen name="BigRowMarginTop">10dp</dimen>
+    <dimen name="SmallRowMarginTop">5dp</dimen>
+    <dimen name="BigAmountMarginTop">15dp</dimen>
+    <dimen name="SmallAmountMarginTop">10dp</dimen>
+
+    <dimen name="AmountMarginRightArrow">50dp</dimen>
+    <dimen name="AmountMarginRightNoArrow">20dp</dimen>
+
     <dimen name="headerSize">17sp</dimen>
+    <dimen name="textSize">15sp</dimen>
+    <dimen name="textSizeBig">20sp</dimen>
+    <dimen name="subtitleSize">10sp</dimen>
+    <dimen name="amountSize">20sp</dimen>
 
 <!--    <dimen name="fb_margin_override_top">10dp</dimen>
     <dimen name="fb_margin_override_bottom">10dp</dimen>

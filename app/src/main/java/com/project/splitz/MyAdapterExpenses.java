@@ -44,7 +44,7 @@ public class MyAdapterExpenses extends ArrayAdapter<Items5> {
         // 4. Set the text for textView
         TitleView.setText(itemsArrayList.get(position).getTitle());
         OwnerView.setText("Owner: " + itemsArrayList.get(position).getOwnerName());
-        AmountView.setText("$ " + String.format("%.2f", itemsArrayList.get(position).getTotalAmount()));
+        AmountView.setText(String.format("%.2f", itemsArrayList.get(position).getTotalAmount()) + " " + itemsArrayList.get(position).getGroupCurrencyID());
 
         // 5. return rowView
         return rowView;

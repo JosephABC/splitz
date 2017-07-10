@@ -16,8 +16,8 @@
         android:textColor="@color/text"
         android:textStyle="bold"
         android:layout_below="@+id/groupnameET"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="@dimen/padding"/>
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
     <View
         android:layout_width="@dimen/dividerW"
         android:layout_height="@dimen/dividerH"
@@ -29,11 +29,11 @@
         android:id="@+id/BaseCurrencyTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/textSizeBig"
         android:textColor="@color/dark_gray"
         android:layout_below="@id/CurrencyText1"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="@dimen/padding">
+        android:layout_marginTop="@dimen/textMarginTop"
+        android:layout_marginLeft="@dimen/textMarginLeft">
     </TextView>
 
     <TextView
@@ -45,8 +45,8 @@
         android:textColor="@color/text"
         android:textStyle="bold"
         android:layout_below="@+id/BaseCurrencyTV"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="@dimen/padding"/>
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
     <View
         android:layout_width="@dimen/dividerW"
         android:layout_height="@dimen/dividerH"
@@ -58,6 +58,5 @@
         android:id="@+id/listViewParticipants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Header"
-        android:layout_marginTop="10dp"/>
+        android:layout_below="@+id/Header"/>
 </RelativeLayout>

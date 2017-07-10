@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context="com.project.splitz.AddExpenseActivity">
 
     <android.support.v7.widget.Toolbar
@@ -17,30 +18,42 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <EditText
-        android:id="@+id/ExpenseTitleET"
+    <TextView
+        android:id="@+id/Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:hint="Enter Title"
+        android:text="Details"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/Details"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
+
+    <EditText
+        android:id="@+id/ExpenseTitleET"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSize"
+        android:hint="Title"
         android:inputType="text"
-        android:paddingRight="20dp"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="187dp"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="20dp" />
+        android:layout_below="@+id/Details"
+        android:layout_marginTop="@dimen/padding"
+        android:layout_marginLeft="@dimen/textMarginLeft" />
 
     <EditText
         android:id="@+id/ExpenseDescriptionET"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Description"
+        android:hint="Description"
         android:inputType="text"
-        android:paddingRight="20dp"
-        android:textSize="15dp"
+        android:textSize="@dimen/textSize"
         android:layout_below="@+id/ExpenseTitleET"
         android:layout_alignLeft="@+id/ExpenseTitleET"
         android:layout_alignStart="@+id/ExpenseTitleET" />
@@ -49,20 +62,20 @@
         android:id="@+id/ExpenseAmountET"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Amount"
+        android:hint="Amount"
         android:inputType="numberDecimal"
         android:paddingRight="20dp"
-        android:textSize="15dp"
+        android:textSize="@dimen/textSize"
         android:layout_below="@+id/ExpenseDescriptionET"
-        android:layout_alignLeft="@+id/ExpenseDescriptionET"
-        android:layout_alignStart="@+id/ExpenseDescriptionET" />
+        android:layout_alignLeft="@+id/ExpenseTitleET"
+        android:layout_alignStart="@+id/ExpenseTitleET" />
 
     <Spinner
         android:id="@+id/currencySpinner"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:prompt="@string/currency_prompt"
-        android:textSize="15dp"
+        android:textSize="@dimen/textSize"
         android:layout_alignBaseline="@+id/ExpenseAmountET"
         android:layout_alignBottom="@+id/ExpenseAmountET"
         android:layout_toRightOf="@+id/ExpenseAmountET" />
@@ -74,7 +87,7 @@
         android:text="1.000"
         android:inputType="numberDecimal"
         android:paddingRight="20dp"
-        android:textSize="15dp"
+        android:textSize="@dimen/textSize"
         android:layout_below="@+id/ExpenseDescriptionET"
         android:layout_toRightOf="@+id/currencySpinner" />
 
@@ -83,36 +96,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="End Amount"
-        android:paddingRight="20dp"
-        android:paddingTop="40dp"
-        android:textSize="20dp"
-        android:layout_below="@+id/ExpenseDescriptionET"
-        android:layout_alignLeft="@+id/ExpenseDescriptionET" />
+        android:textSize="@dimen/textSize"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@+id/ExpenseAmountET"
+        android:layout_marginTop="@dimen/padding"
+        android:layout_marginLeft="@dimen/textMarginLeft"/>
 
+    <TextView
+        android:id="@+id/Participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Participants"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/EndAmountTV"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/Participants"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
     <ListView
         android:id="@+id/listViewMembers"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/EndAmountTV"
+        android:layout_height="180dp"
+        android:layout_below="@+id/Participants"
         android:layout_alignLeft="@+id/ExpenseDescriptionET">
-
     </ListView>
-
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_above="@+id/AddExpenseBtn"
+        android:layout_marginBottom="38dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
     <Button
         android:id="@+id/UnequalSplittingBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unequal Splitting"
-        android:layout_marginTop="19dp"
+        android:background="@android:color/transparent"
+        android:text="Unequal splitting? Click here"
+        android:textColor="@color/text"
+        android:textAllCaps="false"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/listViewMembers"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/AddExpenseBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/smaller_button_width"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:text="Add Expense"
-        android:layout_marginTop="19dp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/UnequalSplittingBtn"
         android:layout_centerHorizontal="true" />
 

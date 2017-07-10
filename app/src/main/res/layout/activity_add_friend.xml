@@ -42,62 +42,62 @@
         android:layout_toRightOf="@+id/SearchUsers"
         android:layout_marginLeft="@dimen/padding"/>
 
-    <View
-        android:layout_width="@dimen/dividerW"
-        android:layout_height="@dimen/dividerH"
-        android:layout_below="@+id/SearchUsers"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/darker_gray"/>
+
     <TextView
         android:id="@+id/SearchResults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="17sp"
         android:text="Search Results  "
-        android:background="@color/background"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
         android:layout_below="@+id/SearchUsers"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="18dp"
         android:layout_marginLeft="@dimen/padding"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/SearchResults"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
+
 
     <TextView
         android:id="@+id/Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="@color/text"
+        android:textSize="20sp"
         android:hint="Email: "
         android:layout_below="@+id/SearchResults"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/padding"
         android:layout_marginLeft="@dimen/padding"/>
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
         android:text=""
+        android:textSize="20sp"
+        android:textColor="@color/dark_gray"
         android:layout_toRightOf="@id/Email"
-        android:layout_alignBottom="@id/Email"
-        android:layout_below="@+id/SearchUsers"/>
+        android:layout_alignBottom="@id/Email"/>
 
 
     <TextView
         android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="@color/text"
+        android:textSize="20sp"
         android:hint="Name: "
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/padding"
         android:layout_marginLeft="@dimen/padding"
         android:layout_below="@+id/textViewEmail" />
-
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
         android:text=""
+        android:textSize="20sp"
+        android:textColor="@color/dark_gray"
         android:layout_alignBaseline="@+id/Name"
         android:layout_alignBottom="@+id/Name"
         android:layout_toRightOf="@+id/Name"/>
@@ -115,9 +115,9 @@
         android:layout_width="@dimen/dividerW"
         android:layout_height="@dimen/dividerH"
         android:layout_below="@+id/Name"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/padding"
         android:layout_centerHorizontal="true"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/text"/>
 
     <Button
         android:id="@+id/AddFriendBtn"

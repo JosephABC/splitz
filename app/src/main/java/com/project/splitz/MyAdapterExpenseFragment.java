@@ -46,7 +46,7 @@ public class MyAdapterExpenseFragment extends ArrayAdapter<ExpenseFragmentItems>
         TitleView.setText(itemsArrayList.get(position).getTitle()+ " | " + itemsArrayList.get(position).getGroupCurrencyID() + " $ " + String.format("%.2f",itemsArrayList.get(position).getTotalAmount()));
         GroupView.setText("Group: " + itemsArrayList.get(position).getGroupName());
         OwnerView.setText("Owner: " + itemsArrayList.get(position).getOwnerName());
-        AmountView.setText(" $" + String.format("%.2f",itemsArrayList.get(position).getAmount()));
+        AmountView.setText(String.format("%.2f",itemsArrayList.get(position).getAmount())+ " " + itemsArrayList.get(position).getGroupCurrencyID());
 
         // 5. return rowView
         return rowView;
