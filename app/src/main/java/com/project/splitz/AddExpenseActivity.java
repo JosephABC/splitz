@@ -465,10 +465,10 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         String CurrencyID = parent.getItemAtPosition(position).toString();
         if (CurrencyID.equals(GroupCurrencyID)){
             ExchangeRateET.setEnabled(false);
-            ExchangeRateET.setFocusable(false);
+//            ExchangeRateET.setFocusable(false);
         }else{
             ExchangeRateET.setEnabled(true);
-            ExchangeRateET.setFocusable(true);
+//            ExchangeRateET.setFocusable(true);
         }
         if (TextUtils.isEmpty(OriginalAmount)) {
             Toast.makeText(parent.getContext(), "Please Enter an Amount", Toast.LENGTH_SHORT).show();
@@ -581,10 +581,10 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
                 if (CurrencyID.equals(GroupCurrencyID)){
                     ExchangeRateET.setEnabled(false);
-                    ExchangeRateET.setFocusable(false);
+//                    ExchangeRateET.setFocusable(false);
                 }else{
                     ExchangeRateET.setEnabled(true);
-                    ExchangeRateET.setFocusable(true);
+//                    ExchangeRateET.setFocusable(true);
                 }
 
             } catch (JSONException e) {
