@@ -87,10 +87,10 @@ public class UnequalSplittingActivity extends AppCompatActivity implements View.
         findViewById(R.id.RecalculateBtn).setOnClickListener(this);
         findViewById(R.id.AddExpenseBtn).setOnClickListener(this);
         //Populate Views
-        OriginalAmountTV.setText("Original Amount: " + String.format("%.2f", OriginalAmount) + " " + CurrencyID);
         EndAmount = OriginalAmount * ExchangeRate;
-        EndAmountTV.setText("Total Amount: " + String.format("%.2f", EndAmount) + " " + GroupCurrencyID + "\n"
-         + "Exchange Rate: " + String.format("%.3f", ExchangeRate) + " " + CurrencyID + "/" + GroupCurrencyID);
+        OriginalAmountTV.setText(String.format("%.2f", OriginalAmount) + " " + CurrencyID
+                + " (Equivalent to " + String.format("%.2f", EndAmount) + " " + GroupCurrencyID + ")");
+        EndAmountTV.setText("Exchange Rate: " + String.format("%.3f", ExchangeRate) + " " + CurrencyID + "/" + GroupCurrencyID);
         UpdateUI();
 
 

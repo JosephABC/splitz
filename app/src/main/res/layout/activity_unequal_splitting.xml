@@ -18,31 +18,82 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <TextView
+        android:id="@+id/Amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Amount"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/Amount"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
+    <TextView
         android:id="@+id/OriginalAmountTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Original Amount"
-        android:paddingRight="20dp"
-        android:paddingTop="40dp"
-        android:textSize="20dp"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/Amount"
+        android:layout_marginLeft="@dimen/textMarginLeft"
+        android:layout_marginTop="@dimen/textMarginTop"
+        android:textSize="@dimen/textSize" />
 
+    <TextView
+        android:id="@+id/ExchangeRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exchange Rate"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/OriginalAmountTV"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/ExchangeRate"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
     <TextView
         android:id="@+id/EndAmountTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="End Amount"
-        android:paddingRight="20dp"
-        android:paddingTop="40dp"
-        android:textSize="20dp"
-        android:layout_below="@+id/OriginalAmountTV" />
+        android:hint="Exchange Rate"
+        android:layout_marginLeft="@dimen/textMarginLeft"
+        android:layout_marginTop="@dimen/textMarginTop"
+        android:textSize="@dimen/textSize"
+        android:layout_below="@+id/ExchangeRate" />
+
+    <TextView
+        android:id="@+id/Participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Participants"
+        android:textSize="@dimen/headerSize"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@id/EndAmountTV"
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_below="@+id/Participants"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
 
     <ListView
         android:id="@+id/listViewMembers"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/EndAmountTV"
-        android:layout_alignLeft="@+id/ExpenseDescriptionET">
+        android:layout_height="200dp"
+        android:layout_below="@+id/Participants">
 
     </ListView>
 
