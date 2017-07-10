@@ -43,7 +43,7 @@ public class MyAdapterExpenseFragment extends ArrayAdapter<ExpenseFragmentItems>
         TextView AmountView = (TextView) rowView.findViewById(R.id.Amount_expenses);
 
         // 4. Set the text for textView
-        TitleView.setText(itemsArrayList.get(position).getTitle()+ " | " + itemsArrayList.get(position).getGroupCurrencyID() + " $ " + String.format("%.2f",itemsArrayList.get(position).getTotalAmount()));
+        TitleView.setText(itemsArrayList.get(position).getTitle());
         GroupView.setText("Group: " + itemsArrayList.get(position).getGroupName());
         OwnerView.setText("Owner: " + itemsArrayList.get(position).getOwnerName());
         AmountView.setText(String.format("%.2f",itemsArrayList.get(position).getAmount())+ " " + itemsArrayList.get(position).getGroupCurrencyID());

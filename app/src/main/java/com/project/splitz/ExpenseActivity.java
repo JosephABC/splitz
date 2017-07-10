@@ -179,7 +179,7 @@ public class ExpenseActivity extends AppCompatActivity {
         AlertDialog myQuittingDialogBox =new AlertDialog.Builder(this)
                 //set message, title, and icon
                 .setTitle("Delete")
-                .setMessage("Do you want to Delete")
+                .setMessage("Are you sure you want to delete " + Title + " ?")
                 .setIcon(R.drawable.ic_delete)
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
@@ -201,6 +201,7 @@ public class ExpenseActivity extends AppCompatActivity {
         return myQuittingDialogBox;
 
     }
+
     public void delete(){
         mAuth = FirebaseAuth.getInstance();
 

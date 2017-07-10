@@ -37,7 +37,7 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
 
         //Button
         rootView.findViewById(R.id.NewFriendBtn).setOnClickListener(this);
-        rootView.findViewById(R.id.RefreshBtn).setOnClickListener(this);
+        //rootView.findViewById(R.id.RefreshBtn).setOnClickListener(this);
 
         // Display friend list
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -118,9 +118,9 @@ public class FriendsFragment extends Fragment implements View.OnClickListener {
             Intent aIntent = new Intent(getActivity(), AddFriendActivity.class);
             startActivity(aIntent);
             AllowRefresh1 = true;
-        }else if (i == R.id.RefreshBtn) {
+/*        }else if (i == R.id.RefreshBtn) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(this).attach(this).commit();
+            ft.detach(this).attach(this).commit();*/
         }
     }
 }

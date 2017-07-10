@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_listview_entries">
 
     <TextView
         android:id="@+id/title_expenses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/textSizeBig"
+        android:textColor="@color/text"
         android:paddingLeft="@dimen/padding"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="@dimen/SmallRowMarginTop">
     </TextView>
 
    <TextView
@@ -18,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_expenses"
-        android:textSize="10sp"
+        android:textSize="@dimen/subtitleSize"
         android:paddingLeft="@dimen/padding">
     </TextView>
 
@@ -27,20 +28,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Group_expenses"
-        android:textSize="10sp"
+        android:textSize="@dimen/subtitleSize"
         android:paddingLeft="@dimen/padding"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="@dimen/SmallRowMarginTop">
     </TextView>
 
     <TextView
         android:id="@+id/Amount_expenses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="@dimen/amountSize"
         android:textColor="@color/colorAccent"
-        android:paddingRight="50dp"
+        android:paddingRight="@dimen/AmountMarginRightArrow"
         android:gravity="right"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="@dimen/BigAmountMarginTop">
     </TextView>
 
     <ImageView
@@ -52,7 +53,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:paddingRight="15dp">
+        android:paddingRight="@dimen/ArrowPadding">
     </ImageView>
 
 

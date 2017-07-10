@@ -88,9 +88,14 @@ public class UnequalSplittingActivity extends AppCompatActivity implements View.
         findViewById(R.id.AddExpenseBtn).setOnClickListener(this);
         //Populate Views
         EndAmount = OriginalAmount * ExchangeRate;
-        OriginalAmountTV.setText(String.format("%.2f", OriginalAmount) + " " + CurrencyID
-                + " (Equivalent to " + String.format("%.2f", EndAmount) + " " + GroupCurrencyID + ")");
-        EndAmountTV.setText("Exchange Rate: " + String.format("%.3f", ExchangeRate) + " " + CurrencyID + "/" + GroupCurrencyID);
+        if (CurrencyID.equals(GroupCurrencyID)){
+            EndAmountTV.setText("Not Applicable");
+            OriginalAmountTV.setText(String.format("%.2f", OriginalAmount) + " " + CurrencyID);
+        } else {
+            EndAmountTV.setText(String.format("%.3f", ExchangeRate) + " " + CurrencyID + " to 1 " + GroupCurrencyID);
+            OriginalAmountTV.setText(String.format("%.2f", OriginalAmount) + " " + CurrencyID
+                    + " (Equivalent to " + String.format("%.2f", EndAmount) + " " + GroupCurrencyID + ")");
+        }
         UpdateUI();
 
 

@@ -47,7 +47,7 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
 
         // Button
         rootView.findViewById(R.id.NewGroupBtn).setOnClickListener(this);
-        rootView.findViewById(R.id.RefreshBtn).setOnClickListener(this);
+        //rootView.findViewById(R.id.RefreshBtn).setOnClickListener(this);
         //Initialize Auth
         mAuth = FirebaseAuth.getInstance();
         //Find Current User
@@ -153,10 +153,10 @@ public class GroupsFragment extends Fragment implements View.OnClickListener{
             Intent myIntent = new Intent(getActivity(), CreateGroupActivity.class);
             startActivity(myIntent);
             AllowRefresh = true;
-        }else if (i == R.id.RefreshBtn) {
+/*        }else if (i == R.id.RefreshBtn) {
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(this).attach(this).commit();
+            ft.detach(this).attach(this).commit();*/
         }
     }
 }

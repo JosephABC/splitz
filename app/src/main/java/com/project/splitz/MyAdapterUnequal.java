@@ -23,10 +23,6 @@ import static com.project.splitz.R.id.Amount;
 import static com.project.splitz.R.id.UserAmountET;
 import static com.project.splitz.R.id.UserEndAmountTV;
 
-/**
- * Created by Joseph Ang on 6/7/2017.
- */
-
 public class MyAdapterUnequal extends ArrayAdapter<ItemUnequal> {
 
     private final Context context;
@@ -97,8 +93,8 @@ public class MyAdapterUnequal extends ArrayAdapter<ItemUnequal> {
         OriginalCurrencyTV.setText(itemsArrayList.get(position).getOriginalCurrency());
         UserAmountET.setText(String.format("%.2f", itemsArrayList.get(position).getOriginalAmount()));
         UserAmountET.setSelection(UserAmountET.getText().length());
-        EndCurrencyTV.setText(itemsArrayList.get(position).getEndCurrency());
-        UserEndAmountTV.setText(String.format("%.2f", itemsArrayList.get(position).getEndAmount()));
+        EndCurrencyTV.setText(itemsArrayList.get(position).getEndCurrency() + ")");
+        UserEndAmountTV.setText(" (" + String.format("%.2f", itemsArrayList.get(position).getEndAmount()));
 
         UserAmountET.addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,7 +110,7 @@ public class MyAdapterUnequal extends ArrayAdapter<ItemUnequal> {
                         Toast.makeText(getContext(), "Please Enter an Amount", Toast.LENGTH_SHORT).show();
                     }else if (Float.valueOf(UserAmountET.getText().toString()) > itemsArrayList.get(0).getTotalAmount()){
                         UserAmountET.setText(String.format("%.2f", itemsArrayList.get(0).getTotalAmount()));
-                        Toast.makeText(getContext(), "That is way over the Total Amount", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "That is over the Total Amount", Toast.LENGTH_SHORT).show();
                         Float OriginalAmount = Float.valueOf(UserAmountET.getText().toString());
                         Float EndAmount = OriginalAmount * itemsArrayList.get(position).getExchangeRate();
                         itemsArrayList.get(position).setOriginalAmount(OriginalAmount);

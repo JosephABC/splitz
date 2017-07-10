@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context="com.project.splitz.UnequalSplittingActivity">
 
     <android.support.v7.widget.Toolbar
@@ -88,31 +89,52 @@
         android:layout_below="@+id/Participants"
         android:layout_centerHorizontal="true"
         android:background="@color/text"/>
+    <TextView
+        android:id="@+id/ParticipantsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uncheck user to enter amount."
+        android:textSize="@dimen/textSize"
+        android:textColor="@color/text"
+        android:layout_below="@id/Participants"
+        android:layout_marginTop="@dimen/textMarginTop"
+        android:layout_marginLeft="@dimen/textMarginLeft"/>
 
     <ListView
         android:id="@+id/listViewMembers"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/Participants">
-
+        android:layout_below="@+id/ParticipantsText"
+        android:layout_marginTop="5dp">
     </ListView>
+
+    <View
+        android:layout_width="@dimen/dividerW"
+        android:layout_height="@dimen/dividerH"
+        android:layout_above="@+id/RecalculateBtn"
+        android:layout_centerHorizontal="true"
+        android:background="@color/text"/>
 
     <Button
         android:id="@+id/RecalculateBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/login_button_width"
+        android:layout_height="@dimen/login_button_height"
+        android:background="@drawable/rounded_grey_button"
         android:text="Recalculate"
-        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="13dp"
         android:layout_below="@+id/listViewMembers"
         android:layout_centerHorizontal="true" />
 
 
     <Button
         android:id="@+id/AddExpenseBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/login_button_width"
+        android:layout_height="@dimen/login_button_height"
+        android:background="@drawable/rounded_button"
         android:text="Add Expense"
-        android:layout_marginTop="19dp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="14dp"
         android:layout_below="@+id/RecalculateBtn"
         android:layout_centerHorizontal="true" />
 

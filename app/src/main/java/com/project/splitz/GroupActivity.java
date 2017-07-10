@@ -1,10 +1,12 @@
 package com.project.splitz;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.MessagePattern;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -170,30 +172,67 @@ public class GroupActivity extends AppCompatActivity implements View.OnClickList
             GroupInfoIntent.putExtras(b);
             startActivity(GroupInfoIntent);
         }else if (id == R.id.Delete){
-            final DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupId);
-            Query GroupQuery = gDatabase;
-            GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Groups group = dataSnapshot.getValue(Groups.class);
-                    List<String> ExpenseIDList = null;
-                    Map<String, Float> ParticipantsData = group.participants;
-                    List<String> ParticipantsIDList = new ArrayList<String>(ParticipantsData.keySet());
-                    if (group.Expenses != null){
-                        ExpenseIDList = group.Expenses;
-                    }
-                    RemoveParticipants(ParticipantsIDList, ExpenseIDList);
-                    gDatabase.removeValue();
 
-                }
+            AlertDialog diaBox = AskOption();
+            diaBox.show();
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private AlertDialog AskOption()
+    {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(this)
+                //set message, title, and icon
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete " + GroupName + " ?")
+                .setIcon(R.drawable.ic_delete)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        delete();
+                        dialog.dismiss();
+                    }
+
+                })
+
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+        return myQuittingDialogBox;
+    }
+
+    public void delete(){
+
+        final DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupId);
+        Query GroupQuery = gDatabase;
+        GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Groups group = dataSnapshot.getValue(Groups.class);
+                List<String> ExpenseIDList = null;
+                Map<String, Float> ParticipantsData = group.participants;
+                List<String> ParticipantsIDList = new ArrayList<String>(ParticipantsData.keySet());
+                if (group.Expenses != null){
+                    ExpenseIDList = group.Expenses;
+                }
+                RemoveParticipants(ParticipantsIDList, ExpenseIDList);
+                gDatabase.removeValue();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void RemoveParticipants(List<String> ParticipantsIDLIst, final List<String> ExpensesIDList){

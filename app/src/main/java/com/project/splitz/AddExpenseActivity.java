@@ -77,7 +77,9 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     public MyAdapterMembers adapter;
     public Spinner CurrencySpinner;
     public EditText ExpenseAmountET;
+    public TextView BaseCurrencyTV;
     public TextView EndAmountTV;
+    public TextView ExpenseCurrencyTV;
     public EditText ExchangeRateET;
     public EditText ExpenseDescriptionET;
     public EditText ExpenseTitleET;
@@ -97,10 +99,13 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         //Views
         EndAmountTV = (TextView) findViewById(R.id.EndAmountTV);
+        ExpenseCurrencyTV = (TextView) findViewById(R.id.ExpenseCurrency);
+        BaseCurrencyTV = (TextView) findViewById(R.id.BaseCurrency);
         ExchangeRateET = (EditText) findViewById(R.id.ExchangeRateET);
         ExpenseAmountET = (EditText) findViewById(R.id.ExpenseAmountET);
         ExpenseDescriptionET = (EditText) findViewById(R.id.ExpenseDescriptionET);
         ExpenseTitleET = (EditText) findViewById(R.id.ExpenseTitleET);
+
 
         //On Text Change
         Watcher = new TextWatcher() {
@@ -139,6 +144,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         GroupId = b.getCharSequence("GroupId").toString();
         GroupName = b.getCharSequence("GroupName").toString();
         GroupCurrencyID = b.getCharSequence("GroupCurrencyID").toString();
+
+        BaseCurrencyTV.setText("1 " + GroupCurrencyID + " = ");
 
         //Currency Spinner
         CurrencySpinner = (Spinner) findViewById(R.id.currencySpinner);
@@ -471,10 +478,11 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         if (TextUtils.isEmpty(OriginalAmount)) {
             Toast.makeText(parent.getContext(), "Please Enter an Amount", Toast.LENGTH_SHORT).show();
 
+            ExpenseCurrencyTV.setText(CurrencyID);
             UpdateExchangeRateWithoutAmount u = new UpdateExchangeRateWithoutAmount();
             u.execute(CurrencyID);
         } else {
-
+            ExpenseCurrencyTV.setText(CurrencyID);
             UpdateExchangeRate Update = new UpdateExchangeRate();
             Update.execute(CurrencyID);
 
