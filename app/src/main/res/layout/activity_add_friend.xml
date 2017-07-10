@@ -27,9 +27,7 @@
         android:hint="Search User Email"
         android:inputType="textEmailAddress"
         android:layout_marginTop="25dp"
-        android:layout_marginLeft="@dimen/padding"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="187dp" />
+        android:layout_marginLeft="@dimen/textMarginLeft"/>
 
     <Button
         android:id="@+id/SearchBtn"
@@ -52,8 +50,8 @@
         android:textColor="@color/text"
         android:textStyle="bold"
         android:layout_below="@+id/SearchUsers"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="@dimen/padding"/>
+        android:layout_marginTop="@dimen/headerMarginTop"
+        android:layout_marginLeft="@dimen/headerMarginLeft"/>
     <View
         android:layout_width="@dimen/dividerW"
         android:layout_height="@dimen/dividerH"
@@ -66,17 +64,17 @@
         android:id="@+id/Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/textSizeBig"
         android:hint="Email: "
         android:layout_below="@+id/SearchResults"
         android:layout_marginTop="@dimen/padding"
-        android:layout_marginLeft="@dimen/padding"/>
+        android:layout_marginLeft="@dimen/textMarginLeft"/>
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="20sp"
+        android:textSize="@dimen/textSizeBig"
         android:textColor="@color/dark_gray"
         android:layout_toRightOf="@id/Email"
         android:layout_alignBottom="@id/Email"/>
@@ -86,17 +84,17 @@
         android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/textSizeBig"
         android:hint="Name: "
-        android:layout_marginTop="@dimen/padding"
-        android:layout_marginLeft="@dimen/padding"
+        android:layout_marginTop="@dimen/textMarginTop"
+        android:layout_marginLeft="@dimen/textMarginLeft"
         android:layout_below="@+id/textViewEmail" />
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="20sp"
+        android:textSize="@dimen/textSizeBig"
         android:textColor="@color/dark_gray"
         android:layout_alignBaseline="@+id/Name"
         android:layout_alignBottom="@+id/Name"
@@ -126,8 +124,6 @@
         android:background="@drawable/rounded_button"
         android:text="Add user as friend"
         android:textColor="@android:color/white"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="240dp"
         android:layout_below="@+id/textViewUserID"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true" />

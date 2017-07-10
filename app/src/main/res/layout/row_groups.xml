@@ -8,11 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_listview_entries"
-        android:textSize="20sp"
+        android:textSize="@dimen/textSizeBig"
         android:textColor="@color/text"
         android:paddingLeft="@dimen/padding"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="@dimen/textMarginTop"
+        android:paddingBottom="@dimen/textMarginTop">
     </TextView>
 
     <ImageView
@@ -24,7 +24,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:paddingRight="15dp">
+        android:paddingRight="@dimen/ArrowPadding">
     </ImageView>
 
 

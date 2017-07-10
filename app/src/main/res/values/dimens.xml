@@ -23,6 +23,8 @@
     <dimen name="AmountMarginRightArrow">50dp</dimen>
     <dimen name="AmountMarginRightNoArrow">20dp</dimen>
 
+    <dimen name="ArrowPadding">15dp</dimen>
+
     <dimen name="headerSize">17sp</dimen>
     <dimen name="textSize">15sp</dimen>
     <dimen name="textSizeBig">20sp</dimen>

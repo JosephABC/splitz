@@ -60,7 +60,7 @@
 
     <EditText
         android:id="@+id/ExpenseAmountET"
-        android:layout_width="120dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:hint="Amount"
         android:inputType="numberDecimal"
@@ -82,7 +82,7 @@
 
     <EditText
         android:id="@+id/ExchangeRateET"
-        android:layout_width="110dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="1.000"
         android:inputType="numberDecimal"

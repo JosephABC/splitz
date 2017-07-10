@@ -45,7 +45,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:paddingRight="15dp">
+        android:paddingRight="@dimen/ArrowPadding">
     </ImageView>
 
 
