@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.internal.Validate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -73,11 +74,13 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
 
     public ArrayList<String> MembersUidList = new ArrayList<String>();
-    private MyAdapterMembers adapter;
-    private Spinner CurrencySpinner;
-    private EditText ExpenseAmountET;
-    private TextView EndAmountTV;
-    private EditText ExchangeRateET;
+    public MyAdapterMembers adapter;
+    public Spinner CurrencySpinner;
+    public EditText ExpenseAmountET;
+    public TextView EndAmountTV;
+    public EditText ExchangeRateET;
+    public EditText ExpenseDescriptionET;
+    public EditText ExpenseTitleET;
 
     public FirebaseAuth mAuth;
     private TextWatcher Watcher;
@@ -96,6 +99,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         EndAmountTV = (TextView) findViewById(R.id.EndAmountTV);
         ExchangeRateET = (EditText) findViewById(R.id.ExchangeRateET);
         ExpenseAmountET = (EditText) findViewById(R.id.ExpenseAmountET);
+        ExpenseDescriptionET = (EditText) findViewById(R.id.ExpenseDescriptionET);
+        ExpenseTitleET = (EditText) findViewById(R.id.ExpenseTitleET);
 
         //On Text Change
         Watcher = new TextWatcher() {
@@ -178,20 +183,25 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.AddExpenseBtn) {
-            addExpense();
+            if (ValidateForm()){
+                addExpense();
+            }else {
+                Toast.makeText(AddExpenseActivity.this, "Please Fill In All Fields", Toast.LENGTH_SHORT).show();
+            }
         }else if (i == R.id.UnequalSplittingBtn){
-            UnequalSplit();
+            if (ValidateForm()){
+                UnequalSplit();
+            }else {
+                Toast.makeText(AddExpenseActivity.this, "Please Fill In All Fields", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
     protected void UnequalSplit(){
-        EditText titleField = (EditText) findViewById(R.id.ExpenseTitleET);
-        EditText descriptionField = (EditText) findViewById(R.id.ExpenseDescriptionET);
-        EditText amountField = (EditText) findViewById(R.id.ExpenseAmountET);
 
-        final String title = titleField.getText().toString();
-        final String description = descriptionField.getText().toString();
-        final Float originalAmount = Float.valueOf(amountField.getText().toString());
+        final String title = ExpenseTitleET.getText().toString();
+        final String description = ExpenseDescriptionET.getText().toString();
         final String CurrencyID = CurrencySpinner.getSelectedItem().toString();
 
         mAuth = FirebaseAuth.getInstance();
@@ -582,5 +592,17 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             }
         }
 
+    }
+
+    public boolean ValidateForm(){
+        if (TextUtils.isEmpty(ExpenseTitleET.getText().toString())){
+            return false;
+        }else if (TextUtils.isEmpty(ExpenseDescriptionET.getText().toString())){
+            return false;
+        }else if (TextUtils.isEmpty(ExpenseAmountET.getText().toString())){
+            return false;
+        }else {
+            return true;
+        }
     }
 }

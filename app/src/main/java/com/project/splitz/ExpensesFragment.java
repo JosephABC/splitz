@@ -86,7 +86,11 @@ public class ExpensesFragment extends Fragment {
                     final String GroupName = expense.GroupName;
                     final String GroupID = expense.GroupID;
                     final String currentUid = currentUser.getUid();
-                    final Float Amount = expense.payers.get(currentUid);
+                    Float AmountTest = expense.payers.get(currentUid);
+                    if (AmountTest == null){
+                        AmountTest = 0f;
+                    }
+                    final Float Amount = AmountTest;
                     DatabaseReference gDatabase = FirebaseDatabase.getInstance().getReference("groups").child(GroupID);
                     Query GroupQuery = gDatabase;
                     GroupQuery.addListenerForSingleValueEvent(new ValueEventListener() {
