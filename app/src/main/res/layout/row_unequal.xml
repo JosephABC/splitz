@@ -47,7 +47,9 @@
         android:textSize="15dp"
         android:layout_toLeftOf="@+id/UserEndCurrencyTV"
         android:layout_alignTop="@+id/UserNameTV"
-        android:cursorVisible="true"/>
+        android:cursorVisible="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
     <TextView
         android:id="@+id/UserEndCurrencyTV"
